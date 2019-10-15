@@ -77,7 +77,6 @@ Setup
 ```
 $ yarn install
 $ python -m venv .venv && source .venv/Scripts/activate
-$ python manage.py migrate
 ```
 ## 가상환경 설정 후, requirements 설치하기 
 
