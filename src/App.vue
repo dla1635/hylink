@@ -1,15 +1,13 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <h1>Django VueJs Template</h1>
+    <div id="nav">
+     <router-link :to="{ name: 'home' }">Vue</router-link> |
+     <router-link :to="{ name: 'messages' }">Django Rest</router-link>
+    </div>
     <router-view/>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'app'
-}
-</script>
 
 <style>
 #app {
