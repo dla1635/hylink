@@ -82,7 +82,8 @@ $ python manage.py migrate
 ## 가상환경 설정 후, requirements 설치하기 
 
 ```
-pip install -r requirements.txt
+$ pip install -r requirements.txt
+$ python manage.py migrate
 ```
 
 ## Running Development Servers
