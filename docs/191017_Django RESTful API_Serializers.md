@@ -244,6 +244,20 @@ urlpatterns = [
 
 
 
+## API 확인 
+
+### post list 
+
+- http://127.0.0.1:8000/api/posts/
+
+![posts list](https://lab.ssafy.com/s1-final/hylink/uploads/f0b4e7d1f38267bd9c27815f8d3b21bc/%EC%BA%A1%EC%B2%98.PNG)
+
+### post 상세페이지
+
+- http://127.0.0.1:8000/api/posts/1/
+
+![post_detail](https://lab.ssafy.com/s1-final/hylink/uploads/7485b9ddbde1776bca120e9b6db4f7ee/%EC%BA%A1%EC%B2%98.PNG)
+
 
 
 ## 참고문헌
