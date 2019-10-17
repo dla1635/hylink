@@ -32,10 +32,23 @@ db.sqlite3
 
 참고한 포스트와 달리 이미 Vue와 연동한 api app이 샘플로 생성되어 있기 때문에 구분을 위해 새로운 posts app을 만들어 보겠습니다. 
 
-
-
 ```bash
 $ python manage.py startapp posts
+```
+
+manage.py가 최상단에 있기 때문에 생성된 posts 폴더를 backend로 옮겨줍니다. 
+
+
+
+### settings/dev.py
+
+생성한 app을 django setting 에 추가해줍니다. 
+
+```python
+INSTALLED_APPS = [
+    ...
+    'backend.posts',
+]
 ```
 
 
@@ -57,12 +70,12 @@ from django.db import models
 from django.contrib.auth.models import User 
 
 class Post(models.Model):
-    user = model.ForeignKey(User, on_delete=models.CASCADE) # CASCADE = 삭제시 foreignkey를 포함하는 모델 인스턴스도 삭제
-    title = model.CharField(max_length=144)
-    contents = model.TextField(blank=True) # 빈칸 가능 
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # CASCADE = 삭제시 foreignkey를 포함하는 모델 인스턴스도 삭제
+    title = models.CharField(max_length=144)
+    contents = models.TextField(blank=True) # 빈칸 가능 
     created_at = models.DateTimeField(auto_now_add=True)
-    view_count = model.IntegerField(default=0)
-    like_count = model.IntegerField(default=0)
+    view_count = models.IntegerField(default=0)
+    like_count = models.IntegerField(default=0)
     
     # admin 페이지에서 보여줄 내용 
     def __str__(self):
@@ -76,6 +89,25 @@ class Post(models.Model):
 ```bash
 $ python manage.py makemigrations <app이름>
 $ python manage.py migrate <app이름>
+```
+
+
+
+
+
+## Admin에 Model 등록
+
+생성한 posts app의 Post 모델을 admin에 등록해야 관리자페이지에서 볼 수 있습니다. 
+
+### posts/admin.py
+
+```python
+from django.contrib import admin
+from .models import Post
+
+
+# Register your models here.
+admin.site.register(Post)
 ```
 
 
@@ -105,12 +137,12 @@ from rest_framework import serializers
 from .models import Post 
 from django.contrib.auth.models import User
 
-class UserSerializer(serializer.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email')
 
-class PostSerializer(serializer.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     
     class Meta:
@@ -121,7 +153,8 @@ class PostSerializer(serializer.ModelSerializer):
             'contents',
             'created_at',
             'view_count',
-            'like_count'
+            'like_count',
+            'user'
         )
         read_only_fields = ('created_at',)
 ```
@@ -143,10 +176,10 @@ from .models import Post
 from rest_framework import permissions
 
 
-class PostView(viewsets.ModelViewSet):
+class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAuthenticated,)
     def perform_create(self, seriallizer):
         serializer.save(user=self.request.user)
 ```
@@ -189,11 +222,11 @@ from django.urls import path, include
 from rest_framework import routers
 
 from .api.views import index_view, MessageViewSet
-from .post.views import PostViewSet # 추가 
+from .posts.views import PostViewSet # 추가 
 
 router = routers.DefaultRouter()
 router.register('messages', MessageViewSet)
-router.register('post', PostViewSet) # 추가
+router.register('posts', PostViewSet) # 추가
 
 urlpatterns = [
 
