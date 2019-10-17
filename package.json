@@ -13,7 +13,12 @@
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
+<<<<<<< HEAD
     "vuetify": "^1.3.5"
+=======
+    "vuetify": "^1.3.5",
+    "vuex": "^3.1.1"
+>>>>>>> fe6a949045a63fe5d0b377bda81c7734ffa9ff14
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
