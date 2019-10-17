@@ -10,10 +10,12 @@ from rest_framework import routers
 
 from .api.views import index_view, MessageViewSet
 from .posts.views import PostViewSet 
+from .posts.views import CommentViewSet
 
 router = routers.DefaultRouter()
 router.register('messages', MessageViewSet)
 router.register('posts', PostViewSet)
+router.register('comments', CommentViewSet)
 
 urlpatterns = [
 

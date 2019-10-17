@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Post 
+from .models import PostComment
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -22,3 +23,18 @@ class PostSerializer(serializers.ModelSerializer):
             'user'
         )
         read_only_fields = ('created_at',)
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    post = PostSerializer(read_only=True)
+
+    class Meta:
+        model = PostComment
+        fields = (
+            'id',
+            'contents',
+            'created_at',
+            'user',
+            'post'
+        )
+        read_only_fields =('created_at',)
