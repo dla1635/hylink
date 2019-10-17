@@ -23,18 +23,18 @@ class TextRank(object):
         dup = {}
         # 0.1같은 실수형식이랑 .txt같은 파일형식 안잘리게 정규식으로 split
         # 풀어쓰면 아래 주석과 같은 기능
-        candidates = split(r'(?<=[^0-9])(?<=[^a-z])[\.|\n]', self.text)
-        # candidates = []
-        # enters_split = split('\n', self.text)
-        # for enter_one in enters_split:
-        #     dots_split = split(r'(?<=[^0-9])(?<=[^a-z])[\.]', enter_one)
-        #     for dot_one in dots_split:
-        #         candidates.append(dot_one)
+        # candidates = split(r'(?<=[^0-9])(?<=[^a-z])[\.|\n]', self.text)
+        candidates = []
+        enters_split = split('\n', self.text)
+        for enter_one in enters_split:
+            dots_split = split(r'(?<=[^0-9])(?<=[^a-z])[\.]', enter_one)
+            for dot_one in dots_split:
+                candidates.append(dot_one)
 
         self.sentences = []
         index = 0
         for candidate in candidates:
-            print(candidate)
+            
             while len(candidate) and (candidate[-1] == '.' or candidate[-1] == ' '):
                 candidate = candidate.strip(' ').strip('.')
             if len(candidate) and candidate not in dup:
