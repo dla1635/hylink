@@ -77,7 +77,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1:8080"
+    "http://127.0.0.1:8080",
 ]
 
 COR_ALLOW_METHODS = (
@@ -105,17 +105,17 @@ CORS_ALLOW_HEADERS = (
 
 # auth model setting
 
-# AUTH_USER_MODEL = "app이름.앱에 있는 유저 모델 class 이름"
-# SITE_ID = 1
+AUTH_USER_MODEL = 'accounts.MyUser'
+SITE_ID = 1
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-    'rest_framework.authentication.TokenAuthentication',
-    'rest_framework.authentication.SessionAuthentication',
-    'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        ),
     'DEFAULT_PERMISSION_CLASSES': (
-    'rest_framework.permissions.IsAuthenticated',
-    ),
+        'rest_framework.permissions.IsAuthenticated',
+        ),
 }
 #JWT_AUTH 설정을 위해 settings.py 맨 위해 import datetime을 추가하자!!
 JWT_AUTH = {

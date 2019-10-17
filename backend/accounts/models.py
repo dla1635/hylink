@@ -18,10 +18,11 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self, email, password, nickname):
         user = self.create_user(
             email,
             password = password,
+            nickname = nickname
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -34,8 +35,10 @@ class MyUser(AbstractBaseUser):
         unique=True,
     )
     nickname = models.TextField(
-        Unique=True,
+        unique=True,
     )
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
 
     objects = MyUserManager()
 
