@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'backend.api',
     'backend.posts',
+    'backend.links',
 ]
 
 MIDDLEWARE = [
