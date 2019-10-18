@@ -78,3 +78,12 @@ sudo jupyter-notebook --allow-root
 
    - 8888 포트번호로 열린 것을 확인
    - `private IP/8888` 로 접속
+
+5. 주피터 노트북 항상 켜놓기
+
+```shell
+sudo jupyter-notebook --allow-root
+ctrl+Z # 실행 종료
+bg
+disown -h
+```
