@@ -7,8 +7,10 @@ class Link(models.Model):
     title = models.CharField(max_length=45, blank=True)
     thumbnail = models.TextField(blank=True)
     summary = models.TextField()
-    sharable = models.IntegerField(null=True) 
+    sharable = models.IntegerField(default=0) 
     created_at = models.DateTimeField(auto_now_add=True)
+    tag = models.ManyToManyField('Tag', through='LinkTag', blank=True)
+    label = models.ManyToManyField('Label', through='LinkLabel', blank=True)
     
     def __str__(self):
         return '[{}] {}'.format(self.user.nickname, self.title)
@@ -16,7 +18,6 @@ class Link(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=45)
-    links = models.ManyToManyField('Link', through='LinkTagJoin', related_name='tags')
 
     def __str__(self):
         return self.name
@@ -24,23 +25,22 @@ class Tag(models.Model):
 
 class Label(models.Model):
     name = models.CharField(max_length=45)
-    links = models.ManyToManyField('Link', through='LinkLabelJoin', related_name='labels')
 
     def __str__(self):
         return self.name
 
 
-class LinkTagJoin(models.Model):
-    link = models.ForeignKey(Link, related_name='link_from_tag', on_delete=models.CASCADE)
-    tag = models.ForeignKey(Tag, related_name='tag_from_link', on_delete=models.CASCADE)
+class LinkTag(models.Model):
+    link = models.ForeignKey(Link, related_name='link_tags', on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, related_name='link_tags', on_delete=models.CASCADE)
     date_joined = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "{} & {} | {}".format(self.link.title, self.tag.name, self.date_joined)
 
-class LinkLabelJoin(models.Model):
-    link = models.ForeignKey(Link, related_name='link_from_label', on_delete=models.CASCADE)
-    label = models.ForeignKey(Label, related_name='label_from_link', on_delete=models.CASCADE)
+class LinkLabel(models.Model):
+    link = models.ForeignKey(Link, related_name='link_labels', on_delete=models.CASCADE)
+    label = models.ForeignKey(Label, related_name='link_labels', on_delete=models.CASCADE)
     date_joined = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
