@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs6 sm6 lg6 xl6 v-for="(item, index) in cardList" :key="index" @click="resizeCard(index)">
+    <v-flex v-for="(item, index) in cardList" :key="index" xs12 sm6 lg6 xl6 >
       <Card :card="item"/>
     </v-flex>
   </v-layout>
@@ -18,11 +18,15 @@ export default {
     cardList: {type:Array}
   },
   methods: {
-    resizeCard(index) {
-          console.log("들어옴")
-          var card = document.querySelector(".card")
-          card.setAttribute("style", "height:300px")
-    },
+    // resizeCard(index) {
+    //       console.log("들어옴",index)
+    //       var card = document.querySelectorAll(".card")
+    //       console.log(card.length)
+    //       for(var i = 0 ;i < card.length;i++) {
+    //         if(card)
+    //       }
+    //       card[index].setAttribute("style", "height:300px")
+    // },
   }
 }
 </script>

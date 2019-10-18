@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    <!-- 라우터뷰는 Header에 존재    -->
-    <Header/>
+    <!-- 라우터뷰는 NavBar에 존재    -->
+    <NavBar/>
   </v-app>
 </template>
 
 <script>
-import Header from '@/components/Header'
+import NavBar from '@/components/NavBar'
 
 export default {
   data() {
@@ -14,8 +14,7 @@ export default {
     };
   },
   components: {
-    Header
+    NavBar
   },
-
 };
 </script>s

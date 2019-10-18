@@ -1,14 +1,30 @@
 <template>
-  <v-card class="card">
-    <v-layout>
-        <v-flex class="card_detail">
-            <span style="font-size:20px;">{{card.title}}</span><br/>
-            <span class="tag" v-for="tag in card.tagList" :key="tag">
-                #{{tag}}
-            </span>
-        </v-flex>
-        <img class="card_img" :src="card.thumbnail">
-    </v-layout>
+    <v-card class="card">   
+        <v-list-group expand="false">
+            <template v-slot:activator>
+                <!-- <v-layout>
+                    <v-flex class="card_detail">
+                        <span style="font-size:20px;">{{card.title}}</span><br/>
+                        <span class="tag" v-for="tag in card.tagList" :key="tag">
+                            #{{tag}}
+                        </span>
+                    </v-flex>
+                    <img class="card_img" :src="card.thumbnail">
+                </v-layout> -->
+            </template>
+            
+            <!-- <v-list-item-content style="padding:0 30px;">
+                <v-layout>
+                    <v-flex class="card_detail">
+                    <span style="font-size:20px;">{{card.title}}</span><br/>
+                    <span class="tag" v-for="tag in card.tagList" :key="tag">
+                        #{{tag}}
+                    </span>
+                </v-flex>
+                <img class="card_img" :src="card.thumbnail">
+                </v-layout>
+            </v-list-item-content> -->
+        </v-list-group>
     </v-card>
 </template>
 
@@ -17,10 +33,9 @@ export default {
 	name: 'Card',
 	props: {
         card: {type:Object},
-        class: {type:String}
+        index: {type:Number},
     },
-    mounted() {
-        console.log(this.card)
+    methods: {
     }
 }
 </script>
@@ -31,9 +46,6 @@ export default {
   margin: 5px 10px;
 }
 
-.card:onclick {
-    height:300px;
-}
 
 .card_detail {
     padding:10px;
@@ -44,5 +56,8 @@ export default {
 }
 .tag {
     margin-right:5px;
+}
+
+#cardContainer {
 }
 </style>

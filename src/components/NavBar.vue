@@ -1,16 +1,13 @@
 <template>
     <v-app>
-        <v-navigation-drawer
+      <v-navigation-drawer
       v-model="drawer"
       fixed
       clipped
       class="grey lighten-4"
       app
-    >
-      <v-list
-        dense
-        class="grey lighten-4"
       >
+      <v-list dense class="grey lighten-4">
         <template v-for="(item, i) in items">
           <v-layout
             v-if="item.heading"
@@ -49,14 +46,12 @@
                 {{ item.text }}
               </v-list-tile-title>
             </v-list-tile-content>
-            
           </v-list-tile>
-
         </template>
       </v-list>
     </v-navigation-drawer>
     
-    <v-toolbar color="amber" app absolute clipped-left>
+    <v-toolbar color="amber" app   clipped-left>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 mr-5">Google&nbsp;<span class="font-weight-light">Keep</span></span>
       <v-text-field
@@ -76,7 +71,7 @@
 
 <script>
 export default {
-    name:"header",
+    name:"navBar",
     data() {
         return{
             drawer: null,
