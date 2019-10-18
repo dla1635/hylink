@@ -87,3 +87,80 @@ ctrl+Z # 실행 종료
 bg
 disown -h
 ```
+
+_여기까지 PuTTY로 AWS EC2 인스턴스에 접속해서 주피터 노트북을 설치했습니다._
+
+## EC2 인스턴스에 프로젝트 초기 설정
+
+git clone 한 뒤, 프로젝트 설정
+
+1. `yarn install`
+
+   - Ubuntu에 yarn이 설치되어 있지 않아 설치해야 된다.
+
+- 저장소 등록
+
+```shell
+~@halink:~# curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+OK
+```
+
+```shell
+~@halink:~# echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+deb http://dl.yarnpkg.com/debian/ stable main
+```
+
+- apt-get update
+
+```shell
+apt-get update
+```
+
+- 설치
+
+```shell
+~@halink:~# apt-get install yarn
+~@halink:~# yarn --version
+0.32
+```
+
+참고 : https://zetawiki.com/wiki/%EC%9A%B0%EB%B6%84%ED%88%AC_yarn_%EC%84%A4%EC%B9%98
+
+2. 가상 환경 설정
+
+```shell
+$ python -m venv .venv
+$ source .venv/bin/activate
+```
+
+**Ubuntu는 Window와 다르게 Scripts 디렉토리가 없고 bin 디렉토리에 activate 파일이 있습니다.**
+
+3. django package 설치
+
+```shell
+$ pip install -r requirements.txt
+$ python manage.py migrate
+```
+
+**requirements.txt 목록을 설치하는데 error 발생**
+
+`pg_config executable not found ubuntu`
+
+위와 같은 error가 발생 시, 아래와 같이 설치 후 다시 requirements 목록을 설치해줍니다.
+
+```shell
+$ sudo apt-get install libpq-dev python-dev
+```
+
+참고 : https://stackoverflow.com/questions/11618898/pg-config-executable-not-found
+
+4. server 테스트
+
+```shell
+$ python manage.py runserver 0.0.0.0:8000
+```
+
+**0.0.0.0을 써주지 않으면 접속 IP가 127.0.0.1(localhost)로 되기 때문에 접속 할 수가 없습니다.**
+
+위와 다른 방법으로 해결한 블로그 주소입니다.
+참고 : https://velog.io/@ground4ekd/AWS-EC2
