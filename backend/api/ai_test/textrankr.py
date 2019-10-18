@@ -34,10 +34,9 @@ class TextRank(object):
         self.sentences = []
         index = 0
         for candidate in candidates:
+            candidate = candidate.strip(' ').strip('.').strip('\t')
             
-            while len(candidate) and (candidate[-1] == '.' or candidate[-1] == ' '):
-                candidate = candidate.strip(' ').strip('.')
-            if len(candidate) and candidate not in dup:
+            if len(candidate) >= 1 and candidate not in dup:
                 dup[candidate] = True
                 self.sentences.append(Sentence(candidate + '.', index))
                 index += 1
