@@ -4,19 +4,23 @@
 
 1. https://www.putty.or 에서 putty 설치
 2. PuTTYgen으로 private key 만들기
+
 ![puttygen](img/puttygen.PNG)
 
    - `Load` 버튼을 눌러 key pair file을 선택한 뒤, `Save private key` 버튼을 눌러 private key 생성
 
 3. PuTTY로 AWS 인스턴스 접속하기
+
 ![putty1](img/putty1.PNG)
 
    - `Host Name`에 private IP address를 입력
 
 ![putty2](img/putty2.PNG)
+
    - Connection > SSH > Auth에서 `Private key for authentication`에 2번에서 만든 private key를 가져오기
 
 4. `open`버튼을 눌러 접속
+
 ![putty3](img/putty3.PNG)
     - `ubuntu`를 입력하고 로그인
 
@@ -42,7 +46,7 @@ python3
 >>> passwd()
 ```
 
-4. 주피터 환경 설정
+3. 주피터 환경 설정
 
 ```shell
 ifconfig # 현재 서버 내부망 IP 주소 확인
@@ -51,7 +55,7 @@ sudo vi /home/ubuntu/.jupyter/jupyter_notebook_config.py
 # sudo vi [config.py 위치]
 ```
 
-    - jupyter_notebook_config.py열어서 파일 가장 아래 쪽에 다음 내용을 추가
+- jupyter_notebook_config.py열어서 파일 가장 아래 쪽에 다음 내용을 추가
 
 ```python
 c = get_config()
@@ -63,7 +67,7 @@ c.NotebookApp.notebook_dir = '{시작 디렉토리}'
 
 ![configsetting](img/configsetting.PNG)
 
-5. 주피터 노트북 실행
+4. 주피터 노트북 실행
 
 ```shell
 sudo jupyter-notebook --allow-root
