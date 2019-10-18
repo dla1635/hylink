@@ -22,7 +22,8 @@
 4. `open`버튼을 눌러 접속
 
 ![putty3](img/putty3.PNG)
-    - `ubuntu`를 입력하고 로그인
+
+   - `ubuntu`를 입력하고 로그인
 
 ## 주피터 노트북 설치 및 사용
 
