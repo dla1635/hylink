@@ -1,21 +1,21 @@
 <template>
-  <div id="app">
-    <h1>Django VueJs Template</h1>
-    <div id="nav">
-     <router-link :to="{ name: 'home' }">Vue</router-link> |
-     <router-link :to="{ name: 'messages' }">Django Rest</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <!-- 라우터뷰는 Header에 존재    -->
+    <Header/>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<script>
+import Header from '@/components/Header'
+
+export default {
+  data() {
+    return {
+    };
+  },
+  components: {
+    Header
+  },
+
+};
+</script>s
