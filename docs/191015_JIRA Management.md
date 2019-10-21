@@ -1,6 +1,6 @@
 # JIRA 관리
 
-> 참고  https://community.atlassian.com/t5/Jira-Core-questions/epic-vs-story-vs-task/qaq-p/204224
+> JIRA ISSUE 생성 할 때 알아두면 좋은 구조 
 
 
 
@@ -68,3 +68,9 @@ Dev Stories = User Story에 직접적으로 연결되진 않는 기능들
   - Jenkins CI 파이프 라인을 설정
   - 전반적인 (고수준) 시스템 아키텍처를 설계
   - 단위 테스트 및 조롱 프레임 워크를 연구하고 결정
+
+
+
+## 참고문헌
+
+- https://community.atlassian.com/t5/Jira-Core-questions/epic-vs-story-vs-task/qaq-p/204224
