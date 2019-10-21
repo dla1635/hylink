@@ -27,7 +27,7 @@ class PostComment(models.Model):
 
 
 class PostReport(models.Model):
-    user = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='report_posts', blank=True)
+    report_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='report_posts', blank=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="report_list")
     contents = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

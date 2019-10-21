@@ -4,6 +4,7 @@ db.sqlite3
 /dist
 /.venv
 __pycache__
+migrations
 
 # local env files
 .env.local
