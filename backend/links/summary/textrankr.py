@@ -105,3 +105,11 @@ class TextRank(object):
             return '\n'.join(results)
         else:
             return results
+
+    def keywords(self, word_num=3):
+        
+        keywords = []
+        for idx in self.sorted_word_rank_idx[:word_num]:
+            keywords.append(self.idx2word[idx])           
+        
+        return keywords
