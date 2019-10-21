@@ -7,7 +7,7 @@ class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # CASCADE = 삭제시 foreignkey를 포함하는 모델 인스턴스도 삭제
     title = models.CharField(max_length=255)
     contents = models.TextField(blank=True) # 빈칸 가능 
-    links = models.ManyToManyField(Link, related_name='link_posts')
+    links = models.ManyToManyField(Link, related_name='link_posts') # M:N 모델 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     view_count = models.IntegerField(default=0)

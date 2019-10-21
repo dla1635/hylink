@@ -4,7 +4,7 @@ from django.conf import settings
 class Link(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
     url = models.TextField()
-    title = models.CharField(max_length=45, blank=True)
+    title = models.CharField(max_length=144, blank=True)
     thumbnail = models.TextField(blank=True)
     summary = models.TextField()
     sharable = models.IntegerField(default=0) 
