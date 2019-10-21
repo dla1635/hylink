@@ -6,6 +6,12 @@ from networkx import pagerank
 from itertools import combinations
 from sentence import Sentence
 
+from konlpy.tag import Okt
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.preprocessing import normalize
+import numpy as np
 
 class TextRank(object):
 
@@ -15,6 +21,7 @@ class TextRank(object):
 
     def build(self):
         self._build_sentences()
+        self._extract_nouns()
         self._build_graph()
         self.pageranks = pagerank(self.graph, weight='weight')
         self.reordered = sorted(self.pageranks, key=self.pageranks.get, reverse=True)
@@ -26,16 +33,13 @@ class TextRank(object):
         # candidates = split(r'(?<=[^0-9])(?<=[^a-z])[\.|\n]', self.text)
         candidates = []
         enters_split = split('\n', self.text)
-        for enter_one in enters_split:
-            dots_split = split(r'(?<=[^0-9])(?<=[^a-z])[\.]', enter_one)
-            for dot_one in dots_split:
-                candidates.append(dot_one)
+        for enter_line in split('\n', self.text): 
+            for line in split(r'(?<=[^0-9])(?<=[^a-z])[\.]', enter_line):
+                candidates.append(line.strip(' ').strip('.').strip('\t'))
 
         self.sentences = []
         index = 0
         for candidate in candidates:
-            candidate = candidate.strip(' ').strip('.').strip('\t')
-            
             if len(candidate) >= 1 and candidate not in dup:
                 dup[candidate] = True
                 self.sentences.append(Sentence(candidate + '.', index))
@@ -43,6 +47,16 @@ class TextRank(object):
             
         del dup
         del candidates
+    
+    def _extract_nouns(self):
+        okt = Okt()
+        self.nouns = []
+        self.stopwords = ["아", "휴", "아이구", "아이쿠", "아이고", "어", "나", "우리", "저희", "따라", "의해", "을", "를", "에", "의", "가",]
+        
+        for sentence in self.sentences:
+            if sentence.text is not '':
+                self.nouns.append(' '.join([noun for noun in okt.nouns(str(sentence.text))
+                if noun not in self.stopwords and len(noun) > 1]))
 
     def _build_graph(self):
         self.graph = Graph()
