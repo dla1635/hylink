@@ -23,8 +23,12 @@ class TextRank(object):
         self._build_sentences()
         self._extract_nouns()
         self._build_graph()
+        # 문장 랭크 처리
         self.pageranks = pagerank(self.graph, weight='weight')
         self.reordered = sorted(self.pageranks, key=self.pageranks.get, reverse=True)
+        # 단어 랭크 처리
+        self.word_rank_idx = self.get_word_ranks(self.words_graph)
+        self.sorted_word_rank_idx = sorted(self.word_rank_idx, key=lambda k: self.word_rank_idx[k], reverse=True)
 
     def _build_sentences(self):
         dup = {}
@@ -58,12 +62,22 @@ class TextRank(object):
                 if noun not in self.stopwords and len(noun) > 1]))
 
     def _build_graph(self):
+        #문장 그래프 처리
         self.graph = Graph()
         self.graph.add_nodes_from(self.sentences)
+        #문장간의 모든 경우에서 유사도 탐색
         for sent1, sent2 in combinations(self.sentences, 2):
             weight = self._jaccard(sent1, sent2)
             if weight:
                 self.graph.add_edge(sent1, sent2, weight=weight)
+        
+        #단어 그래프 처리
+        self.tfidf = TfidfVectorizer()
+        self.cnt_vec = CountVectorizer()
+        cnt_vec_mat = normalize(self.cnt_vec.fit_transform(self.nouns).toarray().astype(float), axis=0)
+        vocab = self.cnt_vec.vocabulary_
+        self.words_graph = np.dot(cnt_vec_mat.T, cnt_vec_mat)
+        self.idx2word = {vocab[word] : word for word in vocab}
 
     def _jaccard(self, sent1, sent2):
         p = sum((sent1.bow & sent2.bow).values())
