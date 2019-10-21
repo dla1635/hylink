@@ -32,7 +32,6 @@ class TextRank(object):
         # 풀어쓰면 아래 주석과 같은 기능
         # candidates = split(r'(?<=[^0-9])(?<=[^a-z])[\.|\n]', self.text)
         candidates = []
-        enters_split = split('\n', self.text)
         for enter_line in split('\n', self.text): 
             for line in split(r'(?<=[^0-9])(?<=[^a-z])[\.]', enter_line):
                 candidates.append(line.strip(' ').strip('.').strip('\t'))
