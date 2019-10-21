@@ -35,7 +35,7 @@
           <v-list-tile
             v-else
             :key="i"
-            @click=""
+            @click="drawer"
           >
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>

@@ -5,7 +5,10 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 # Cumstom User Model 은 username, email, password, nickname 입력 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, password, nickname):
+
+    use_in_migrations = True 
+
+    def create_user(self, email, nickname, password=None):
         
         if not email:
             raise ValueError('이메일 주소를 입력해주세요')
@@ -29,12 +32,16 @@ class MyUserManager(BaseUserManager):
         return user
 
 class MyUser(AbstractBaseUser):
+
+    username = None
+
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
     )
-    nickname = models.TextField(
+    nickname = models.CharField(
+        max_length=255,
         unique=True,
     )
     is_active = models.BooleanField(default=True)
