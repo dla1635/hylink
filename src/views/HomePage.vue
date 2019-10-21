@@ -1,9 +1,7 @@
 <template>
   <v-app id="container">
     <v-container fluid>
-      <v-layout style="">
         <CardList :cardList="card_list"/>
-      </v-layout>
     </v-container>
   </v-app>
 </template>
@@ -38,6 +36,26 @@ export default {
               title: "블록체인",
               tagList: ["알고리즘","자바","백준"],
               thumbnail: "https://img.kr.news.samsung.com/kr/wp-content/uploads/2018/06/0705story17.png"
+          },
+          {
+              title: "알고리즘 분석2",
+              tagList: ["알고리즘","자바","백준"],
+              thumbnail: "http://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/images/big-square.png"
+          },
+          {
+              title: "알고리즘 분석2",
+              tagList: ["알고리즘","자바","백준"],
+              thumbnail: "http://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/images/big-square.png"
+          },
+          {
+              title: "알고리즘 분석2",
+              tagList: ["알고리즘","자바","백준"],
+              thumbnail: "http://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/images/big-square.png"
+          },
+          {
+              title: "알고리즘 분석2",
+              tagList: ["알고리즘","자바","백준"],
+              thumbnail: "http://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/images/big-square.png"
           }
       ],
       card_list2:[{
