@@ -8,7 +8,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from .api.views import index_view, MessageViewSet
-from .posts.views import PostViewSet, CommentViewSet
+from .posts.views import PostViewSet, CommentViewSet, ReportViewSet
 from .links.views import LinkViewSet 
 
 router = routers.DefaultRouter()
@@ -16,6 +16,7 @@ router.register('messages', MessageViewSet)
 router.register('posts', PostViewSet)
 router.register('comments', CommentViewSet)
 router.register('links', LinkViewSet)
+router.register('reports', ReportViewSet)
 
 
 urlpatterns = [
