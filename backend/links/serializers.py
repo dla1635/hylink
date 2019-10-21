@@ -2,11 +2,10 @@ from rest_framework import serializers
 from .models import Link 
 from .models import Tag, LinkTag
 from .models import Label, LinkLabel
-from posts.models import UserSerializer as user
 
 
 class LinkSerializer(serializers.ModelSerializer):
-    user = user 
+    # user = user 
 
     class Meta:
         model = Link
@@ -18,7 +17,7 @@ class LinkSerializer(serializers.ModelSerializer):
             'summary',
             'sharable',
             'created_at',
-            'user'
+            # 'user'
         )
         read_only_fields = ('created_at',)
 
