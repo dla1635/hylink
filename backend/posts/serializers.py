@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Post 
 from .models import PostComment
+from .models import PostReport
 # from django.contrib.auth.models import User
 from django.conf import settings
 
@@ -39,3 +40,5 @@ class CommentSerializer(serializers.ModelSerializer):
             'post'
         )
         read_only_fields =('created_at',)
+
+# class ReportSerializer(serializers.ModelSerializer):
