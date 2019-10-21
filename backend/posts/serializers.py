@@ -5,12 +5,13 @@ from .models import PostReport
 from backend.links.models import Link 
 from backend.links.serializers import LinkSerializer
 # from django.contrib.auth.models import User
-from django.conf import settings
+# from django.conf import settings
+from django.contrib.auth import get_user_model
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = settings.AUTH_USER_MODEL,
+        model = get_user_model(),
         fields = ('id', 'email', 'nickname')
 
 
@@ -19,7 +20,7 @@ class PostSerializer(serializers.ModelSerializer):
     links = LinkSerializer(read_only=True, many=True)
     links_id = serializers.PrimaryKeyRelatedField(queryset=Link.objects.all(), write_only=True, many=True)
     like_users = UserSerializer(read_only=True, many =True)
-    like_users_id = serializers.PrimaryKeyRelatedField(queryset=settings.AUTH_USER_MODEL.objects.all(), write_only=True, many=True)
+    like_users_id = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all(), write_only=True, many=True)
     
     class Meta:
         model = Post
@@ -28,7 +29,7 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'contents',
             'links',
-            'links_id'
+            'links_id',
             'created_at',
             'updated_at',
             'view_count',
@@ -89,7 +90,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class ReportSerializer(serializers.ModelSerializer):
     report_users = UserSerializer(read_only=True, many=True)
-    report_users_id = serializers.PrimaryKeyRelatedField(queryset=settings.AUTH_USER_MODEL.objects.all(), write_only=True, many=True)
+    report_users_id = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all(), write_only=True, many=True)
     post = PostSerializer(read_only=True)
     post_id = serializers.PrimaryKeyRelatedField(queryset=Post.objects.all(), write_only=True)
     

@@ -13,6 +13,9 @@ class Post(models.Model):
     view_count = models.IntegerField(default=0)
     like_count = models.IntegerField(default=0)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts', blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
     
     # admin 페이지에서 보여줄 내용 
     def __str__(self):
@@ -25,6 +28,12 @@ class PostComment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return '[{}] {}, {}'.format(self.user.nickname, self.post.title, self.contents)
+
 
 class PostReport(models.Model):
     report_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='report_posts', blank=True)
@@ -32,3 +41,9 @@ class PostReport(models.Model):
     contents = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return '[{}] {}, {}'.format(self.report_user.nickname, self.post.title, self.contents)

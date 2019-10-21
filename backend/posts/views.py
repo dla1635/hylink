@@ -19,9 +19,13 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user, post=self.request.post)
+        serializer.save(user=self.request.user)
 
 
 class ReportViewSet(viewsets.ModelViewSet):
     queryset = PostReport.objects.all()
     serializer_class = ReportSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save()
