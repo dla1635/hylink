@@ -7,11 +7,17 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-
 from .api.views import index_view, MessageViewSet
+from .posts.views import PostViewSet, CommentViewSet, ReportViewSet
+from .links.views import LinkViewSet 
 
 router = routers.DefaultRouter()
 router.register('messages', MessageViewSet)
+router.register('posts', PostViewSet)
+router.register('comments', CommentViewSet)
+router.register('links', LinkViewSet)
+router.register('reports', ReportViewSet)
+
 
 urlpatterns = [
 
@@ -24,5 +30,3 @@ urlpatterns = [
     # http://localhost:8000/api/admin/
     path('api/admin/', admin.site.urls),
 ]
-
-
