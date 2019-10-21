@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    like_users = UserSerializer(read_only=True, many =True)
     
     class Meta:
         model = Post
@@ -22,7 +23,8 @@ class PostSerializer(serializers.ModelSerializer):
             'created_at',
             'view_count',
             'like_count',
-            'user'
+            'user',
+            'like_users'
         )
         read_only_fields = ('created_at',)
 
@@ -41,4 +43,17 @@ class CommentSerializer(serializers.ModelSerializer):
         )
         read_only_fields =('created_at',)
 
-# class ReportSerializer(serializers.ModelSerializer):
+class ReportSerializer(serializers.ModelSerializer):
+    report_users = UserSerializer(read_only=True, many=True)
+    post = PostSerializer(read_only=True)
+
+    class Meta:
+        model = PostReport
+        fields = (
+            'id',
+            'contents',
+            'created_at',
+            'post',
+            'report_users'
+        )
+        read_only_fields = ('created_at',)
