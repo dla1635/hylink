@@ -1,8 +1,18 @@
 <template>
-  <v-layout row wrap>
-    <v-flex v-for="(item, index) in cardList" :key="index" xs12 sm6 lg6 xl6 >
-      <Card :card="item"/>
-    </v-flex>
+  <v-layout column id="container">
+    <v-text-field
+        solo
+        text
+        hide-details
+        label="Search"
+        prepend-inner-icon="search"
+        style="width:300px;"
+    ></v-text-field>
+    <v-layout  row wrap>
+      <v-flex v-for="(item, index) in cardList" :key="index" xs12 sm6 lg6 xl6 >
+        <Card :card="item" :index="index"/>
+      </v-flex>
+    </v-layout>
   </v-layout>
 </template>
 
@@ -32,4 +42,8 @@ export default {
 </script>
 
 <style scoped>
+
+#container {
+  padding:0 10%;
+}
 </style>

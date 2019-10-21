@@ -7,62 +7,74 @@
       class="grey lighten-4"
       app
       >
-      <v-list dense class="grey lighten-4">
+      <v-list
+        dense
+        class="grey lighten-4"
+      >
         <template v-for="(item, i) in items">
-          <v-layout
+          <v-row
             v-if="item.heading"
             :key="i"
-            row
-            align-center
+            align="center"
           >
-            <v-flex xs6>
+            <v-col cols="6">
               <v-subheader v-if="item.heading">
                 {{ item.heading }}
               </v-subheader>
-            </v-flex>
-            <v-flex xs6 class="text-xs-right">
-              <v-btn small flat>edit</v-btn>
-            </v-flex>
-          </v-layout>
-
+            </v-col>
+            <v-col
+              cols="6"
+              class="text-right"
+            >
+              <v-btn
+                small
+                text
+              >edit</v-btn>
+            </v-col>
+          </v-row>
           <v-divider
             v-else-if="item.divider"
             :key="i"
             dark
-            class="my-3"
+            class="my-4"
           ></v-divider>
-
-          <v-list-tile
+          <v-list-item
             v-else
             :key="i"
-            @click=""
           >
-            <v-list-tile-action>
+            <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-
-            <v-list-tile-content>
-              <v-list-tile-title class="grey--text">
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title class="grey--text">
                 {{ item.text }}
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </template>
       </v-list>
     </v-navigation-drawer>
     
-    <v-toolbar color="amber" app   clipped-left>
-      <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
+    <v-app-bar
+      app
+      clipped-left
+      color="amber"
+    >
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <span class="title ml-3 mr-5">Google&nbsp;<span class="font-weight-light">Keep</span></span>
       <v-text-field
-        solo-inverted
-        flat
+        text
         hide-details
-        label="Search"
         prepend-inner-icon="search"
       ></v-text-field>
-      <v-spacer></v-spacer>
-    </v-toolbar>
+      <v-flex align-center>
+        <v-btn icon>
+        <img src="https://www.w3schools.com/css/paris.jpg" 
+          style="width:50px; height:50px; border-radius: 50%;"/>
+        </v-btn>
+        <span style="font-size:20px; line-height:24px;">종완띠</span>
+      </v-flex>
+    </v-app-bar>
 
     <!-- 라우터뷰  -->
     <v-content><router-view/></v-content>
