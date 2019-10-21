@@ -21,12 +21,13 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'contents',
             'created_at',
+            'updated_at',
             'view_count',
             'like_count',
             'user',
             'like_users'
         )
-        read_only_fields = ('created_at',)
+        read_only_fields = ('created_at', 'updated_at',)
 
 class CommentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -38,10 +39,11 @@ class CommentSerializer(serializers.ModelSerializer):
             'id',
             'contents',
             'created_at',
+            'updated_at',
             'user',
             'post'
         )
-        read_only_fields =('created_at',)
+        read_only_fields =('created_at', 'updated_at',)
 
 class ReportSerializer(serializers.ModelSerializer):
     report_users = UserSerializer(read_only=True, many=True)
@@ -53,7 +55,8 @@ class ReportSerializer(serializers.ModelSerializer):
             'id',
             'contents',
             'created_at',
+            'updated_at',
             'post',
             'report_users'
         )
-        read_only_fields = ('created_at',)
+        read_only_fields = ('created_at', 'updated_at',)
