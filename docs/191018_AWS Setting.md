@@ -96,7 +96,14 @@ git clone 한 뒤, 프로젝트 설정
 
 1. `yarn install`
 
-   - Ubuntu에 yarn이 설치되어 있지 않아 설치해야 된다.
+   - Ubuntu에 yarn이 설치되어 있지 않아 설치해야 됩니다.
+
+- 기존 yarn, cmdtest 지우기
+
+```shell
+~$ sudo apt remove cmdtest
+~$ sudo apt remove yarn
+```
 
 - 저장소 등록
 
@@ -126,7 +133,13 @@ apt-get update
 
 참고 : https://zetawiki.com/wiki/%EC%9A%B0%EB%B6%84%ED%88%AC_yarn_%EC%84%A4%EC%B9%98
 
-2. 가상 환경 설정
+2. vue/cli 설치
+
+```shell
+~# npm install @vue/cli
+```
+
+3. 가상 환경 설정
 
 ```shell
 $ python -m venv .venv
@@ -135,7 +148,7 @@ $ source .venv/bin/activate
 
 **Ubuntu는 Window와 다르게 Scripts 디렉토리가 없고 bin 디렉토리에 activate 파일이 있습니다.**
 
-3. django package 설치
+4. django package 설치
 
 ```shell
 $ pip install -r requirements.txt
@@ -164,3 +177,6 @@ $ python manage.py runserver 0.0.0.0:8000
 
 위와 다른 방법으로 해결한 블로그 주소입니다.
 참고 : https://velog.io/@ground4ekd/AWS-EC2
+
+
+**만약 run server가 되지 않는다면, `node_modules`, `package-lock.json`을 지우고 yarn을 다시 설치한뒤, vue/cli도 설치해주세요**
