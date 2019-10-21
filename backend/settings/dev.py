@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',  # < Per Whitenoise, to disable built in
     'django.contrib.staticfiles',
+    'django_extensions',
     
     # 로그인 기능을 위한 추가앱 
     'django.contrib.sites',

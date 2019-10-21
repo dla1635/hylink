@@ -1,8 +1,6 @@
 from rest_framework import viewsets
-from .serializers import PostSerializer
-from .models import Post
-from .serializers import CommentSerializer
-from .models import PostComment
+from .models import Post, PostComment, PostReport
+from .serializers import PostSerializer, CommentSerializer, ReportSerializer
 from rest_framework import permissions
 
 
@@ -22,3 +20,8 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, post=self.request.post)
+
+
+class ReportViewSet(viewsets.ModelViewSet):
+    queryset = PostReport.objects.all()
+    serializer_class = ReportSerializer
