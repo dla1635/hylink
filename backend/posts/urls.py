@@ -30,7 +30,7 @@ report_list = ReportViewSet.as_view({
 })
 
 urlpatterns = format_suffix_patterns([
-    path('auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('posts/', post_list, name='post_list'),
     path('posts/<int:pk>/', post_detail, name='post_detail'),
     path('comments/', comment_list, name='comment_list'),

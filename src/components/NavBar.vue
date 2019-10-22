@@ -41,6 +41,10 @@
           <v-list-item
             v-else
             :key="i"
+<<<<<<< HEAD
+=======
+            @click="drawer"
+>>>>>>> 23299980eae983c98c0ee1dd0ce6e59119e6215a
           >
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
