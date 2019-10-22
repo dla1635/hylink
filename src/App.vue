@@ -16,18 +16,20 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <Login></Login>
+      <Regist></Regist>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
+import Login from './components/Login'
+import Regist from './components/Regist'
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Login,
+    Regist
   },
   data: () => ({
     //
