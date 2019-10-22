@@ -15,7 +15,7 @@ class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    def perform_create(self, seriallizer):
+    def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
 # class LinkTagViewSet(viewsets.ModelViewSet):
