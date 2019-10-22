@@ -10,10 +10,12 @@ from urllib import parse #인코딩용 임포트
 from bs4 import BeautifulSoup
 from textrankr import TextRank
 
-url =""
+from url2text import urlparse
 
-url = input("url을 입력하세요(http://혹은 https://로 시작하는 주소) :")
-soup = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser")
+
+
+url ="http://cloudpanya.com/221665855362"
+img_url, title, input_text = urlparse(url)
 # print("origin html text")
 # print(soup)
 # print("======= all tag ==========")
@@ -25,21 +27,16 @@ soup = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser")
 #     input_text+= line.get_text().strip()
 
 
-all_p = soup.find_all("p",class_="")
 # print("======= all p ==========")
 # for line in all_p:
 #     print(line.get_text().strip() +"\n")
 
-input_text = ""
-for line in all_p:
-    input_text = input_text + line.get_text().strip() +"\n"
 
 textrank = TextRank(input_text)
 # print(textrank.summarize())  # gives you some text
 # print(textrank.summarize(3, verbose=False))  # up to 3 sentences, returned as list
 print("===============    title   ============")
-title = soup.find("title")
-print(title.get_text().strip())
+print(title)
 print("=============== summarized ============")
 sentences = textrank.summarize(3, verbose=False)
 print("1 : {}".format(sentences[0]))
