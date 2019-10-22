@@ -37,7 +37,7 @@ urlpatterns = [
     path('api/admin/', admin.site.urls),
 
 
-    path('api/users/api-auth/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls')),
     # login, registration 등 path 설정 
     path('api/users/rest-auth/', include('rest_auth.urls')),
     # 토큰 발급 및 재발급 페이지 설정 

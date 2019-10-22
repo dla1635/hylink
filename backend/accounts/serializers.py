@@ -17,7 +17,6 @@ class CustomRegisterSerializer(RegisterSerializer):
     #             _("A user is already registered with this e-mail address."))
     #     return email
 
-
     # def validate_password(self, password):
     #     return get_adapter().clean_password(password)
 
@@ -35,7 +34,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     def save(self, request):
         user = get_user_model()
         cleaned_data = self.get_cleaned_data()
-        user.objects.create_user(**cleaned_data)
+        user.objects.create_user(self, **cleaned_data)
         return user
     
 
