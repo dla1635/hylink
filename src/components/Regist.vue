@@ -26,8 +26,15 @@
 
     </v-card-text>
     <v-card-actions>
-        <v-btn round color="primary" >Sign Up</v-btn>
-        <v-btn round color="secondary">Back</v-btn>
+        <v-container>
+            <v-row justify = "center">
+                <v-btn round color="secondary">Sign Up</v-btn>
+                <v-btn round >Back</v-btn>
+
+            </v-row>
+
+        </v-container>
+
     </v-card-actions>
 </v-card>
 </template>
