@@ -15,9 +15,30 @@ class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    def perform_create(self, seriallizer):
+    def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+class LabelViewSet(viewsets.ModelViewSet):
+    queryset = Label.objects.all()
+    serializer_class = LabelSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)       
+
+class LinkLabelViewSet(viewsets.ModelViewSet):
+    queryset = LinkLabel.objects.all()
+    serializer_class = LinkLabelSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+        
+class LinkTagViewSet(viewsets.ModelViewSet):
+    queryset = LinkTag.objects.all()
+    serializer_class = LinkTagSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 # class LinkTagViewSet(viewsets.ModelViewSet):
 #     """
 #     retrieve:
