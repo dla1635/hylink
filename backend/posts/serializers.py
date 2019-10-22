@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = get_user_model(),
+        model = get_user_model()
         fields = ('id', 'email', 'nickname')
 
 
@@ -19,7 +19,7 @@ class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True, required=False)
     links = LinkSerializer(read_only=True, many=True)
     links_id = serializers.PrimaryKeyRelatedField(queryset=Link.objects.all(), write_only=True, many=True)
-    like_users = UserSerializer(read_only=True, many =True)
+    like_users = UserSerializer(read_only=True, many=True)
     like_users_id = serializers.PrimaryKeyRelatedField(queryset=get_user_model().objects.all(), write_only=True, many=True)
     
     class Meta:
@@ -36,7 +36,7 @@ class PostSerializer(serializers.ModelSerializer):
             'like_count',
             'user',
             'like_users',
-            'like_users_id'
+            'like_users_id',
         )
         read_only_fields = ('pk', 'created_at', 'updated_at',)
 
@@ -49,9 +49,12 @@ class PostSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         links = validated_data.pop('links_id')
+        like_users = validated_data.pop('like_users_id')
         posts = Post.objects.create(**validated_data)
         for lk in links:
             posts.links.add(lk)
+        for lu in like_users:
+            posts.like_users.add(lu)
         return posts 
 
 
