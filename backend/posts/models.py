@@ -12,7 +12,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     view_count = models.IntegerField(default=0)
     like_count = models.IntegerField(default=0)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts', blank=True)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_posts", blank=True)
 
     class Meta:
         ordering = ['-created_at']
