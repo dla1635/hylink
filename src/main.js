@@ -6,7 +6,7 @@ import $backend from '@/backend'
 Vue.prototype.$backend = $backend
 Vue.config.productionTip = false
 
-import store from './store'
+import store from './store/store'
 import axios from 'axios'
 Vue.prototype.$axios = axios
 
