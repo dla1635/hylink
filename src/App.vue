@@ -6,6 +6,7 @@
 </template>
 
 <script>
+/*eslint no-console: "error"*/
 import NavBar from '@/components/NavBar'
 
 export default {
