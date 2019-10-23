@@ -5,6 +5,8 @@
 - 아래 URL에 접속해서 설치하기
 https://downloads.mariadb.org/mariadb/10.4.8/
 
+![mariadb](img/mariadb.PNG)
+
 ```text
 password : root
 ```
