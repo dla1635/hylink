@@ -4,18 +4,18 @@ from .serializers import LinkTagSerializer, LinkTagDetailSerializer, LinkLabelSe
 from .models import Link, Tag, Label, LinkTag, LinkLabel
 from rest_framework import permissions
 
-from django_filters.rest_framework import DjangoFilterBackend
+# from django_filters.rest_framework import DjangoFilterBackend
 
-from rest_framework import status, viewsets
-from rest_framework.filters import OrderingFilter
-from rest_framework.response import Response
+# from rest_framework import status, viewsets
+# from rest_framework.filters import OrderingFilter
+# from rest_framework.response import Response
 
 
 class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = LinkSerializer
     permission_classes = (permissions.IsAuthenticated,)
-    def perform_create(self, seriallizer):
+    def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
 # class LinkTagViewSet(viewsets.ModelViewSet):

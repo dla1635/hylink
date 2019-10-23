@@ -2,11 +2,39 @@ from rest_framework import serializers
 from .models import Link 
 from .models import Tag, LinkTag
 from .models import Label, LinkLabel
-from posts.models import UserSerializer as user
+from django.contrib.auth import get_user_model
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'email', 'nickname')
+
+
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields =(
+            'id',
+            'name',
+        )
+
+
+class LabelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Label
+        fields = (
+            'id',
+            'name',
+        )
 
 
 class LinkSerializer(serializers.ModelSerializer):
-    user = user 
+    user = UserSerializer(read_only=True)
+    tag = TagSerializer(read_only=True, many=True)
+    label = LabelSerializer(read_only=True, many=True)
 
     class Meta:
         model = Link
@@ -18,33 +46,13 @@ class LinkSerializer(serializers.ModelSerializer):
             'summary',
             'sharable',
             'created_at',
-            'user'
+            'updated_at',
+            'user',
+            'tag',
+            'label',
         )
-        read_only_fields = ('created_at',)
-
-
-class TagSerializer(serializers.ModelSerializer):
-    links = LinkSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Tag
-        fields =(
-            'id',
-            'name',
-            'links'
-        )
-
-
-class LabelSerializer(serializers.ModelSerializer):
-    links = LinkSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Label
-        fields = (
-            'id',
-            'name',
-            'links'
-        )
+        read_only_fields = ('created_at', 'updated_at',)
+        
 
 class LinkTagSerializer(serializers.ModelSerializer):
     class Meta:
