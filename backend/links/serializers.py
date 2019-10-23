@@ -4,7 +4,6 @@ from .models import Tag, LinkTag
 from .models import Label, LinkLabel
 from django.contrib.auth import get_user_model
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
@@ -40,6 +39,7 @@ class LinkSerializer(serializers.ModelSerializer):
         model = Link
         fields = (
             'id',
+            'user',
             'url',
             'title',
             'thumbnail',
@@ -47,9 +47,8 @@ class LinkSerializer(serializers.ModelSerializer):
             'sharable',
             'created_at',
             'updated_at',
-            'user',
             'tag',
-            'label',
+            'label'
         )
         read_only_fields = ('created_at', 'updated_at',)
         
