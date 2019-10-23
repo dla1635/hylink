@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from '@/views/HomePage'
-import Messages from '@/components/Messages'
+// import Messages from '@/components/Messages'
 
 Vue.use(Router)
 
@@ -13,10 +13,10 @@ export default new Router({
       name: 'home',
       component: HomePage
     },
-    {
-      path: '/messages',
-      name: 'messages',
-      component: Messages
-    }
+    // {
+    //   path: '/messages',
+    //   name: 'messages',
+    //   component: Messages
+    // }
   ]
 })
