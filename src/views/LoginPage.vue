@@ -22,10 +22,7 @@ export default {
         Login
     },
     method : {
-        async signUp() {
-            // 로그인 프로세스
-
-        },
+        
     }
 }
 </script>

@@ -1,5 +1,11 @@
 <template>
-<Regist></Regist>
+<v-container fill-height>
+    <v-row justify="center">
+
+        <Regist></Regist>
+    </v-row>
+
+</v-container>
 </template>
 
 <script>
@@ -8,17 +14,14 @@ import Regist from "@/components/Regist"
 export default {
     data: () => ({
         drawer: null,
-        id : "",
+        id: "",
         password: ""
     }),
     components: {
         Regist
     },
-    method : {
-        async signUp() {
-            // 로그인 프로세스
+    method: {
 
-        },
     }
 }
 </script>

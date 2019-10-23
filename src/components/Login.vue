@@ -2,7 +2,7 @@
 <v-card flat width="500" color="#ffffff00">
     <v-toolbar flat borderless height="200" color="#ffffff00">
             <v-container>
-                <v-row justify="center" class="display-1">HyLink</v-row>
+                <v-row justify="center" class="display-4">HyLink</v-row>
             </v-container>
     </v-toolbar>
 
