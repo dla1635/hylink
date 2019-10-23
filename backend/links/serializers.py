@@ -3,10 +3,6 @@ from .models import Link
 from .models import Tag, LinkTag
 from .models import Label, LinkLabel
 from django.contrib.auth import get_user_model
-<<<<<<< HEAD
-=======
-
->>>>>>> 91289c0fb6cbcb2f1eb442761f95eef6c81293c9
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
