@@ -1,5 +1,6 @@
 <template>
     <v-layout>
+      <v-row>
       <v-app-bar
       app
       clipped-left
@@ -13,15 +14,15 @@
         hide-details
         prepend-inner-icon="search"
       ></v-text-field>
-      <v-flex align-center>
+      <v-flex align-center d-flex flex-row-reverse mr-5>
         <v-btn icon>
         <img src="https://www.w3schools.com/css/paris.jpg" 
           style="width:50px; height:50px; border-radius: 50%;"/>
         </v-btn>
-        <span style="font-size:20px; line-height:24px;">종완띠</span>
+        <span style="font-size:20px; line-height:24px; margin-right:5px;">종완띠</span>
       </v-flex>
     </v-app-bar>
-
+    </v-row>
 
       <v-navigation-drawer
       v-model="drawer"
