@@ -33,10 +33,9 @@ class LinkViewSet(viewsets.ModelViewSet):
 
     # POST
     def create(self, request):
-        print("here!!!!")
+
+        # 1. request에 담긴 link정보 가져오기
         user = request.user
-        print("=======================")
-        print(user)
         url = request.data.get('url', None)
         title = request.data.get('title',None)
         thumbnail = request.data.get('thumbnail',None)
@@ -45,44 +44,66 @@ class LinkViewSet(viewsets.ModelViewSet):
 
         new_link = Link(user=user, url=url, title=title, thumbnail=thumbnail, summary=summary, sharable=sharable)
         new_link.save()
-        print(new_link)
-        # user_tags = request.data.get('tags', None)
-        # print(link)
 
-        # if link != None:
-        #     user = link.get('u_id',None)
-        #     url = link.get('url', None)
-        #     title = link.get('title',None)
-        #     thumbnail = link.get('thumbnail',None)
-        #     summary = link.get('summary',None)
-        #     sharable = link.get('sharable',0)
-        #     user_tags = request.data.get('tags', None)
-
-        #     new_link = Link.object.create(user=user, url=url, title=title, thumbnail=thumbnail, summary=summary, sharable=sharable)
-        #     new_link.save()
-        #     l_id = Link.objects.get(url=url).id
-
-        #     print(new_link)
-
-        #     if user_tags != None:
-        #         tags = Tag.objects.all()
-
-        #         for user_tag in user_tags:
-        #             hasTag = False
-        #             for tag in tags:
-        #                 if tag.name == user_tag:
-        #                     hasTag = True
-        #                     break
-                
-        #             if hasTag == False:
-        #                 Tag(name=user_tag).save()
-                
-        #             link_tag = Tag.objects.get(name=user_tag)
-        #             new_link.tag.add(link_tag)
-        return Response(status=status.HTTP_200_OK)
-        # else:
-        #     print("CREATE ERROR\n NOT EXIT LINK DATA")
+        user_tags = request.data.get('tags', None)
+        tags = Tag.objects.all()
+        for user_tag in user_tags:
+            hasTag = False
+            for tag in tags:
+                if tag.name == user_tag:
+                    hasTag = True
+                    break
     
+            if hasTag == False:
+                Tag(name=user_tag).save()
+
+            link_tag = Tag.objects.get(name=user_tag)
+            new_link.tag.add(link_tag)
+
+        #########################################################################
+        # default로 들어와야 하는 값이 없을 경우, 처리 해야 됨. 에러 메세지 보내기!! #
+        #########################################################################
+        return Response(status=status.HTTP_200_OK)
+
+    # PUT
+    def update(self, request):
+        user = request.user
+        l_id = request.data.get('l_id', None)
+        url = request.data.get('url', None)
+        title = request.data.get('title',None)
+        thumbnail = request.data.get('thumbnail',None)
+        summary = request.data.get('summary',None)
+        sharable = request.data.get('sharable',None)
+
+        update_link = Link.objects.get(id=l_id)
+        update_link.url = url
+        update_link.title = title
+        update_link.thumbnail = thumbnail
+        update_link.summary = summary
+        update_link.sharable = sharable
+    
+        user_tags = request.data.get('tags', None)
+        tags = Tag.objects.all()
+        for user_tag in user_tags:
+            hasTag = False
+            for tag in tags:
+                if tag.name == user_tag:
+                    hasTag = True
+                    break
+    
+            if hasTag == False:
+                Tag(name=user_tag).save()
+
+            link_tag = Tag.objects.get(name=user_tag)
+
+            # tag를 clear하는 방법
+            update_link.tag.add(link_tag)
+
+        if sharable != None:
+            sharable = int(sharable)
+        
+
+
     # def retrieve(self, request):
     #     # Link, Tag, Label
     #     l_id = request.GET.get('l_id', None)
