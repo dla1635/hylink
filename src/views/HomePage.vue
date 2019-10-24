@@ -1,17 +1,20 @@
 <template>
-  <v-app id="container">
+  <div id="container">
+    <Header />
     <v-container fluid>
         <CardList :cardList="card_list"/>
     </v-container>
-  </v-app>
+  </div>
 </template>
 
 <script>
+import Header from '@/components/template/Header'
 import CardList from '@/components/CardList'
 
 export default {
   name: "HomePage",
   components: {
+      Header,
       CardList
   },
   data() {

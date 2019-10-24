@@ -92,16 +92,16 @@ export default {
     name:"Header",
     data() {
         return{
-            drawer: null,
-        items: [
-            { heading: 'Labels' },
-            { divider: true },
-            { icon: 'local_offer', text: 'Algorithm' },
-            { icon: 'local_offer', text: 'BigData' },
-            { icon: 'local_offer', text: 'BlockChain' },
-            { icon: 'local_offer', text: 'AI' },
-            { icon: 'local_offer', text: 'jAVA' }
-        ]
+            drawer: false,
+            items: [
+                { heading: 'Labels' },
+                { divider: true },
+                { icon: 'local_offer', text: 'Algorithm' },
+                { icon: 'local_offer', text: 'BigData' },
+                { icon: 'local_offer', text: 'BlockChain' },
+                { icon: 'local_offer', text: 'AI' },
+                { icon: 'local_offer', text: 'jAVA' }
+            ]
         }
     }
 }
