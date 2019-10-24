@@ -1,5 +1,29 @@
 <template>
-    <v-app>
+    <v-layout>
+      <v-row>
+      <v-app-bar
+      app
+      clipped-left
+      fixed
+      color="white"
+    >
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <span class="title ml-3 mr-5">Link&nbsp;<span class="font-weight-light">Kit</span></span>
+      <v-text-field
+        text
+        hide-details
+        prepend-inner-icon="search"
+      ></v-text-field>
+      <v-flex align-center d-flex flex-row-reverse mr-5>
+        <v-btn icon>
+        <img src="https://www.w3schools.com/css/paris.jpg" 
+          style="width:50px; height:50px; border-radius: 50%;"/>
+        </v-btn>
+        <span style="font-size:20px; line-height:24px; margin-right:5px;">종완띠</span>
+      </v-flex>
+    </v-app-bar>
+    </v-row>
+
       <v-navigation-drawer
       v-model="drawer"
       fixed
@@ -56,47 +80,28 @@
       </v-list>
     </v-navigation-drawer>
     
-    <v-app-bar
-      app
-      clipped-left
-      color="amber"
-    >
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <span class="title ml-3 mr-5">Google&nbsp;<span class="font-weight-light">Keep</span></span>
-      <v-text-field
-        text
-        hide-details
-        prepend-inner-icon="search"
-      ></v-text-field>
-      <v-flex align-center>
-        <v-btn icon>
-        <img src="https://www.w3schools.com/css/paris.jpg" 
-          style="width:50px; height:50px; border-radius: 50%;"/>
-        </v-btn>
-        <span style="font-size:20px; line-height:24px;">종완띠</span>
-      </v-flex>
-    </v-app-bar>
+    
 
     <!-- 라우터뷰  -->
     <v-content><router-view/></v-content>
-    </v-app>
+  </v-layout>
 </template>
 
 <script>
 export default {
-    name:"navBar",
+    name:"Header",
     data() {
         return{
-            drawer: null,
-        items: [
-            { heading: 'Labels' },
-            { divider: true },
-            { icon: 'local_offer', text: 'Algorithm' },
-            { icon: 'local_offer', text: 'BigData' },
-            { icon: 'local_offer', text: 'BlockChain' },
-            { icon: 'local_offer', text: 'AI' },
-            { icon: 'local_offer', text: 'jAVA' }
-        ]
+            drawer: false,
+            items: [
+                { heading: 'Labels' },
+                { divider: true },
+                { icon: 'local_offer', text: 'Algorithm' },
+                { icon: 'local_offer', text: 'BigData' },
+                { icon: 'local_offer', text: 'BlockChain' },
+                { icon: 'local_offer', text: 'AI' },
+                { icon: 'local_offer', text: 'jAVA' }
+            ]
         }
     }
 }
