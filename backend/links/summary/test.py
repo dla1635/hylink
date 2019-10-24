@@ -14,8 +14,7 @@ from url2text import urlparse
 
 max_keyword = 3
 
-url ="https://godoftyping.wordpress.com/2017/06/24/python-beautifulsoup/"
-# url = "https://ndb796.tistory.com/250"
+url ="https://ko.wikipedia.org/wiki/위키"
 img_url, title, input_text, meta_tag = urlparse(url)
 
 
