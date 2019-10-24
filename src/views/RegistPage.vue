@@ -1,7 +1,6 @@
 <template>
 <v-container fill-height>
     <v-row justify="center">
-
         <Regist></Regist>
     </v-row>
 
@@ -9,13 +8,11 @@
 </template>
 
 <script>
-import Regist from "@/components/Regist"
+import Regist from "@/components/login/Regist"
 
 export default {
     data: () => ({
-        drawer: null,
-        id: "",
-        password: ""
+
     }),
     components: {
         Regist

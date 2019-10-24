@@ -78,7 +78,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1:8080",
+    "http://localhost:8080",
 ]
 
 COR_ALLOW_METHODS = (
@@ -154,7 +154,6 @@ JWT_AUTH = {
 }
 REST_USE_JWT = True
 
-
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
@@ -225,8 +224,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'ko-kr'
+TIME_ZONE = 'Asia/Seoul'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True

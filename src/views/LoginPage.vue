@@ -10,13 +10,11 @@
 </template>
 
 <script>
-import Login from "@/components/Login"
+import Login from "@/components/login/Login"
 
 export default {
     data: () => ({
-        drawer: null,
-        id : "",
-        password: ""
+
     }),
     components: {
         Login

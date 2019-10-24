@@ -23,7 +23,12 @@
     <v-card-actions>
         <v-container>
             <v-row justify="center">
-                <v-btn color="#B6DCCC" rounded="true" width="100" height="25">Login</v-btn>
+                <v-btn 
+                    color="#B6DCCC" 
+                    rounded="true" 
+                    width="100" 
+                    height="25"
+                    @click="login({ email, password })">Login</v-btn>
             </v-row>
 
         </v-container>
@@ -32,18 +37,22 @@
 </template>
 
 <script>
-export default {
-    data: () => ({
-        drawer: null,
-        id: "",
-        password: ""
-    }),
-    method: {
-        async signUp() {
-            // 로그인 프로세스
+import { mapState, mapActions } from 'vuex';
 
-        },
-    }
+export default {
+    props: {
+        email: { type: String },
+        password: { type: String },
+    },
+    data: () => ({
+
+    }),
+    computed: {
+        ...mapState(["isLogin", "isLoginError"])
+    },
+    methods: {
+        ...mapActions(["login"])
+    } 
 }
 </script>
 
