@@ -17,6 +17,6 @@ link = LinkViewSet.as_view({
 
 urlpatterns = format_suffix_patterns([
     # path('auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('linklist/<int:pk>/', linklist, name='linklist'),
+    path('linklist/', linklist, name='linklist'),
     path('link/$', link, name='link'),
 ])

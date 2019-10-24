@@ -5,6 +5,7 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
+from django.db.models import Count, F
 
 # from django_filters.rest_framework import DjangoFilterBackend
 
@@ -18,7 +19,30 @@ class LinkViewSet(viewsets.ModelViewSet):
     serializer_class = LinkSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    def update_linktag(self, link, user_tags):
+        if user_tags != None:
+            if Tag.objects.all().count() > 0:
+                tags = Tag.objects.all()
+                for user_tag in user_tags:
+                    hasTag = False
+                    for tag in tags:
+                        if tag.name == user_tag:
+                            hasTag = True
+                            break
+        
+                if hasTag == False:
+                    Tag(name=user_tag).save()
 
+                link_tag = Tag.objects.get(name=user_tag)
+                link.tag.add(link_tag)
+            else:
+                for user_tag in user_tags:
+                    link_tag = Tag(name=user_tag)
+                    link_tag.save()
+                    link.tag.add(link_tag)
+        else:
+            print("TAG가 없습니당")
+    
     # =============links=============
     # user별로 links list 보내주는 methods
     def list(self, request):
@@ -33,7 +57,7 @@ class LinkViewSet(viewsets.ModelViewSet):
 
     # POST
     def create(self, request):
-
+        print("here~~")
         # 1. request에 담긴 link정보 가져오기
         user = request.user
         url = request.data.get('url', None)
@@ -42,23 +66,37 @@ class LinkViewSet(viewsets.ModelViewSet):
         summary = request.data.get('summary',None)
         sharable = 0
 
+        print(url+" "+title+" "+thumbnail+" "+summary)
+
         new_link = Link(user=user, url=url, title=title, thumbnail=thumbnail, summary=summary, sharable=sharable)
         new_link.save()
 
+        # Movie.objects.filter(id=id).count()
         user_tags = request.data.get('tags', None)
-        tags = Tag.objects.all()
-        for user_tag in user_tags:
-            hasTag = False
-            for tag in tags:
-                if tag.name == user_tag:
-                    hasTag = True
-                    break
-    
-            if hasTag == False:
-                Tag(name=user_tag).save()
+        print("================")
+        self.update_linktag(new_link, user_tags)
+        # if user_tags != None:
+        #     if Tag.objects.all().count() > 0:
+        #         tags = Tag.objects.all()
+        #         for user_tag in user_tags:
+        #             hasTag = False
+        #             for tag in tags:
+        #                 if tag.name == user_tag:
+        #                     hasTag = True
+        #                     break
+        
+        #         if hasTag == False:
+        #             Tag(name=user_tag).save()
 
-            link_tag = Tag.objects.get(name=user_tag)
-            new_link.tag.add(link_tag)
+        #         link_tag = Tag.objects.get(name=user_tag)
+        #         new_link.tag.add(link_tag)
+        #     else:
+        #         for user_tag in user_tags:
+        #             link_tag = Tag(name=user_tag)
+        #             link_tag.save()
+        #             new_link.tag.add(link_tag)
+        # else:
+        #     print("TAG가 없습니당")
 
         #########################################################################
         # default로 들어와야 하는 값이 없을 경우, 처리 해야 됨. 에러 메세지 보내기!! #
@@ -67,43 +105,53 @@ class LinkViewSet(viewsets.ModelViewSet):
 
     # PUT
     def update(self, request):
-        user = request.user
         l_id = request.data.get('l_id', None)
-        url = request.data.get('url', None)
-        title = request.data.get('title',None)
-        thumbnail = request.data.get('thumbnail',None)
-        summary = request.data.get('summary',None)
-        sharable = request.data.get('sharable',None)
 
-        update_link = Link.objects.get(id=l_id)
-        update_link.url = url
-        update_link.title = title
-        update_link.thumbnail = thumbnail
-        update_link.summary = summary
-        update_link.sharable = sharable
+        if Link.objects.get(id=l_id).count() != 0:
+            user = request.user
+            url = request.data.get('url', None)
+            title = request.data.get('title',None)
+            thumbnail = request.data.get('thumbnail',None)
+            summary = request.data.get('summary',None)
+            sharable = request.data.get('sharable',None)
+            if sharable != None:
+                sharable = int(sharable)
+
+            update_link = Link.objects.get(id=l_id)
+            update_link.url = url
+            update_link.title = title
+            update_link.thumbnail = thumbnail
+            update_link.summary = summary
+            update_link.sharable = sharable
+
+            user_tags = request.data.get('tags', None)
+            update_linktag(update_link, user_tags)
+        else:
+            print("링크가 존재하지 않아 수정할 수 없습니다.")
+        # user_tags = request.data.get('tags', None)
+        # update_linktag(new_link, user_tags)
+        # tags = Tag.objects.all()
+        # for user_tag in user_tags:
+        #     hasTag = False
+        #     for tag in tags:
+        #         if tag.name == user_tag:
+        #             hasTag = True
+        #             break
     
-        user_tags = request.data.get('tags', None)
-        tags = Tag.objects.all()
-        for user_tag in user_tags:
-            hasTag = False
-            for tag in tags:
-                if tag.name == user_tag:
-                    hasTag = True
-                    break
-    
-            if hasTag == False:
-                Tag(name=user_tag).save()
+        #     if hasTag == False:
+        #         Tag(name=user_tag).save()
 
-            link_tag = Tag.objects.get(name=user_tag)
+        #     link_tag = Tag.objects.get(name=user_tag)
 
-            # tag를 clear하는 방법
-            update_link.tag.add(link_tag)
+        #     # tag를 clear하는 방법
+        #     update_link.tag.add(link_tag)
 
-        if sharable != None:
-            sharable = int(sharable)
-        
+        # if sharable != None:
+        #     sharable = int(sharable)
+        return Response(status=status.HTTP_200_OK)
 
-
+    def retrieve(self, request):
+        return Response(status=status.HTTP_200_OK)
     # def retrieve(self, request):
     #     # Link, Tag, Label
     #     l_id = request.GET.get('l_id', None)
@@ -134,8 +182,13 @@ class LinksViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
 
     def list(self, request):
-        
-        return Response(status=status.HTTP_200_OK)
+        print("linklist GET")
+        user = request.user
+        print(user)
+        link_list = Link.objects.all().filter(user=user)
+        print(link_list)
+        serializer = LinkSerializer(link_list, many=True)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
     
 # class  (viewsets.ModelViewSet):
 #     queryset = Label.objects.all()
