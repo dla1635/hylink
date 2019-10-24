@@ -15,8 +15,9 @@ from url2text import urlparse
 max_keyword = 3
 
 url ="https://ko.wikipedia.org/wiki/위키"
+print("before urlparse")
 img_url, title, input_text, meta_tag = urlparse(url)
-
+print("after parse")
 
 
 
