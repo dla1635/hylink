@@ -9,27 +9,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = ('id', 'email', 'nickname')
 
-
-class TagSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Tag
-        fields =(
-            'id',
-            'name',
-        )
-
-
-class LabelSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Label
-        fields = (
-            'id',
-            'name',
-        )
-
-
 class LinkSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     tag = TagSerializer(read_only=True, many=True)
@@ -51,7 +30,25 @@ class LinkSerializer(serializers.ModelSerializer):
             'label'
         )
         read_only_fields = ('created_at', 'updated_at',)
-        
+
+class TagSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tag
+        fields =(
+            'id',
+            'name',
+        )
+
+
+class LabelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Label
+        fields = (
+            'id',
+            'name',
+        )
 
 class LinkTagSerializer(serializers.ModelSerializer):
     class Meta:

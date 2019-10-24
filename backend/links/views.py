@@ -1,8 +1,9 @@
-from rest_framework import viewsets
 from .serializers import LinkSerializer, TagSerializer, LabelSerializer
 from .serializers import LinkTagSerializer, LinkTagDetailSerializer, LinkLabelSerializer, LinkLabelDetailSerializer
 from .models import Link, Tag, Label, LinkTag, LinkLabel
-from rest_framework import permissions
+from rest_framework import permissions, status, viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 # from django_filters.rest_framework import DjangoFilterBackend
 
@@ -18,27 +19,45 @@ class LinkViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-class LabelViewSet(viewsets.ModelViewSet):
-    queryset = Label.objects.all()
-    serializer_class = LabelSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)       
+    def create(self, request, *args, **kwargs):
+        link = request.data.get('link', None);
 
-class LinkLabelViewSet(viewsets.ModelViewSet):
-    queryset = LinkLabel.objects.all()
-    serializer_class = LinkLabelSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user = link.get('uid',None)
+        url = link.get('url', None)
+        title = link.get('title',None)
+        thumbnail = link.get('thumbnail',None)
+        summary = link.get('summary',None)
+        sharable = link.get('sharable',0)
+    
+    # user별로 links list 보내주는 methods
+    def list(self, request):
+        user_links = Link.objects.all().filter(user=self.request.user)
+        serializer = self.get_serializer(user_links, many=True)
+        return Response(serializer.data)
+
+    # def retrieve(self, request):
+        
+# class  (viewsets.ModelViewSet):
+#     queryset = Label.objects.all()
+#     serializer_class = LabelSerializer
+#     permission_classes = (permissions.IsAuthenticated,)
+#     def perform_create(self, serializer):
+#         serializer.save(user=self.request.user)       
+
+# class LinkLabelViewSet(viewsets.ModelViewSet):
+#     queryset = LinkLabel.objects.all()
+#     serializer_class = LinkLabelSerializer
+#     permission_classes = (permissions.IsAuthenticated,)
+#     def perform_create(self, serializer):
+#         serializer.save(user=self.request.user)
 
         
-class LinkTagViewSet(viewsets.ModelViewSet):
-    queryset = LinkTag.objects.all()
-    serializer_class = LinkTagSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+# class LinkTagViewSet(viewsets.ModelViewSet):
+#     queryset = LinkTag.objects.all()
+#     serializer_class = LinkTagSerializer
+#     permission_classes = (permissions.IsAuthenticated,)
+#     def perform_create(self, serializer):
+#         serializer.save(user=self.request.user)
 # class LinkTagViewSet(viewsets.ModelViewSet):
 #     """
 #     retrieve:

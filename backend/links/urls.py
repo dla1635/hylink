@@ -6,6 +6,7 @@ link_list = LinkViewSet.as_view({
     'post': 'create',
     'get': 'list'
 })
+
 link_detail = LinkViewSet.as_view({
     'get': 'retrieve',
     'put': 'update',
