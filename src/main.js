@@ -10,6 +10,9 @@ import store from './store/store'
 import axios from 'axios'
 Vue.prototype.$axios = axios
 
+import VueSession from 'vue-session'
+Vue.use(VueSession)
+
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import vuetify from './plugins/vuetify';
