@@ -6,11 +6,12 @@ import $backend from '@/backend'
 Vue.prototype.$backend = $backend
 Vue.config.productionTip = false
 
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
 import vuetify from './plugins/vuetify';
-Vue.use(Vuetify)
 // Vue.use(VueRouter)
+
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
 
 const vue = new Vue({
   router,
