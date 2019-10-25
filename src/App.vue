@@ -1,14 +1,11 @@
 <template>
 <v-app>
-    <!-- 라우터뷰는 NavBar에 존재    -->
+
+    <!-- 상단 바 -->
+    <AppBar></AppBar>
+
+    <!--  Side bar    -->
     <NavBar/>
-
-    <v-app-bar app>
-        <v-toolbar-title class="headline text-uppercase">
-            <router-link to="/"> <span>TEST</span> </router-link>
-        </v-toolbar-title>
-
-    </v-app-bar>
 
     <v-content>
         <router-view />
@@ -18,6 +15,7 @@
 </template>
 
 <script>
+import AppBar from '@/components/AppBar'
 
 import NavBar from '@/components/NavBar'
 
@@ -27,7 +25,8 @@ export default {
         //
     }),
     components: {
+    AppBar,
     NavBar
   },
 };
-</script>s
+</script>
