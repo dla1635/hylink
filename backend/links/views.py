@@ -5,7 +5,7 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 
 # from django_filters.rest_framework import DjangoFilterBackend
 
@@ -17,7 +17,7 @@ from django.db.models import Count, F
 class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
     def update_linktag(self, link, user_tags):
         if user_tags != None:
@@ -137,14 +137,25 @@ class LinkViewSet(viewsets.ModelViewSet):
 class LinksViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
     def list(self, request):
         print("linklist GET")
+        
         user = request.user
-        print(user)
-        # link_list = Link.objects.all().filter(user=user)
-        link_list = Link.objects.all()
+        # print(user)
+        search_word = request.data.get('search_word',None)
+
+        link_list = Link.objects.all().filter(user=user)
+        if search_word != None:
+            # 1. summary || title에 있나
+            # 2. tag
+            # 3. label
+            if link_list.filter(Q(summary__icontains=search_word)|Q(title__icontains=search_word)).count() > 0:
+                print("summary")
+
+        link_list = Link.objects.all().filter(user=user)
+        # link_list = Link.objects.all()
         serializer = LinkSerializer(link_list, many=True)
         return Response(data=serializer.data,status=status.HTTP_200_OK)
     

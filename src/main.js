@@ -7,21 +7,28 @@ import $backend from '@/backend'
 Vue.prototype.$backend = $backend
 Vue.config.productionTip = false
 
-// Vuetify
-import vuetify from './plugins/vuetify';
-
-// Axios
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios)
-
-// Vuex
 import store from './store/store'
+import axios from 'axios'
+Vue.prototype.$axios = axios
+
+import VueSession from 'vue-session'
+Vue.use(VueSession)
+
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import vuetify from './plugins/vuetify';
+Vue.use(Vuetify)
+
+import VueSweetalert2 from 'vue-sweetalert2';
+// 스타일 커스터마이징 
+import 'sweetalert2/dist/sweetalert2.min.css'
+Vue.use(VueSweetalert2)
+Vue.prototype.$swal = VueSweetalert2
 
 const vue = new Vue({
   router,
-  vuetify,
   store,
+  vuetify,
   render: h => h(App)
 })
 
