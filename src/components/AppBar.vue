@@ -1,0 +1,28 @@
+<template>
+<v-app-bar app clipped-left color="amber">
+    <v-app-bar-nav-icon @click="changeNavBarState()"></v-app-bar-nav-icon>
+    <span class="title ml-3 mr-5">Google&nbsp;<span class="font-weight-light">Keep</span></span>
+    <v-text-field text hide-details prepend-inner-icon="search"></v-text-field>
+    <v-flex align-center>
+        <v-btn icon>
+            <img src="https://www.w3schools.com/css/paris.jpg" style="width:50px; height:50px; border-radius: 50%;" />
+        </v-btn>
+        <span style="font-size:20px; line-height:24px;">종완띠</span>
+    </v-flex>
+</v-app-bar>
+</template>
+
+<script>
+export default {
+    data(){
+        return {
+            drawer: false
+        }
+    },
+    methods: {
+        changeNavBarState(){
+            this.$store.commit('changeNavBarState');
+        }
+    }
+}
+</script>
