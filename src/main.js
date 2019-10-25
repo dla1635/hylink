@@ -3,18 +3,25 @@ import '@/plugins/vuetify'
 import App from '@/App.vue'
 import router from '@/router'
 import $backend from '@/backend'
+
 Vue.prototype.$backend = $backend
 Vue.config.productionTip = false
 
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
+// Vuetify
 import vuetify from './plugins/vuetify';
-Vue.use(Vuetify)
-// Vue.use(VueRouter)
+
+// Axios
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+
+// Vuex
+import store from './store/store'
 
 const vue = new Vue({
   router,
   vuetify,
+  store,
   render: h => h(App)
 })
 
