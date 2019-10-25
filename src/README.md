@@ -2,7 +2,7 @@
 
 ## 폴더구조 
 
-'''
+```
 src
 ├ assets			// img, font, css 등 모든 자원 
    ├ css		
@@ -32,6 +32,6 @@ src
       └ layout.js 
 ├ App.vue
 └ main.js
-'''
+```
 
 참고 : https://medium.com/tldr-tech/vue-js-2-vuex-router-yarn-basic-configuration-version-2-7b9c489d43b3
