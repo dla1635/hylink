@@ -117,7 +117,7 @@ export default {
                   title: 'Error',
                   text: 'Wrong username or password',
                   showConfirmButton:false,
-                  showCloseButton:false,
+                  showCloseButton:true,
                   timer:3000
                 })
               })
