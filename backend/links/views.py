@@ -75,28 +75,6 @@ class LinkViewSet(viewsets.ModelViewSet):
         user_tags = request.data.get('tags', None)
         print("================")
         self.update_linktag(new_link, user_tags)
-        # if user_tags != None:
-        #     if Tag.objects.all().count() > 0:
-        #         tags = Tag.objects.all()
-        #         for user_tag in user_tags:
-        #             hasTag = False
-        #             for tag in tags:
-        #                 if tag.name == user_tag:
-        #                     hasTag = True
-        #                     break
-        
-        #         if hasTag == False:
-        #             Tag(name=user_tag).save()
-
-        #         link_tag = Tag.objects.get(name=user_tag)
-        #         new_link.tag.add(link_tag)
-        #     else:
-        #         for user_tag in user_tags:
-        #             link_tag = Tag(name=user_tag)
-        #             link_tag.save()
-        #             new_link.tag.add(link_tag)
-        # else:
-        #     print("TAG가 없습니당")
 
         #########################################################################
         # default로 들어와야 하는 값이 없을 경우, 처리 해야 됨. 에러 메세지 보내기!! #
@@ -128,26 +106,6 @@ class LinkViewSet(viewsets.ModelViewSet):
             update_linktag(update_link, user_tags)
         else:
             print("링크가 존재하지 않아 수정할 수 없습니다.")
-        # user_tags = request.data.get('tags', None)
-        # update_linktag(new_link, user_tags)
-        # tags = Tag.objects.all()
-        # for user_tag in user_tags:
-        #     hasTag = False
-        #     for tag in tags:
-        #         if tag.name == user_tag:
-        #             hasTag = True
-        #             break
-    
-        #     if hasTag == False:
-        #         Tag(name=user_tag).save()
-
-        #     link_tag = Tag.objects.get(name=user_tag)
-
-        #     # tag를 clear하는 방법
-        #     update_link.tag.add(link_tag)
-
-        # if sharable != None:
-        #     sharable = int(sharable)
         return Response(status=status.HTTP_200_OK)
 
     def retrieve(self, request):
@@ -185,8 +143,8 @@ class LinksViewSet(viewsets.ModelViewSet):
         print("linklist GET")
         user = request.user
         print(user)
-        link_list = Link.objects.all().filter(user=user)
-        print(link_list)
+        # link_list = Link.objects.all().filter(user=user)
+        link_list = Link.objects.all()
         serializer = LinkSerializer(link_list, many=True)
         return Response(data=serializer.data,status=status.HTTP_200_OK)
     
