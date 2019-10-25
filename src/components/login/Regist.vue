@@ -20,8 +20,8 @@
 
                 <v-form>
                     <v-container grid-list-md text-xs-center>
-                        <v-text-field class="input-with-icon form_input" name='email' label='E-Mail' v-model='email' type='email' prepend-icon="mail_outline" required></v-text-field>
                         <v-text-field class="input-with-icon form_input" name='name' label='Name' v-model='name' type='text' prepend-icon="face" required></v-text-field>
+                        <v-text-field class="input-with-icon form_input" name='email' label='E-Mail' v-model='email' type='email' prepend-icon="mail_outline" required></v-text-field>
                         <v-text-field class="input-with-icon form_input" name='password' label='Password' v-model='password' type='password' prepend-icon="lock" required></v-text-field>
                         <v-text-field class="input-with-icon form_input" name='confirmPassword' label='confirmPassword' v-model='confirmPassword' type='password' prepend-icon="check_circle" required></v-text-field>
                     </v-container>
@@ -35,7 +35,7 @@
                 <v-btn 
                     rounded 
                     color="#B6DCCC"
-                    @click="signUp({email, name, password, confirmPassword})">Sign Up</v-btn>
+                    @click="signUp({name, email, password, confirmPassword})">Sign Up</v-btn>
             </v-row>
         </v-container>
 

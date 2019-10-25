@@ -41,11 +41,10 @@ import { mapState, mapActions } from 'vuex';
 
 export default {
     props: {
-        email: { type: String },
-        password: { type: String },
     },
     data: () => ({
-
+        email: "",
+        password: "",
     }),
     computed: {
         ...mapState(["isLogin", "isLoginError"])

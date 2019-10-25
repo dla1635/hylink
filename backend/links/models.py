@@ -1,8 +1,9 @@
 from django.db import models
-from django.conf import settings
+from django.contrib.auth.models import User 
+
 
 class Link(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
     url = models.TextField()
     title = models.CharField(max_length=144, blank=True)
     thumbnail = models.TextField(blank=True)

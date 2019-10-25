@@ -2,6 +2,27 @@ import Axios from "axios"
 import Router from "../router";
 
 export const Actions = {
+
+    signUp(dispatch, loginObj) {
+      // login => 토큰 반환 
+      Axios.post('http://127.0.0.1:8000/api/users/rest-auth/registration/', loginObj)
+        .then(res => {
+          this.$swal('회원가입 성공', '환영합니다!', 'OK')
+          Router.push({
+            name: 'login'
+          });
+          // eslint-disable-next-line no-console
+          console.log(res)
+        })
+        .catch(() => {
+          this.$swal({
+            type: 'error',
+            title: 'Oops...',
+            text: '아이디, 이메일, 비밀번호를 확인해주세요!',
+          })
+        })
+    },
+
   login(dispatch, loginObj) {
     // login => 토큰 반환 
     Axios.post('http://127.0.0.1:8000/api-auth/login/', loginObj)
@@ -24,21 +45,7 @@ export const Actions = {
     commit('logout');
     Router.push({ name: "home" });
   },
-  signUp(dispatch, loginObj) {
-    // login => 토큰 반환 
-    Axios.post('http://127.0.0.1:8000/api/users/rest-auth/registration/', loginObj)
-      .then(res => {
-        alert("회원가입이 성공적으로 이뤄졌습니다.")
-        Router.push({
-          name: 'login'
-        });
-        // eslint-disable-next-line no-console
-        console.log(res)
-      })
-      .catch(() => {
-        alert("이메일과 비밀번호를 입력해주세요.")
-      })
-  },
+
   getMemberInfo({commit}) {
     let token = localStorage.getItem("access_token");
     let config = {
@@ -48,7 +55,7 @@ export const Actions = {
     };
     // 토큰 => 멤버 정보 반환 
     // 새로고침 => 토큰만 가지고 멤버 정보 반환 가능 
-    Axios.get("http://127.0.0.1:8000.api/user/", config)
+    Axios.get("http://127.0.0.1:8000/api/user/", config)
     .then(res => {
       let userInfo = {
         pk: res.data.data.pk,
