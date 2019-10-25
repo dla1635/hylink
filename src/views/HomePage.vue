@@ -27,7 +27,7 @@ export default {
           },
           {
             title: "빅데이터",
-            tagList: ["빅데이터","자바",""],
+            tagList: ["빅데이터","자바","깃허브"],
             thumbnail: "https://blogsimages.adobe.com/digitaldialogue/files/2018/10/Digital-Dialogue_Q4-1%ED%9A%8C%EC%B0%A8-%EC%9D%B4%EB%A9%94%EC%9D%BC-%EB%A7%88%EC%BC%80%ED%8C%85-%EB%B9%85%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%99%80-%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5%EC%9C%BC%EB%A1%9C-%EB%82%A0%EA%B0%9C%EB%A5%BC-%EB%8B%AC%EB%8B%A4_03.jpg"
             ,url:"https://www.naver.com"
           },

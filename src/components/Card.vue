@@ -9,19 +9,19 @@
     >
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
-           <v-btn icon @click="goLink" v-on="on"><v-icon size=20>reply</v-icon></v-btn>
+           <v-btn class="mr-3" icon @click="goLink" v-on="on"><v-icon size=20>reply</v-icon></v-btn>
         </template>
         <span>링크 이동</span>
       </v-tooltip>
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
-           <v-btn icon @click="changeEditMode" v-on="on"><v-icon size=20>edit</v-icon></v-btn>
+           <v-btn class="mr-3" icon @click="changeEditMode" v-on="on"><v-icon size=20>edit</v-icon></v-btn>
         </template>
         <span>편집</span>
       </v-tooltip>
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
-           <v-btn icon @click="copyToClipboard(card.url)" v-on="on"><v-icon size=20>file_copy</v-icon></v-btn>
+           <v-btn  icon @click="copyToClipboard(card.url)" v-on="on"><v-icon size=20>file_copy</v-icon></v-btn>
         </template>
         <span>클립보드 복사</span>
       </v-tooltip>
@@ -38,7 +38,7 @@
         <img v-show="thumnail_flag" class="card_img" :src="card.thumbnail" />
       </v-layout>
       <v-flex id="tagContainer">
-        <span class="tag"  style="font-size:70%; height:26px; margin:7px; padding:0 0px;" v-for="tag in card.tagList" :key="tag">#{{tag}}</span>
+        <v-chip class="tag"  v-for="tag in card.tagList" :key="tag">#{{tag}} </v-chip>
       </v-flex>
   </v-card>
   </v-hover>
@@ -124,11 +124,8 @@ export default {
   height: 100px;
 }
 .tag {
-  font-size: 70%;
-  height:25px; 
-  margin:5px 7px 0 0; 
-  padding:0 0px;
-}
+  margin:7px; 
+  }
 
 .summary {
     margin: 0px;
