@@ -20,10 +20,38 @@
 
                 <v-form>
                     <v-container grid-list-md text-xs-center>
-                        <v-text-field class="input-with-icon form_input" name='name' label='Name' v-model='name' type='text' prepend-icon="face" required></v-text-field>
-                        <v-text-field class="input-with-icon form_input" name='email' label='E-Mail' v-model='email' type='email' prepend-icon="mail_outline" required></v-text-field>
-                        <v-text-field class="input-with-icon form_input" name='password' label='Password' v-model='password' type='password' prepend-icon="lock" required></v-text-field>
-                        <v-text-field class="input-with-icon form_input" name='confirmPassword' label='confirmPassword' v-model='confirmPassword' type='password' prepend-icon="check_circle" required></v-text-field>
+                        <v-text-field 
+                            class="input-with-icon form_input" 
+                            name='username' 
+                            label='Username' 
+                            v-model='credentials.username' 
+                            type='text' 
+                            prepend-icon="face" 
+                            required></v-text-field>
+                        <v-text-field 
+                            class="input-with-icon form_input" 
+                            name='email' 
+                            label='E-Mail' 
+                            v-model='credentials.email' 
+                            type='email' 
+                            prepend-icon="mail_outline" 
+                            required></v-text-field>
+                        <v-text-field 
+                            class="input-with-icon form_input" 
+                            name='password' 
+                            label='Password' 
+                            v-model='credentials.password' 
+                            type='password' 
+                            prepend-icon="lock" 
+                            required></v-text-field>
+                        <!-- <v-text-field 
+                            class="input-with-icon form_input" 
+                            name='confirmPassword' 
+                            label='confirmPassword' 
+                            v-model='confirmPassword' 
+                            type='password' 
+                            prepend-icon="check_circle" 
+                            required></v-text-field> -->
                     </v-container>
                 </v-form>
 
@@ -35,7 +63,7 @@
                 <v-btn 
                     rounded 
                     color="#B6DCCC"
-                    @click="signUp({name, email, password, confirmPassword})">Sign Up</v-btn>
+                    @click="signUp">Sign Up</v-btn>
             </v-row>
         </v-container>
 
@@ -43,20 +71,40 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 
 export default {
+    name: 'regist',
     props: {
         source: String,
     },
     data: () => ({
-        email: "",
-        name: "",
-        password: null,
-        confirmPassword: null,
+        credentials: {
+            'username': "",
+            'email': "",
+            'password': "",
+        },
+        // confirmPassword: null,
     }),
     methods: {
-        ...mapActions(["signUp"])
+        signUp: function() {
+            this.$axios.post('http://127.0.0.1:8000/api/users/', this.credentials)
+                .then(res => {
+                    this.$swal('회원가입 성공', '환영합니다!', 'OK')
+                    this.router.push({
+                        name: 'login'
+                    });
+                    // eslint-disable-next-line no-console
+                    console.log(res)
+                })
+                .catch(() => {
+                    this.$swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: '아이디, 이메일, 비밀번호를 확인해주세요!',
+                        showCloseButton:true,
+                    })
+                })
+        }
     } 
 }
 </script>

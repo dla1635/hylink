@@ -11,7 +11,7 @@ from rest_framework import routers
 from .api.views import index_view, MessageViewSet
 from .posts.views import PostViewSet, CommentViewSet, ReportViewSet
 from .links.views import LinkViewSet 
-from .profiles.views import CurrentUserViewSet
+from .profiles.views import UserViewSet
 
 from rest_framework_jwt.views import obtain_jwt_token
 
@@ -22,7 +22,7 @@ router.register('posts', PostViewSet)
 router.register('comments', CommentViewSet)
 router.register('links', LinkViewSet)
 router.register('reports', ReportViewSet)
-router.register('users', CurrentUserViewSet)
+router.register('users', UserViewSet)
 
 
 urlpatterns = [

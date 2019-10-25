@@ -4,11 +4,7 @@ from .models import Tag, LinkTag
 from .models import Label, LinkLabel
 from django.contrib.auth.models import User 
 # from django.contrib.auth import get_user_model
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'email', 'nickname')
+from backend.profiles.serializers import UserSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):

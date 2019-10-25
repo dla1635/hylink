@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.contrib.auth.models import User
-from .serializers import CurrentUserSerializer
 from rest_framework import viewsets
+from django.contrib.auth.models import User
+from .serializers import UserSerializer
+from rest_framework import permissions
 
 
-class CurrentUserViewSet(viewsets.ReadOnlyModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = CurrentUserSerializer
+    serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated,)

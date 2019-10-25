@@ -24,12 +24,11 @@
                         name="username" 
                         prepend-icon="person" 
                         type="text" 
-                        outlined="true" 
-                        rounded="true" 
-                        persistent-hint="false" 
-                        single-line="true" 
+                        outlined
+                        rounded
+                        single-line
                         loading="false" 
-                        dense = "true"></v-text-field>
+                        dense></v-text-field>
                     <v-text-field 
                         type="password"
                         v-model="credentials.password"
@@ -44,12 +43,11 @@
                         background-color="#C8EBCC" 
                         name="password" 
                         prepend-icon="lock" 
-                        outlined="true" 
-                        rounded="true" 
-                        persistent-hint="false" 
-                        single-line="true" 
+                        outlined
+                        rounded
+                        single-line
                         loading="false" 
-                        dense = "true"></v-text-field>
+                        dense></v-text-field>
                     <p class="caption ma-0">Forgot password?</p>
                 </v-form>
             </v-row>
@@ -63,7 +61,7 @@
             <v-row justify="center">
                 <v-btn 
                     color="#B6DCCC" 
-                    rounded="true" 
+                    rounded
                     width="100" 
                     height="25"
                     :disabled="!valid" 
@@ -76,15 +74,15 @@
 </template>
 
 <script>
-import axios from 'axios';
-import router from '../../router';
-
 export default {
     name: 'login',
     props: {
     },
     data: () => ({
-        credentials: {},
+        credentials: {
+          'username': "",
+          'password': "",
+        },
         valid: true,
         rules: {
           username: [
@@ -97,31 +95,30 @@ export default {
             v => (v && v.length > 7) || "The password must be longer than 7 characters"
           ]
         },
-        username: "",
-        password: "",
     }),
 
     methods: {
-        login() {
+        login: function() {
           // checking if the input is valid
-            if (this.$refs.form.validate()) {
+          if (this.$refs.form.validate()) {
               this.loading = true;
-              axios.post('http://localhost:8000/api/auth/', this.credentials).then(res => {
-                this.$session.start();
-                this.$session.set('token', res.data.token);
-                router.push('/');
-              }).catch(() => {
-                this.loading = false;
-                this.$swal.fire({
-                  type: 'warning',
-                  title: 'Error',
-                  text: 'Wrong username or password',
-                  showConfirmButton:false,
-                  showCloseButton:true,
-                  timer:3000
-                })
+              this.$axios.post('http://localhost:8000/api/auth/', this.credentials).then(res => {
+              this.$session.start();
+              this.$session.set('token', res.data.token);
+              this.$router.push('/');
+              // eslint-disable-next-line no-console
+              console.log(res)
+            }).catch(() => {
+              this.$swal({
+                type: 'warning',
+                title: 'Error',
+                text: 'Wrong username or password',
+                showConfirmButton:false,
+                showCloseButton:true,
+                timer:3000
               })
-            }
+            })
+          }
         }
     }
 }
