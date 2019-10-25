@@ -1,6 +1,6 @@
 <template>
 <v-app-bar app clipped-left color="amber">
-    <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="changeNavBarState()"></v-app-bar-nav-icon>
     <span class="title ml-3 mr-5">Google&nbsp;<span class="font-weight-light">Keep</span></span>
     <v-text-field text hide-details prepend-inner-icon="search"></v-text-field>
     <v-flex align-center>
@@ -14,6 +14,15 @@
 
 <script>
 export default {
-    
+    data(){
+        return {
+            drawer: false
+        }
+    },
+    methods: {
+        changeNavBarState(){
+            this.$store.commit('changeNavBarState');
+        }
+    }
 }
 </script>

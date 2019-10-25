@@ -33,7 +33,7 @@ export default {
     name: "navBar",
     data() {
         return {
-            drawer: null,
+            drawer: false,
             items: [{
                     heading: 'Labels'
                 },
@@ -62,6 +62,16 @@ export default {
                 }
             ]
         }
+    },
+    computed: {
+        drawerState() {
+            return this.$store.getters.getNavBarState;
+        }
+    },
+    watch: {
+        drawerState(val) {
+            this.drawer = val;
+        },
     }
 }
 </script>

@@ -4,7 +4,7 @@ export const layout = {
     },
     mutations: {
         changeNavBarState(state){
-            state.isNavBarOpen ^= false;
+            state.isNavBarOpen ^= true;
         }
     },
     actions: { 

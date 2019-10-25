@@ -5,18 +5,17 @@
     <AppBar></AppBar>
 
     <!--  Side bar    -->
-    <NavBar/>
+    <NavBar />
 
     <v-content>
         <router-view />
     </v-content>
-    
+
 </v-app>
 </template>
 
 <script>
 import AppBar from '@/components/AppBar'
-
 import NavBar from '@/components/NavBar'
 
 export default {
@@ -25,8 +24,8 @@ export default {
         //
     }),
     components: {
-    AppBar,
-    NavBar
-  },
+        AppBar,
+        NavBar
+    },
 };
 </script>

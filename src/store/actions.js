@@ -1,5 +1,5 @@
-import axios from 'axios'
-import router from '../router/router'
+// import axios from 'axios'
+// import router from '../router/router'
 
 export const Actions = {
   //   createTeam({commit}, payload) {
