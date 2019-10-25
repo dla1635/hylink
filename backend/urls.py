@@ -10,13 +10,8 @@ from rest_framework import routers
 
 from .api.views import index_view, MessageViewSet
 from .posts.views import PostViewSet, CommentViewSet, ReportViewSet
-<<<<<<< HEAD
-from .links.views import LinkViewSet, LinksViewSet 
-from .accounts.views import UserViewSet
-=======
 from .links.views import LinkViewSet 
 from .profiles.views import UserViewSet
->>>>>>> b8f89bb2d57b0657c7a6b85acf1f712844820070
 
 from rest_framework_jwt.views import obtain_jwt_token
 
