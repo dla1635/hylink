@@ -5,7 +5,7 @@ import { Actions } from './actions.js'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+export const store =  new Vuex.Store({
   state: {
   },
   mutations: Object.assign({}, Mutations),
