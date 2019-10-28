@@ -1,6 +1,6 @@
 <template>
 <v-hover v-slot:default="{ hover }">
-  <v-card class="card" :elevation="hover ? 12 : 2">
+  <v-card class="card" :elevation="hover ? 5 : 2">
     <CardModifyModal v-if="modal_flag" :card="card"></CardModifyModal>
     <div
       v-if="hover"
