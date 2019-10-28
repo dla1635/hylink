@@ -75,7 +75,7 @@ MIDDLEWARE = [
 ]
 
 # cors header setting 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:8080",
@@ -196,10 +196,10 @@ DATABASES = {
         #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hylink',
-        'USER' : 'root',
-        'PASSWORD' : 'root',
-        'HOST' : 'localhost',        
-        'PORT' : ''
+        'USER' : 'hylink',
+        'PASSWORD' : 'hylink!',
+        'HOST' : '13.125.61.163',        
+        'PORT' : '3306'
     }
 }
 
