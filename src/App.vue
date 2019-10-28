@@ -5,7 +5,7 @@
     <AppBar></AppBar>
 
     <!--  Side bar    -->
-    <NavBar />
+    <NavBar v-if="navBarDrawer" />
 
     <v-content>
         <router-view />
@@ -15,18 +15,32 @@
 </template>
 
 <script>
-/*eslint no-console: "error"*/
 import AppBar from '@/components/AppBar'
 import NavBar from '@/components/NavBar'
 
 export default {
     name: 'App',
     data: () => ({
-        //
+        navBarDrawer: false,
+        AppBarDrawer: false
     }),
     components: {
         AppBar,
         NavBar
     },
+    methods: {
+
+    },
+    computed: {
+        drawerState() {
+            return this.$store.getters.getNavBarState;
+        },
+        
+    },
+    watch: {
+        drawerState(val) {
+            this.navBarDrawer = val;
+        },
+    }
 };
 </script>

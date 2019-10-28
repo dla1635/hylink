@@ -1,7 +1,7 @@
 <template>
 <v-app-bar app clipped-left color="amber">
     <v-app-bar-nav-icon @click="changeNavBarState()"></v-app-bar-nav-icon>
-    <v-img src="../assets/logo.png" max-width="50"></v-img><span class="title ml-3 mr-5">Hylink</span>
+    <v-img src="@/assets/logo.png" max-width="50"></v-img><span class="title ml-3 mr-5">Hylink</span>
     <v-text-field text hide-details prepend-inner-icon="search"></v-text-field>
     <v-flex align-center>
         <v-btn icon>
@@ -14,13 +14,13 @@
 
 <script>
 export default {
-    data(){
+    data() {
         return {
             drawer: false
         }
     },
     methods: {
-        changeNavBarState(){
+        changeNavBarState() {
             this.$store.commit('changeNavBarState');
         }
     }
