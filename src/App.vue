@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import AppBar from '@/shared_components/AppBar'
-import NavBar from '@/shared_components/NavBar'
+import AppBar from '@/components/AppBar'
+import NavBar from '@/components/NavBar'
 
 export default {
     name: 'App',

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import CardList from '@/shared_components/CardList'
+import CardList from '@/components/CardList'
 
 export default {
     name: "HomePage",
