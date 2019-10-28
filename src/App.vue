@@ -7,6 +7,10 @@
 </template>
 
 <script>
+/*eslint no-console: "error"*/
+import AppBar from '@/components/AppBar'
+import NavBar from '@/components/NavBar'
+
 export default {
   name: 'App',
   data() {

@@ -75,7 +75,68 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# cors header setting 
 CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_WHITELIST = [
+    "http://127.0.0.1:8080",
+]
+
+COR_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT'
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'access-control-request-method',
+    'access-control-request-headers',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
+
+# auth model setting
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_EMAIL_FIELD = 'email'
+ACCOUNT_LOGOUT_ON_GET = True
+
+AUTH_USER_MODEL = 'accounts.MyUser'
+
+REST_AUTH_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "backend.accounts.serializers.CustomUserDetailsSerializer",
+}
+REST_AUTH_REGISTER_SERIALIZERS = {
+    "REGISTER_SERIALIZER": "backend.accounts.serializers.CustomRegisterSerializer",
+}
+
+SITE_ID = 1
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        ),
+}
+
 
 # CORS_ORIGIN_WHITELIST = (
 #     'localhost:8080',
@@ -113,10 +174,10 @@ DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hylink',
-        'USER' : 'root',
-        'PASSWORD' : 'root',
-        'HOST' : 'localhost',        
-        'PORT' : ''
+        'USER' : 'hylink',
+        'PASSWORD' : 'hylink!',
+        'HOST' : '13.125.61.163',        
+        'PORT' : '3306'
     }
 }
 

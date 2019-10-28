@@ -46,7 +46,8 @@ class LinkViewSet(viewsets.ModelViewSet):
     # =============links=============
     # user별로 links list 보내주는 methods
     def list(self, request):
-        user_links = Link.objects.all().filter(user=self.request.user)
+        user_links = self.request.user.Link.all()
+        # user_links = Link.objects.all().filter(user=self.request.user)
         serializer = self.get_serializer(user_links, many=True)
         return Response(serializer.data)
 
@@ -109,6 +110,18 @@ class LinkViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_200_OK)
 
     def retrieve(self, request):
+
+        return Response(status=status.HTTP_200_OK)
+    
+    def destroy(self, request):
+        l_id = request.data.get('l_id', None)
+
+        if Link.objects.get(id=l_id).count() > 0:
+            Link.object.get(id=l_id).delete()
+        else:
+            print("존재하지 않는 Link : "+ l_id)
+        
+        
         return Response(status=status.HTTP_200_OK)
     # def retrieve(self, request):
     #     # Link, Tag, Label
@@ -151,14 +164,43 @@ class LinksViewSet(viewsets.ModelViewSet):
             # 1. summary || title에 있나
             # 2. tag
             # 3. label
-            if link_list.filter(Q(summary__icontains=search_word)|Q(title__icontains=search_word)).count() > 0:
-                print("summary")
 
-        link_list = Link.objects.all().filter(user=user)
+            label_view = LabelViewSet()
+            label_view.create(request)
+            if link_list.filter(Q(summary__icontains=search_word)|Q(title__icontains=search_word)).count() > 0:
+                link_list.filter(Q(summary__icontains=search_word)|Q(title__icontains=search_word))
+
         # link_list = Link.objects.all()
         serializer = LinkSerializer(link_list, many=True)
+        
         return Response(data=serializer.data,status=status.HTTP_200_OK)
+
+
+class LabelViewSet(viewsets.ModelViewSet):
+    queryset = Label.objects.all()
+    serializer_class = LabelSerializer
+
+    def create(self, request):
+        print("Label create")
+
+        label = request.data.get('label', None)
+
+        if label != None and Label.objects.get(name=label).count == 0:
+            Label(name=label).save()
+        else:
+            print("이미 존재하는 label 또는 label 값이 제대로 입력되지 않음")
     
+        return Response(status=status.HTTP_200_OK)
+    
+    def update(self, request):
+        print("label update")
+
+        l_id = request.data.get('l_id', None)
+        name = request.data.get('name', None)
+        update_label = Link.objects.get(id=l_id)
+        update_label.name = name
+        
+
 # class  (viewsets.ModelViewSet):
 #     queryset = Label.objects.all()
 #     serializer_class = LabelSerializer
