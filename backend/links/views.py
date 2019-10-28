@@ -45,11 +45,11 @@ class LinkViewSet(viewsets.ModelViewSet):
     
     # =============links=============
     # user별로 links list 보내주는 methods
-    def list(self, request):
-        user_links = self.request.user.Link.all()
-        # user_links = Link.objects.all().filter(user=self.request.user)
-        serializer = self.get_serializer(user_links, many=True)
-        return Response(serializer.data)
+    # def list(self, request):
+    #     user_links = self.request.user.Link.all()
+    #     # user_links = Link.objects.all().filter(user=self.request.user)
+    #     serializer = self.get_serializer(user_links, many=True)
+    #     return Response(serializer.data)
 
     # def perform_create(self, serializer):
     #     serializer.save(user=self.request.user)
@@ -154,24 +154,30 @@ class LinksViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         print("linklist GET")
-        
+
+        search_type = request.data.get('type',None)
+        if search_type != 'tag' or search_type != None or search_type != 'label' or search_type != 'word':
+            print("잘못된 입력으로 검색했습니다.")
+            return Response(status=status.HTTP_200_OK)
+
+        word = request.data.get('word', None)
         user = request.user
-        # print(user)
-        search_word = request.data.get('search_word',None)
-
         link_list = Link.objects.all().filter(user=user)
-        if search_word != None:
-            # 1. summary || title에 있나
-            # 2. tag
-            # 3. label
 
-            label_view = LabelViewSet()
-            label_view.create(request)
-            if link_list.filter(Q(summary__icontains=search_word)|Q(title__icontains=search_word)).count() > 0:
-                link_list.filter(Q(summary__icontains=search_word)|Q(title__icontains=search_word))
+        if type != None: # ALL
+            result = link_list
+        elif search_type == 'word': # search word를 포함한 links
+            # content_filter = link_list.filter(Q(summary__icontains=word)|Q(title__icontains=word)) if link_list.filter(Q(summary__icontains=word)|Q(title__icontains=word)).count() > 0 else None
+            content_filter = link_list.filter(Q(summary__icontains=word)|Q(title__icontains=word))
+            tag_filter = Tag.objects.get(name=word).links.all().filter(user=user)
+            result = content_filter.union(tag_filter, all=False)
+        elif search_type == 'tag': # tag를 포함한 links
+            result =  Tag.objects.get(name=word).links.all().filter(user=user)
+        elif search_type == 'label': # label에 포함된 links
+            result = Label.objects.get(name=word).links.all().filter(user=user)
 
         # link_list = Link.objects.all()
-        serializer = LinkSerializer(link_list, many=True)
+        serializer = LinkSerializer(result, many=True)
         
         return Response(data=serializer.data,status=status.HTTP_200_OK)
 
