@@ -41,12 +41,13 @@
           <v-list-item
             v-else
             :key="i"
+            @click="drawer"
           >
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title class="grey--text">
+              <v-list-item-title class="grey--text" @click="goLabel(item.text)">
                 {{ item.text }}
               </v-list-item-title>
             </v-list-item-content>
@@ -61,18 +62,19 @@
       color="amber"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <span class="title ml-3 mr-5">Google&nbsp;<span class="font-weight-light">Keep</span></span>
+      <span class="title ml-3 mr-5">HyLink</span>
       <v-text-field
         text
         hide-details
         prepend-inner-icon="search"
       ></v-text-field>
+      <v-spacer></v-spacer>
       <v-flex align-center>
-        <v-btn icon>
+        <!-- <v-btn icon>
         <img src="https://www.w3schools.com/css/paris.jpg" 
           style="width:50px; height:50px; border-radius: 50%;"/>
         </v-btn>
-        <span style="font-size:20px; line-height:24px;">종완띠</span>
+        <span style="font-size:20px; line-height:24px;">종완띠</span> -->
       </v-flex>
     </v-app-bar>
 
@@ -82,13 +84,15 @@
 </template>
 
 <script>
+import router from '@/router'
+
 export default {
     name:"navBar",
     data() {
         return{
             drawer: null,
         items: [
-            { heading: 'Labels' },
+            { icon: 'local_offer', text: '전체' },
             { divider: true },
             { icon: 'local_offer', text: 'Algorithm' },
             { icon: 'local_offer', text: 'BigData' },
@@ -97,6 +101,11 @@ export default {
             { icon: 'local_offer', text: 'jAVA' }
         ]
         }
+    },
+    methods: {
+      goLabel(text) {
+         router.push({ path: '/', query: { text: text }})
+      }
     }
 }
 </script>

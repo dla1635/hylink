@@ -91,22 +91,39 @@ COR_ALLOW_METHODS = (
 )
 
 CORS_ALLOW_HEADERS = (
-'accept',
-'accept-encoding',
-'authorization',
-'access-control-request-method',
-'access-control-request-headers',
-'content-type',
-'dnt',
-'origin',
-'user-agent',
-'x-csrftoken',
-'x-requested-with',
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'access-control-request-method',
+    'access-control-request-headers',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 )
 
 # auth model setting
 
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_EMAIL_FIELD = 'email'
+ACCOUNT_LOGOUT_ON_GET = True
+
 AUTH_USER_MODEL = 'accounts.MyUser'
+
+REST_AUTH_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "backend.accounts.serializers.CustomUserDetailsSerializer",
+}
+REST_AUTH_REGISTER_SERIALIZERS = {
+    "REGISTER_SERIALIZER": "backend.accounts.serializers.CustomRegisterSerializer",
+}
+
 SITE_ID = 1
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -118,8 +135,11 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
         ),
 }
+
+
 #JWT_AUTH 설정을 위해 settings.py 맨 위해 import datetime을 추가하자!!
 JWT_AUTH = {
+    'JWT_SECRET_KEY': SECRET_KEY,
     # If the secret is wrong, it will raise a jwt.DecodeError telling you as such. You can still get at the payload by setting the JWT_VERIFY to False.
     'JWT_VERIFY': True,
     # You can turn off expiration time verification by setting JWT_VERIFY_EXPIRATION to False.
@@ -128,6 +148,7 @@ JWT_AUTH = {
     # This is an instance of Python's datetime.timedelta. This will be added to datetime.utcnow() to set the expiration time.
     # Default is datetime.timedelta(seconds=300)(5 minutes).
     'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
+    # 'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28), # JWT 토큰 갱신의 유효기간 
     'JWT_ALLOW_REFRESH': True,
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
@@ -159,13 +180,28 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # 'default': dj_database_url.config(
+    #     default=os.getenv('DATABASE_URL')
+    # )
+    'default' : {
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hylink',
+        'USER' : 'root',
+        'PASSWORD' : 'root',
+        'HOST' : 'localhost',        
+        'PORT' : ''
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
