@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Login from "@/components/Login"
+import Login from "./LoginForm"
 
 export default {
     data: () => ({

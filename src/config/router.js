@@ -1,15 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home'
+import Home from '@/views/Home/HomePage'
 
-import Login from '@/views/LoginPage'
-import Regist from '@/views/RegistPage'
+import Welcome from '@/views/Welcome/WelcomePage'
+
+import Login from '@/views/Login/LoginPage'
+import Regist from '@/views/Regist/RegistPage'
 
 Vue.use(Router)
 
 export default new Router({
   mode : 'history',
   routes: [
+    {
+      path: '/',
+      name: 'welcome',
+      component: Welcome
+    },
     {
       path: '/',
       name: 'home',

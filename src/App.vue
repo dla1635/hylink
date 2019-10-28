@@ -5,7 +5,7 @@
     <AppBar></AppBar>
 
     <!--  Side bar    -->
-    <NavBar />
+    <NavBar v-if="navBarDrawer" />
 
     <v-content>
         <router-view />
@@ -15,17 +15,32 @@
 </template>
 
 <script>
-import AppBar from '@/components/AppBar'
-import NavBar from '@/components/NavBar'
+import AppBar from '@/shared_components/AppBar'
+import NavBar from '@/shared_components/NavBar'
 
 export default {
     name: 'App',
     data: () => ({
-        //
+        navBarDrawer: false,
+        AppBarDrawer: false
     }),
     components: {
         AppBar,
         NavBar
     },
+    methods: {
+
+    },
+    computed: {
+        drawerState() {
+            return this.$store.getters.getNavBarState;
+        },
+        
+    },
+    watch: {
+        drawerState(val) {
+            this.navBarDrawer = val;
+        },
+    }
 };
 </script>

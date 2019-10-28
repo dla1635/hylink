@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Card from '@/components/Card'
+import Card from '@/shared_components/Card'
  
 export default {
   name: 'CardList',

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Regist from "@/components/Regist"
+import Regist from "./RegistForm"
 
 export default {
     data: () => ({
