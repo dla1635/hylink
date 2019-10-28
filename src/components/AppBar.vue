@@ -13,7 +13,8 @@
 </template>
 
 <script>
-export default {
+export default {    
+    name: 'AppBar',
     data() {
         return {
             drawer: false

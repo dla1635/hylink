@@ -12,6 +12,7 @@
 import Regist from "./RegistForm"
 
 export default {
+    name: 'RegistPage',
     data: () => ({
         drawer: null,
         id: "",
