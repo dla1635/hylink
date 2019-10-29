@@ -15,7 +15,8 @@ Vue.use(vuetify)
 
 // Axios
 import axios from 'axios'
-Vue.use(axios)
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
 Vue.prototype.$axios = axios
 
 
