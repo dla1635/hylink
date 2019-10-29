@@ -98,8 +98,8 @@ class LinkViewSet(viewsets.ModelViewSet):
         msg = "user valid" if valid == True else "user invalid"
         return valid, msg
     
-    def isvalid_label(self, label):
-        valid = True if Label.objects.get(name=label).count() > 0 else False
+    def isvalid_label(self, lb_id):
+        valid = True if Label.objects.get(id=lb_id).count() > 0 else False
         msg = "label valid" if valid == True else "label invalid"
         return valid, msg
     '''
@@ -252,88 +252,18 @@ class LabelViewSet(viewsets.ModelViewSet):
     def update(self, request):
         print("label update")
 
-        l_id = request.data.get('l_id', None)
+        lb_id = request.data.get('lb_id', None)
+        valid, msg = self.isvalid_label(lb_id)
+        if not valid:
+            print(msg)
+            return Response(status=status.HTTP_200_OK) 
+
         name = request.data.get('name', None)
-        update_label = Link.objects.get(id=l_id)
+        update_label = Link.objects.get(id=lb_id)
         update_label.name = name
+
+        return Response(status=status.HTTP_200_OK) 
         
-
-# class  (viewsets.ModelViewSet):
-#     queryset = Label.objects.all()
-#     serializer_class = LabelSerializer
-#     permission_classes = (permissions.IsAuthenticated,)
-#     def perform_create(self, serializer):
-#         serializer.save(user=self.request.user)       
-
-# class LinkLabelViewSet(viewsets.ModelViewSet):
-#     queryset = LinkLabel.objects.all()
-#     serializer_class = LinkLabelSerializer
-#     permission_classes = (permissions.IsAuthenticated,)
-#     def perform_create(self, serializer):
-#         serializer.save(user=self.request.user)
-
-        
-# class LinkTagViewSet(viewsets.ModelViewSet):
-#     queryset = LinkTag.objects.all()
-#     serializer_class = LinkTagSerializer
-#     permission_classes = (permissions.IsAuthenticated,)
-#     def perform_create(self, serializer):
-#         serializer.save(user=self.request.user)
-# class LinkTagViewSet(viewsets.ModelViewSet):
-#     """
-#     retrieve:
-#     Return the given match.
-#     list:
-#     Return a list of all the existing matches.
-#     create:
-#     Create a new match instance.
-#     """
-#     queryset = LinkTag.objects.all()
-#     serializer_class = LinkTagSerializer # for list view
-#     detail_serializer_class = LinkTagDetailSerializer # for detail view
-#     filter_backends = (DjangoFilterBackend, OrderingFilter,)
-#     ordering_fields = '__all__'
-#     def get_serializer_class(self):
-#         """
-#         Determins which serializer to user `list` or `detail`
-#         """
-#         if self.action == 'retrieve':
-#             if hasattr(self, 'detail_serializer_class'):
-#                 return self.detail_serializer_class
-#         return super().get_serializer_class()
-#     def get_queryset(self):
-#         """
-#         Optionally restricts the returned queries by filtering against
-#         a `sport` and `name` query parameter in the URL.
-#         """
-#         queryset = LinkTag.objects.all()
-#         link = self.request.query_params.get('link', None)
-#         tag = self.request.query_params.get('tag', None)
-#         if link is not None:
-#             link = link.title()
-#             queryset = queryset.filter(link__name=link)
-#         if tag is not None:
-#             queryset = queryset.filter(tag=tag)
-#         return queryset
-#     def create(self, request):
-#         """
-#         to parse the incoming request and create a new match or update
-#         existing odds.
-#         """
-#         message = request.data.pop('message_type')
-#         # check if incoming api request is for new event creation
-#         if message == "NewEvent":
-#             event = request.data.pop('event')
-#             sport = event.pop('sport')
-#             markets = event.pop('markets')[0] # for now we have only one market
-#             selections = markets.pop('selections')
-#             sport = Sport.objects.create(**sport)
-#             markets = Market.objects.create(**markets, sport=sport)
-#             for selection in selections:
-#                 markets.selections.create(**selection)
-#             match = Match.objects.create(**event, sport=sport, market=markets)
-#             return Response(status=status.HTTP_201_CREATED)
-#         # check if incoming api request is for updation of odds
 #         elif message == "UpdateOdds":
 #             event = request.data.pop('event')
 #             markets = event.pop('markets')[0]
