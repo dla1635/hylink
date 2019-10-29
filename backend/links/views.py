@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from summary.textrankr import TextRank
 from summary.url2text import urlparse
 
-# from django_filters.rest_framework import DjangoFilterBackend
+# from django_filters.rest_framework import DjangoFilterBackend 
 # from rest_framework.filters import OrderingFilter
 
 
@@ -117,7 +117,13 @@ class LinkViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_200_OK) 
 
         url = request.data.get('url', None)
-
+        img_url, title, input_text, meta_tag = urlparse(url)
+        ​
+        textrank = TextRank(input_text) #TextRank생성되면서 내부에서 요약, 키워드 처리함
+        ​
+        sentences = textrank.summarize(3, verbose=False) #sentences에 list형식으로 3개 돌려줌 verbose는 \n 추가할지 여부인데 필요없을듯
+        ​
+        keywords = textrank.keywords(3) #keyword 3개 list형식, 다만 키워드값은 [idx][0]번째에 저장되있음
         
         title = request.data.get('title',None)
         thumbnail = request.data.get('thumbnail',None)
