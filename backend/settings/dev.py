@@ -116,15 +116,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_EMAIL_FIELD = 'email'
 ACCOUNT_LOGOUT_ON_GET = True
 
-AUTH_USER_MODEL = 'accounts.MyUser'
-
-REST_AUTH_SERIALIZERS = {
-    "USER_DETAILS_SERIALIZER": "backend.accounts.serializers.CustomUserDetailsSerializer",
-}
-REST_AUTH_REGISTER_SERIALIZERS = {
-    "REGISTER_SERIALIZER": "backend.accounts.serializers.CustomRegisterSerializer",
-}
-
 SITE_ID = 1
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
