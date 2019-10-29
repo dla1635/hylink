@@ -1,17 +1,23 @@
 <template>
-<v-app id="container">
+<v-container>
+    <!-- 상단 바 -->
+    <AppBar></AppBar>
     404 ERROR!
-</v-app>
+</v-container>
 </template>
 
 <script>
+import AppBar from './AppBar'
+
 export default {
     name: "404",
+    components: {
+        AppBar,
+    },
     data() {
         return {
-            
-        };
-    },
+        }
+    }
 };
 </script>
 
