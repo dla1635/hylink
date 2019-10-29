@@ -5,7 +5,7 @@ import Home from '@/views/Home/HomePage'
 import Welcome from '@/views/Welcome/WelcomePage'
 
 import Login from '@/views/Login/LoginPage'
-import Regist from '@/views/Regist/RegistPage'
+import Register from '@/views/Register/RegisterPage'
 
 import NotFound from '@/views/Error/NotFound404'
 
@@ -28,22 +28,21 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login,
-      meta: {authRequired: true}
+      component: Login
     },
     {
-      path: '/regist',
-      name: 'regist',
-      component: Regist,
+      path: '/register',
+      name: 'register',
+      component: Register,
     },
     {
-      path: '/404',
+      path: '/notfound',
       name: 'notfound',
       component : NotFound
     },
     {
       path: '*',
-      redirect: '/404' 
+      redirect: '/notfound' 
     },
   ]
 })
@@ -53,8 +52,7 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function(routeInfo) {
     return routeInfo.meta.authRequired;
   })) {
-    // 이동할 페이지에 인증 정보가 필요하면 경고 창을 띄우고 페이지 전환은 하지 않음
-    alert('Login Please!');
+    // 인증 정보가 없으면 이전 페이지로 돌아감
     next(false);
   } else {
     next(); // 페이지 전환
