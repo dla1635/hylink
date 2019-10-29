@@ -1,5 +1,11 @@
 <template>
 <v-container>
+        <!-- 상단 바 -->
+    <AppBar></AppBar>
+
+    <!--  Side bar    -->
+    <NavBar v-if="navBarDrawer" />
+    
     <v-layout text-center wrap>
         <v-flex xs12>
             <v-img :src="require('@/assets/logo.svg')" class="my-3" contain height="200"></v-img>
@@ -30,10 +36,31 @@
 </template>
 
 <script>
+import AppBar from './AppBar'
+import NavBar from './NavBar'
+
 export default {
     name: 'WelcomePage',
-    data: () => ({
-    
-    }),
+    components: {
+        AppBar,
+        NavBar,
+    },
+    data() {
+        return {
+            navBarDrawer: false,
+            AppBarDrawer: false,
+        }
+    },
+    computed: {
+        drawerState() {
+            return this.$store.getters.getNavBarState;
+        },
+
+    },
+    watch: {
+        drawerState(val) {
+            this.navBarDrawer = val;
+        },
+    }
 };
 </script>

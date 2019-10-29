@@ -1,5 +1,11 @@
 <template>
 <v-app id="container">
+    <!-- 상단 바 -->
+    <AppBar></AppBar>
+
+    <!--  Side bar    -->
+    <NavBar v-if="navBarDrawer" />
+
     <v-container fluid>
         <CardList :cardList="card_list" />
     </v-container>
@@ -7,15 +13,21 @@
 </template>
 
 <script>
+import AppBar from './AppBar'
+import NavBar from './NavBar'
 import CardList from '@/components/CardList'
 
 export default {
     name: "HomePage",
     components: {
+        AppBar,
+        NavBar,
         CardList
     },
     data() {
         return {
+            navBarDrawer: false,
+            AppBarDrawer: false,
             card_list: [{
                     title: "알고리즘 분석1",
                     tagList: ["알고리즘", "자바", "백준"],
@@ -81,7 +93,18 @@ export default {
         };
     },
     mounted() {},
-    methods: {}
+    methods: {},
+    computed: {
+        drawerState() {
+            return this.$store.getters.getNavBarState;
+        },
+
+    },
+    watch: {
+        drawerState(val) {
+            this.navBarDrawer = val;
+        },
+    }
 };
 </script>
 
