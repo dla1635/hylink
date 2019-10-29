@@ -110,16 +110,27 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'hylink',
+#         'USER' : 'hylink',
+#         'PASSWORD' : 'hylink!',
+#         'HOST' : '13.125.61.163',        
+#         'PORT' : '3306'
+#     }
+# }
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hylink',
-        'USER' : 'hylink',
-        'PASSWORD' : 'hylink!',
-        'HOST' : '13.125.61.163',        
-        'PORT' : '3306'
+        'USER' : 'root',
+        'PASSWORD' : 'root',
+        'HOST' : 'localhost',        
+        'PORT' : ''
     }
 }
+
 
 
 # Password validation

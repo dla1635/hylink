@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 
 // Vuetify
 import vuetify from './config/vuetify';
-Vue.user(vuetify)
+Vue.use(vuetify)
 
 // Axios
 import axios from 'axios'

@@ -2,9 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Welcome from '@/views/Welcome/WelcomePage'
-import HomePage from '@/views/HomePage'
-import LoginPage from '@/views/LoginPage'
-import RegistPage from '@/views/RegistPage'
+import HomePage from '@/views/Home/HomePage'
+import LoginPage from '@/views/Login/LoginPage'
+import RegistPage from '@/views/Regist/RegistPage'
 import AboutUs from '@/components/template/AboutUs'
 import NotFound from '@/components/template/NotFound'
 
