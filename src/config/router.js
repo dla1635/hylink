@@ -5,8 +5,7 @@ import Welcome from '@/views/Welcome/WelcomePage'
 import HomePage from '@/views/Home/HomePage'
 import LoginPage from '@/views/Login/LoginPage'
 import RegistPage from '@/views/Regist/RegistPage'
-import AboutUs from '@/components/template/AboutUs'
-import NotFound from '@/components/template/NotFound'
+import NotFound from '@/components/NotFound'
 
 Vue.use(Router)
 
@@ -32,11 +31,6 @@ export default new Router({
       path: '/regist',
       name: 'regist',
       component: RegistPage
-    },
-    {
-      path: '/aboutus',
-      name: 'aboutus',
-      component: AboutUs
     },
     {
       path: '/notfound',

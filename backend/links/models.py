@@ -20,7 +20,7 @@ class Link(models.Model):
         ordering = ['-created_at']
     
     def __str__(self):
-        return '[{}] {}'.format(self.user.nickname, self.title)
+        return '[{}] {}'.format(self.user.username, self.title)
 
 
 class Tag(models.Model):

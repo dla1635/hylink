@@ -1,7 +1,7 @@
 {
-    "name": "Django VueJs Template",
+    "name": "LinkPop",
     "description": "",
-    "repository": "https://github.com/gtalarico/django-vue-template",
+    "repository": "https://lab.ssafy.com/s1-final/hylink",
     "keywords": ["django", "vue", "vuejs", "template", "django rest framework"],
     "env": {
       "DJANGO_SETTINGS_MODULE": {
