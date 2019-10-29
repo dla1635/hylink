@@ -180,6 +180,7 @@ class LinksViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
     permission_classes = (permissions.IsAuthenticated,)
+<<<<<<< HEAD
 
     def list(self, request):
         print("linklist GET")
@@ -211,6 +212,12 @@ class LinksViewSet(viewsets.ModelViewSet):
 #     permission_classes = (permissions.IsAuthenticated,)
 #     def perform_create(self, serializer):
 #         serializer.save(user=self.request.user)
+=======
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+        
+>>>>>>> 5ed773ccbcc2ed8eaac31e0a8480a1055554c588
 # class LinkTagViewSet(viewsets.ModelViewSet):
 #     """
 #     retrieve:
