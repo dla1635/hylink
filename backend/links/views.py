@@ -5,12 +5,12 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.db.models import Count, F, Q
-from django.contrib.auth.models import User 
-# from django_filters.rest_framework import DjangoFilterBackend
+from django.contrib.auth.models import User
+from summary.textrankr import TextRank
+from summary.url2text import urlparse
 
-# from rest_framework import status, viewsets
+# from django_filters.rest_framework import DjangoFilterBackend
 # from rest_framework.filters import OrderingFilter
-# from rest_framework.response import Response
 
 
 class LinkViewSet(viewsets.ModelViewSet):
@@ -117,6 +117,8 @@ class LinkViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_200_OK) 
 
         url = request.data.get('url', None)
+
+        
         title = request.data.get('title',None)
         thumbnail = request.data.get('thumbnail',None)
         summary = request.data.get('summary',None)
