@@ -13,8 +13,8 @@ class Link(models.Model):
     sharable = models.IntegerField(default=0) 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    tag = models.ManyToManyField('Tag', through='LinkTag', blank=True)
-    label = models.ManyToManyField('Label', through='LinkLabel', blank=True)
+    tag = models.ManyToManyField('Tag', through='LinkTag', related_name='links', blank=True)
+    label = models.ManyToManyField('Label', through='LinkLabel', related_name='links',blank=True)
     
     class Meta:
         ordering = ['-created_at']
