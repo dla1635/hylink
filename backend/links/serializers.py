@@ -2,8 +2,9 @@ from rest_framework import serializers
 from .models import Link 
 from .models import Tag, LinkTag
 from .models import Label, LinkLabel
-from django.contrib.auth.models import User 
-# from django.contrib.auth import get_user_model
+# from django.contrib.auth.models import User 
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from backend.profiles.serializers import UserSerializer
 
 
