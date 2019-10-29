@@ -70,6 +70,8 @@ class LinkViewSet(viewsets.ModelViewSet):
         #             link.tag.add(link_tag)
         # else:
         #     print("TAG가 없습니당")
+    
+    
 
     def isvalid_value(self, user, url, title, thumbnail, summary, visible):
         msg = ""
@@ -117,17 +119,31 @@ class LinkViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_200_OK) 
 
         url = request.data.get('url', None)
-        img_url, title, input_text, meta_tag = urlparse(url)
+        thumbnail, title, input_text, meta_tag = urlparse(url) # string으로 None이 넘어올 수 있음
         ​
         textrank = TextRank(input_text) #TextRank생성되면서 내부에서 요약, 키워드 처리함
         ​
         sentences = textrank.summarize(3, verbose=False) #sentences에 list형식으로 3개 돌려줌 verbose는 \n 추가할지 여부인데 필요없을듯
         ​
         keywords = textrank.keywords(3) #keyword 3개 list형식, 다만 키워드값은 [idx][0]번째에 저장되있음
+
+        user_tags =[]
+        for i in range(0,3):
+            keyword = keywords[i]
+            if keyword != None:
+                user_tags.append(keyword)
         
-        title = request.data.get('title',None)
-        thumbnail = request.data.get('thumbnail',None)
-        summary = request.data.get('summary',None)
+        summary = ''
+        for i in range(0,3):
+            sentence = sentences[i]
+            if sentence != None:
+                summary += sentence
+        
+        if summary == '':
+            summary = 'None'
+        # title = request.data.get('title',None)
+        # thumbnail = request.data.get('thumbnail',None)
+        # summary = request.data.get('summary',None)
         sharable = 0
         # value가 유효한지 확인
         # isvalid_value()
@@ -163,9 +179,9 @@ class LinkViewSet(viewsets.ModelViewSet):
         title = request.data.get('title',None)
         thumbnail = request.data.get('thumbnail',None)
         summary = request.data.get('summary',None)
-        sharable = request.data.get('sharable',None)
-        if sharable != None:
-            sharable = int(sharable)
+        # sharable = request.data.get('sharable',None)
+        # if sharable != None:
+        #     sharable = int(sharable)
         # value가 유효한지 확인
         # isvalid_value()
 
@@ -174,7 +190,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         update_link.title = title
         update_link.thumbnail = thumbnail
         update_link.summary = summary
-        update_link.sharable = sharable
+        # update_link.sharable = sharable
 
         user_tags = request.data.get('tags', None)
         update_linktag(update_link, user_tags)
