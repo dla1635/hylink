@@ -14,7 +14,7 @@ from re import split
 from networkx import Graph
 from networkx import pagerank
 from itertools import combinations
-from sentence import Sentence
+from summary.sentence import Sentence
 
 from konlpy.tag import Okt
 
@@ -24,6 +24,7 @@ from sklearn.preprocessing import normalize
 import numpy as np
 
 from collections import Counter
+
 
 class TextRank(object):
     stopwords = ["만약","대한","아", "휴", "아이구", "아이쿠", "아이고", "어", "나", "우리", "저희", "따라", "의해", "을", "를", "에", "의", "가",]
