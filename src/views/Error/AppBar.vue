@@ -1,8 +1,9 @@
 <template>
 <v-app-bar app clipped-left color="amber">
-    <v-app-bar-nav-icon @click="changeNavBarState()"></v-app-bar-nav-icon>
-    <v-img src="@/assets/logo.png" max-width="50"></v-img><span class="title ml-3 mr-5">Hylink</span>
-    <v-text-field text hide-details prepend-inner-icon="search"></v-text-field>
+    <router-link to="home">
+        <v-img src="@/assets/logo.png" max-width="50"></v-img><span class="title ml-3 mr-5">Hylink</span>
+        <v-text-field text hide-details prepend-inner-icon="search"></v-text-field>
+    </router-link>
     <v-flex align-center>
         <v-btn icon>
             <img src="https://www.w3schools.com/css/paris.jpg" style="width:50px; height:50px; border-radius: 50%;" />
@@ -13,7 +14,7 @@
 </template>
 
 <script>
-export default {    
+export default {
     name: 'AppBar',
     data() {
         return {

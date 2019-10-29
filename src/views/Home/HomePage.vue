@@ -27,7 +27,6 @@ export default {
     data() {
         return {
             navBarDrawer: false,
-            AppBarDrawer: false,
             card_list: [{
                     title: "알고리즘 분석1",
                     tagList: ["알고리즘", "자바", "백준"],
