@@ -19,13 +19,13 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',  # < Per Whitenoise, to disable built in
     'django.contrib.staticfiles',
+    'django.contrib.admin',
     'django_extensions',
     
     # RESTful API 인증
@@ -40,12 +40,13 @@ INSTALLED_APPS = [
     'backend.profiles',
 ]
 
+AUTH_USER_MODEL = 'profiles.User'
+
+
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    # ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -75,59 +76,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# cors header setting 
 CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_ORIGIN_WHITELIST = [
-    "http://127.0.0.1:8080",
-]
-
-COR_ALLOW_METHODS = (
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT'
-)
-
-CORS_ALLOW_HEADERS = (
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'access-control-request-method',
-    'access-control-request-headers',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-)
-
-# auth model setting
-
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_USER_EMAIL_FIELD = 'email'
-ACCOUNT_LOGOUT_ON_GET = True
-
-SITE_ID = 1
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-        ),
-}
-
 
 # CORS_ORIGIN_WHITELIST = (
 #     'localhost:8080',
@@ -161,16 +110,27 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'hylink',
+#         'USER' : 'hylink',
+#         'PASSWORD' : 'hylink!',
+#         'HOST' : '13.125.61.163',        
+#         'PORT' : '3306'
+#     }
+# }
 DATABASES = {
     'default' : {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hylink',
-        'USER' : 'hylink',
-        'PASSWORD' : 'hylink!',
-        'HOST' : '13.125.61.163',        
-        'PORT' : '3306'
+        'USER' : 'root',
+        'PASSWORD' : 'root',
+        'HOST' : 'localhost',        
+        'PORT' : ''
     }
 }
+
 
 
 # Password validation
@@ -210,7 +170,7 @@ USE_TZ = True
 # http://whitenoise.evans.io/en/stable/django.html?highlight=django
 
 MIDDLEWARE_CLASSES = (
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 )
 
 STATIC_URL = '/static/'

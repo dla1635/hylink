@@ -13,7 +13,8 @@ from .posts.views import PostViewSet, CommentViewSet, ReportViewSet
 from .links.views import LinkViewSet, LinksViewSet 
 from .profiles.views import UserViewSet
 
-from rest_framework_jwt.views import obtain_jwt_token
+
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh_jwt_token
 
 
 router = routers.DefaultRouter()
@@ -39,13 +40,8 @@ urlpatterns = [
 
     path('api/auth/', obtain_jwt_token),
 
-    # path('api-auth/', include('rest_framework.urls')),
-    # # login, registration 등 path 설정 
-    # path('api/users/rest-auth/', include('rest_auth.urls')),
-    # # 토큰 발급 및 재발급 페이지 설정 
-    # path('api/users/rest-auth/obtain_token/', obtain_jwt_token, name="obtain-jwt" ),
-    # path('api/users/rest-auth/refresh_token/', refresh_jwt_token, name="refresh-jwt"),
+    path('api/auth/verify', verify_jwt_token),
 
-    # path('api/users/rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('api/auth/refresh', refresh_jwt_token),
 
 ]
