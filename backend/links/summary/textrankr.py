@@ -14,7 +14,7 @@ from re import split
 from networkx import Graph
 from networkx import pagerank
 from itertools import combinations
-from summary.sentence import Sentence
+from sentence import Sentence
 
 from konlpy.tag import Okt
 
@@ -22,6 +22,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import normalize
 import numpy as np
+import re
 
 from collections import Counter
 
@@ -37,7 +38,7 @@ class TextRank(object):
         self._build_sentences()
 
         # self.test_word()
-        #self.has_nouns = self._extract_nouns()
+        # self.has_nouns = self._extract_nouns()
         
         # 문장 처리
         self._build_graph()        
@@ -46,32 +47,12 @@ class TextRank(object):
         
 
         # 단어 처리
-        if self.has_noun:
-            self.word_rank_collections = Counter(self.nouns)
+        self.word_rank_collections = Counter(self.nouns)
+        #if self.has_noun:
             # self._build_word_graph()
             # word_rank_idx = self.get_word_ranks(self.words_graph)
             # self.sorted_word_rank_idx = sorted(word_rank_idx, key=lambda k: word_rank_idx[k], reverse=True)
 
-
-    def test_word(self):
-        
-        okt = Okt()
-        word2index={}  
-        bow=[]  
-        for sentence in self.sentences:
-            token = okt.nouns(sentence.text)
-            for voca in token:  
-                    if voca not in word2index.keys():  
-                        word2index[voca]=len(word2index)  
-            # token을 읽으면서, word2index에 없는 (not in) 단어는 새로 추가하고, 이미 있는 단어는 넘깁니다.   
-                        bow.insert(len(word2index)-1,1)
-            # BoW 전체에 전부 기본값 1을 넣어줍니다. 단어의 개수는 최소 1개 이상이기 때문입니다.  
-                    else:
-                        index=word2index.get(voca)
-            # 재등장하는 단어의 인덱스를 받아옵니다.
-                        bow[index]=bow[index]+1
-            # 재등장한 단어는 해당하는 인덱스의 위치에 1을 더해줍니다. (단어의 개수를 세는 것입니다.)  
-        
 
     def _build_sentences(self):
         okt= Okt()
@@ -82,14 +63,15 @@ class TextRank(object):
         #전체 text를 문장단위로 split한다
         #   전체 문장 text를 \n으로 split
         #   나눈 한 line에서 .으로 split 파일명 안잘리게 정규식적용
-        #   line에서 앞 뒤 공백 제거후 append        
-        for enter_line in split('\n', self.text): 
-            for line in split(r'(?<=[^0-9])(?<=[^a-z])[\.]', enter_line):
+        #   line에서 앞 뒤 공백 제거후 append     
+
+        for enter_line in re.split('\n|! |\? ', self.text): 
+            for line in split(r'[\.](?=[^0-9])(?=[^a-z])', enter_line):
                 candidates.append(line.strip(' ').strip('.').strip('\t'))
 
         self.sentences = []
         self.nouns = []
-        self.has_noun = False
+        # self.has_noun = False
         index = 0
 
         for candidate in candidates:
@@ -102,8 +84,8 @@ class TextRank(object):
                 for noun in okt.nouns(str(candidate)):
                     if noun not in self.stopwords and len(noun) > 1:
                         self.nouns.append(noun)
-        if len(self.nouns) > 0:
-            self.has_noun = True
+        # if len(self.nouns) > 0:
+        #     self.has_noun = True
                 
         del dup
         del candidates
@@ -204,22 +186,25 @@ class TextRank(object):
         return results
 
 if __name__ == "__main__":
-    input_text = ''''''
+    input_text = '''
+    
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    '''
     textrank = TextRank(input_text)
+    max_num = 3
 
     print("=============== summarized ============")
-    sentences = textrank.summarize(3, verbose=False)
+    sentences = textrank.summarize(max_num, verbose=False)
     idx = 1
     print("type : {}".format(type(sentences)))
     for sentence in sentences:
         print("{} : {}".format(idx,sentences[idx-1]))
         idx+=1
 
-    max_keyword = 3
     print("=============== keywords ==============")
-    keywords = textrank.keywords(max_keyword)
+    keywords = textrank.keywords(max_num)
     idx = 1
     print("type : {}".format(type(keywords)))
     for keyword in keywords:
-        print("{}".format(keywords[idx-1][0]))
+        print("{}".format(keywords[idx-1]))
         idx+=1
