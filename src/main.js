@@ -14,11 +14,15 @@ import vuetify from './config/vuetify';
 
 // Axios
 import axios from 'axios'
-import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios)
+Vue.prototype.$axios = axios
 
 // Vuex
 import store from './vuex/store'
+
+// validation
+import { Validator } from 'vee-validate'
+
+Vue.use(Validator)
 
 const vue = new Vue({
   router,
