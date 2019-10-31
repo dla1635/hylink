@@ -14,7 +14,7 @@
 
 # max_keyword = 3
 
-# url ="https://ko.wikipedia.org/wiki/%EC%82%BC%EC%84%B1%EC%A0%84%EC%9E%90"
+# url ="https://www.revsys.com/tidbits/tips-using-djangos-manytomanyfield/"
 # img_url, title, input_text, meta_tag = urlparse(url)
 
 # print("=============== title      ============")
