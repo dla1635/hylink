@@ -36,6 +36,6 @@ whitenoise==4.1.4
 bs4==0.0.1
 konlpy==0.5.1
 nltk==3.4.3
-Jpype1==0.6.3
+Jpype1==0.6.3   #Jpype에러시 summary폴더 내에 있는 JPype1-0.6.3-cp36-cp36m-win_amd64.whl 혹은 버전과 환경에 맞는 Jpype설치
 networkx==2.3
 requests==2.22.0
