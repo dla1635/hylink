@@ -39,3 +39,4 @@ nltk==3.4.3
 Jpype1==0.6.3
 networkx==2.3
 requests==2.22.0
+numpy==1.17.3
