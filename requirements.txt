@@ -38,4 +38,4 @@ konlpy==0.5.1
 nltk==3.4.3
 Jpype1==0.6.3
 networkx==2.3
-request==2.22.0
+requests==2.22.0
