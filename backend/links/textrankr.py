@@ -29,8 +29,12 @@ from collections import Counter
 
 
 class TextRank(object):
-    stopwords = ["이하","만약","대한","아", "휴", "아이구", "아이쿠", "아이고", "어", "나", "우리", "저희", "따라", "의해", "을", "를", "에", "의", "가",]
-    
+    stopwords = [
+        "이하","만약","대한","아", "휴", "아이구", "아이쿠", "아이고", "어", "나", "우리", "저희", "따라", "의해", "을", "를", "에", "의", "가",
+    ]
+    eng_stopwords=[
+        "lot","day","way",
+    ]
     def __init__(self, text):
         self.text = text.strip()
         self.build()
@@ -72,9 +76,10 @@ class TextRank(object):
 
         self.sentences = []
         self.nouns = []
-        # self.has_noun = False
+        self.has_noun = False
         index = 0
-
+        eng_list = []
+        eng_nouns = []
         for candidate in candidates:
             if len(candidate) >= 1 and candidate not in dup:
                 dup[candidate] = True
@@ -82,18 +87,25 @@ class TextRank(object):
                 self.sentences.append(Sentence(candidate + '.', index))
                 index += 1
                 # 문장의 명사들 추가
-                for noun in okt.nouns(str(candidate)):
-                    if noun not in self.stopwords and len(noun) > 1:
-                        self.nouns.append(noun)
-                
-                # 영어 문자열 
-                for pos in nltk.pos_tag(nltk.word_tokenize(str(candidate))):
-                    if pos[1]=="NN" and pos[0] not in self.stopwords and len(pos[0]) > 1:
+                for pos in okt.pos(str(candidate)):
+                    if pos[0] not in self.stopwords and len(pos[0]) > 1 and pos[1]=="Noun":
                         self.nouns.append(pos[0])
+                    elif pos[1]=="Alpha":
+                        eng_list.append(pos[0])
 
-        # if len(self.nouns) > 0:
-        #     self.has_noun = True
-                
+                # 영어 문자열 
+                for pos in nltk.pos_tag(eng_list):
+                    if pos[1]=="NN" and pos[0] not in self.eng_stopwords and len(pos[0]) > 1:        
+                        eng_nouns.append(pos[0])
+
+        if len(self.nouns) > 0:
+            self.has_noun = True
+        else:
+            if(len(eng_nouns) > 0):
+                self.nouns.extend(eng_nouns)
+                self.has_noun = True
+
+
         del dup
         del candidates
 
@@ -185,6 +197,7 @@ class TextRank(object):
         results = []
         for keyword in keywords:
             results.append(keyword[0])
+        #리턴값 3개 보장
         if len(results) < word_num:    
             for i in range(len(results),word_num):
                     results.append("None")
