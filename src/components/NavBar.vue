@@ -30,7 +30,7 @@ import {mapActions} from 'vuex'
 import Store from '@/vuex/store'
 
 export default {
-    name: "navBar",
+    name: "NavBar",
     data() {
         return {
           labels:[]

@@ -33,6 +33,7 @@
 
 <script>
 export default {
+    name: 'LoginForm',
     data: () => ({
         drawer: null,
         id: "",
