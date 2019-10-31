@@ -93,8 +93,19 @@ class LinkViewSet(viewsets.ModelViewSet):
         print("url : "+url)
         print("isVisible : "+ str(is_visible))
 
+        # user & link 존재하면 return
+        if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
+            print("user가 이미 등록한 URL")
+            return Response(status=status.HTTP_200_OK) 
+
         # 3. url로 썸네일, 태그, 제목, 3줄 요약 가져오기
         thumbnail, title, input_text, meta_tag = urlparse(url) # string으로 None이 넘어올 수 있음
+        print(meta_tag)
+
+        if title=='None':
+            print("유효하지 않는 URL")
+            return Response(status=status.HTTP_200_OK) 
+        
         textrank = TextRank(input_text) #TextRank생성되면서 내부에서 요약, 키워드 처리함
         sentences = textrank.summarize(3, verbose=False) #sentences에 list형식으로 3개 돌려줌 verbose는 \n 추가할지 여부인데 필요없을듯
         if len(meta_tag) > 1:
@@ -109,13 +120,13 @@ class LinkViewSet(viewsets.ModelViewSet):
             keyword = keywords[i]
             if keyword != 'None':
                 user_tags.append(keyword)
-            else:
-                if i == 0:
-                    user_tags.append('Vue')
-                elif i == 1:
-                    user_tags.append('django')
-                else:
-                    user_tags.append('AWS')
+            # else:
+            #     if i == 0:
+            #         user_tags.append('Vue')
+            #     elif i == 1:
+            #         user_tags.append('django')
+            #     else:
+            #         user_tags.append('AWS')
         
         print(user_tags)
         summary = ''
