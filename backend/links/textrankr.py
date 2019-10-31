@@ -16,6 +16,7 @@ from networkx import pagerank
 from itertools import combinations
 from sentence import Sentence
 
+import nltk
 from konlpy.tag import Okt
 
 # from sklearn.feature_extraction.text import TfidfVectorizer
@@ -28,7 +29,7 @@ from collections import Counter
 
 
 class TextRank(object):
-    stopwords = ["만약","대한","아", "휴", "아이구", "아이쿠", "아이고", "어", "나", "우리", "저희", "따라", "의해", "을", "를", "에", "의", "가",]
+    stopwords = ["이하","만약","대한","아", "휴", "아이구", "아이쿠", "아이고", "어", "나", "우리", "저희", "따라", "의해", "을", "를", "에", "의", "가",]
     
     def __init__(self, text):
         self.text = text.strip()
@@ -84,6 +85,12 @@ class TextRank(object):
                 for noun in okt.nouns(str(candidate)):
                     if noun not in self.stopwords and len(noun) > 1:
                         self.nouns.append(noun)
+                
+                # 영어 문자열 
+                for pos in nltk.pos_tag(nltk.word_tokenize(str(candidate))):
+                    if pos[1]=="NN" and pos[0] not in self.stopwords and len(pos[0]) > 1:
+                        self.nouns.append(pos[0])
+
         # if len(self.nouns) > 0:
         #     self.has_noun = True
                 
