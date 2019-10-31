@@ -97,7 +97,10 @@ class LinkViewSet(viewsets.ModelViewSet):
         thumbnail, title, input_text, meta_tag = urlparse(url) # string으로 None이 넘어올 수 있음
         textrank = TextRank(input_text) #TextRank생성되면서 내부에서 요약, 키워드 처리함
         sentences = textrank.summarize(3, verbose=False) #sentences에 list형식으로 3개 돌려줌 verbose는 \n 추가할지 여부인데 필요없을듯
-        keywords = textrank.keywords(3) #keyword 3개 list형식, 다만 키워드값은 [idx][0]번째에 저장되있음
+        if len(meta_tag) > 1:
+            keywords = meta_tag
+        else:
+            keywords = textrank.keywords(3) #keyword 3개 list형식, 다만 키워드값은 [idx][0]번째에 저장되있음
 
         print(keywords)
         # 4. 가져온 태그와 3줄 요약 정리
