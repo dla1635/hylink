@@ -1,15 +1,8 @@
 <template>
   <v-layout column id="container">
     <v-layout>
-      <v-text-field
-          solo
-          text
-          hide-details
-          label="URL"
-          prepend-inner-icon="link"
-          style="width:300px; margin-bottom:10px;"
-      ></v-text-field>
       <v-spacer/>
+      <v-btn @click="sharing_flag=!sharing_flag">공유</v-btn>
       <v-menu transition="slide-y-transition" :close-on-content-click="false">
         <template v-slot:activator="{ on }">
           <v-btn icon><v-icon style="width:40px; height:40px;"  v-on="on">apps</v-icon> </v-btn>
@@ -36,18 +29,20 @@
           </div>
           </v-list>
     </v-menu>
-      
     </v-layout>
-    <v-layout  row wrap >
-      <v-flex v-for="(item, index) in cardList" :key="index" xs12 sm6 lg6 xl6 >
-        <Card :card="item" :index="index" :thumnail_flag="thumnail_flag" :summary_flag="summary_flag"/>
-      </v-flex>
-    </v-layout>
-
+      <v-item-group multiple v-model="selectedCard">
+        <v-layout  row wrap >
+            <v-flex v-for="(item, index) in cardList" :key="index" xs12 sm6 lg6 xl6 >
+              <Card :card="item" :index="index" :thumnail_flag="thumnail_flag" :summary_flag="summary_flag" :sharing_flag="sharing_flag"/>
+            </v-flex>
+        </v-layout>
+      </v-item-group>
   </v-layout>
 </template>
 
 <script>
+/* eslint-disable no-console */
+
 import Card from '@/components/Card'
  
 export default {
@@ -56,6 +51,8 @@ export default {
     return{
       thumnail_flag:true,
       summary_flag:true,
+      sharing_flag:false,
+      selectedCard:[]
     }
   },
   components: {
@@ -63,6 +60,11 @@ export default {
   },
   props: {
     cardList: {type:Array}
+  },
+  watch: {
+      selectedCard: function() {
+        console.log(this.selectedCard)
+      }
   },
   methods: {
   }
@@ -83,6 +85,4 @@ export default {
 #container {
   padding:0 10%;
 }
-
-
 </style>
