@@ -5,13 +5,47 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.db.models import Count, F, Q
-from django.contrib.auth.models import User
-from summary.textrankr import TextRank
-from summary.url2text import urlparse
+from .textrankr import TextRank
+from .url2text import urlparse
+from django.contrib.auth import get_user_model
 
 # from django_filters.rest_framework import DjangoFilterBackend 
 # from rest_framework.filters import OrderingFilter
 
+def isvalid_value(user, url, title, thumbnail, summary, visible):
+    msg = ""
+    if user == None:
+        msg += 'user '
+    
+    if url == None:
+        msg += 'url '
+
+    if title == None:
+        msg += 'title '
+
+    if thumbnail == None:
+        msg += 'thumbnail '
+
+    if summary == None:
+        msg += 'summary '
+
+def isvalid_link(l_id):
+    valid = True if Link.objects.filter(id=l_id).count() > 0 else False
+    msg = "link valid" if valid == True else "link invalid"
+    return valid, msg
+
+def isvalid_user( user):
+    print(user.id)
+    print(get_user_model().objects.filter(id=2).count())
+    valid = True if get_user_model().objects.filter(id=user.id).count() > 0 else False
+    print(valid)
+    msg = "user valid" if valid == True else "user invalid"
+    return valid, msg
+
+def isvalid_label(lb_id):
+    valid = True if Label.objects.filter(id=lb_id).count() > 0 else False
+    msg = "label valid" if valid == True else "label invalid"
+    return valid, msg
 
 class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
@@ -31,41 +65,10 @@ class LinkViewSet(viewsets.ModelViewSet):
                     hasTag = True
                     break
             if hasTag == False:
-                Tag(name=link_tag).save()
+                Tag(name=tag_name).save()
             link_tag = Tag.objects.get(name=tag_name)
             link.tag.add(link_tag)    
 
-    def isvalid_value(self, user, url, title, thumbnail, summary, visible):
-        msg = ""
-        if user == None:
-            msg += 'user '
-        
-        if url == None:
-            msg += 'url '
-
-        if title == None:
-            msg += 'title '
-
-        if thumbnail == None:
-            msg += 'thumbnail '
-
-        if summary == None:
-            msg += 'summary '
-    
-    def isvalid_link(self, l_id):
-        valid = True if Link.objects.get(id=l_id).count() > 0 else False
-        msg = "link valid" if valid == True else "link invalid"
-        return valid, msg
-
-    def isvalid_user(self, user):
-        valid = True if User.objects.get(user=user).count() > 0 else False
-        msg = "user valid" if valid == True else "user invalid"
-        return valid, msg
-    
-    def isvalid_label(self, lb_id):
-        valid = True if Label.objects.get(id=lb_id).count() > 0 else False
-        msg = "label valid" if valid == True else "label invalid"
-        return valid, msg
     '''
     [method] = POST
     입력값으로 link 생성한 뒤, DB에 저장
@@ -76,7 +79,9 @@ class LinkViewSet(viewsets.ModelViewSet):
 
         # 1. user가 유효한지 확인 
         user = request.user
-        valid, msg = self.isvalid_user(user)
+        print(user)
+        valid, msg = isvalid_user(user)
+        print("here")
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK) 
@@ -85,12 +90,16 @@ class LinkViewSet(viewsets.ModelViewSet):
         url = request.data.get('url', None)
         is_visible = request.data.get('is_visible', 3)
 
+        print("url : "+url)
+        print("isVisible : "+ str(is_visible))
+
         # 3. url로 썸네일, 태그, 제목, 3줄 요약 가져오기
         thumbnail, title, input_text, meta_tag = urlparse(url) # string으로 None이 넘어올 수 있음
         textrank = TextRank(input_text) #TextRank생성되면서 내부에서 요약, 키워드 처리함
         sentences = textrank.summarize(3, verbose=False) #sentences에 list형식으로 3개 돌려줌 verbose는 \n 추가할지 여부인데 필요없을듯
         keywords = textrank.keywords(3) #keyword 3개 list형식, 다만 키워드값은 [idx][0]번째에 저장되있음
 
+        print(keywords)
         # 4. 가져온 태그와 3줄 요약 정리
         user_tags =[]
         for i in range(0,3):
@@ -98,6 +107,7 @@ class LinkViewSet(viewsets.ModelViewSet):
             if keyword != 'None':
                 user_tags.append(keyword)
         
+        print(user_tags)
         summary = ''
         for i in range(0,3):
             sentence = sentences[i]
@@ -121,7 +131,9 @@ class LinkViewSet(viewsets.ModelViewSet):
         new_link.save()
 
         link_tags = request.data.get('tags', None)
-        self.update_linktag(new_link, link_tags)
+        user_tags = ['Vue', 'Django','AWS']
+                
+        self.update_linktag(new_link, user_tags)
 
         return Response(status=status.HTTP_200_OK)
 
@@ -130,14 +142,14 @@ class LinkViewSet(viewsets.ModelViewSet):
         # 1. user & link 유효성 체크
         # 유효한 link인지 확인
         l_id = request.data.get('l_id', None)
-        valid, msg = self.isvalid_link(l_id)
+        valid, msg = isvalid_link(l_id)
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK)
 
         # user가 유효한지 확인
         user = request.user
-        valid, msg = self.isvalid_user(user)
+        valid, msg = isvalid_user(user)
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK) 
@@ -183,7 +195,7 @@ class LinkViewSet(viewsets.ModelViewSet):
     def destroy(self, request):
         l_id = request.data.get('l_id', None)
         # 유효한 link인지 확인
-        valid, msg = self.isvalid_link(l_id)
+        valid, msg = isvalid_link(l_id)
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK)
@@ -201,36 +213,36 @@ class LinksViewSet(viewsets.ModelViewSet):
     def list(self, request):
         print("linklist GET")
         user = request.user
-        valid, msg = self.isvalid_user(user)
+        valid, msg = isvalid_user(user)
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK)
 
         search_type = request.data.get('type',None)
-        if search_type != 'tag' or search_type != None or search_type != 'label' or search_type != 'word':
+        print(search_type)
+        if search_type != 'tag' and search_type != None and search_type != 'label' and search_type != 'word':
             print("잘못된 입력으로 검색했습니다.")
-            return Response(status=status.HTTP_200_OK)
-
-        word = request.data.get('word', None)
-        if word == None:
-            print("검색 단어가 입력되지 않았습니다.")
             return Response(status=status.HTTP_200_OK)
         
         link_list = Link.objects.all().filter(user=user)
 
-        if search_type != None: # ALL
+        if search_type == None: # ALL
             result = link_list
         elif search_type == 'word': # search word를 포함한 links
             # content_filter = link_list.filter(Q(summary__icontains=word)|Q(title__icontains=word)) if link_list.filter(Q(summary__icontains=word)|Q(title__icontains=word)).count() > 0 else None
+            word = request.data.get('word', None)
+            if word == None:
+                print("검색 단어가 입력되지 않았습니다.")
+                return Response(status=status.HTTP_200_OK)
+            
             content_filter = link_list.filter(Q(summary__icontains=word)|Q(title__icontains=word))
-            tag_filter = Tag.objects.get(name=word).links.all().filter(user=user)
+            tag_filter = Tag.objects.get(name=word).links.all().filter(id=user.id)
             result = content_filter.union(tag_filter, all=False)
         elif search_type == 'tag': # tag를 포함한 links
-            result =  Tag.objects.get(name=word).links.all().filter(user=user)
+            result =  Tag.objects.get(name=word).links.all().filter(id=user.id)
         elif search_type == 'label': # label에 포함된 links
-            result = Label.objects.get(name=word).links.all().filter(user=user)
+            result = Label.objects.get(name=word).links.all().filter(id=user.id)
 
-        # link_list = Link.objects.all()
         serializer = LinkSerializer(result, many=True)
         
         return Response(data=serializer.data,status=status.HTTP_200_OK)
@@ -256,7 +268,7 @@ class LabelViewSet(viewsets.ModelViewSet):
         print("label update")
 
         lb_id = request.data.get('lb_id', None)
-        valid, msg = self.isvalid_label(lb_id)
+        valid, msg = isvalid_label(lb_id)
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK) 

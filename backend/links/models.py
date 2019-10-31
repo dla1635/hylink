@@ -11,7 +11,7 @@ class Link(models.Model):
     thumbnail = models.TextField(blank=True)
     summary = models.TextField()
     sharable = models.IntegerField(default=0)
-    is_visible = models.IntegerField()
+    is_visible = models.IntegerField(default=3)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tag = models.ManyToManyField('Tag', through='LinkTag', related_name='links', blank=True)

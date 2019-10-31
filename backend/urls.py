@@ -10,7 +10,7 @@ from rest_framework import routers
 
 from .api.views import index_view, MessageViewSet
 from .posts.views import PostViewSet, CommentViewSet, ReportViewSet
-from .links.views import LinkViewSet, LinksViewSet 
+from .links.views import LinkViewSet, LinksViewSet, LabelViewSet 
 from .profiles.views import UserViewSet
 
 
@@ -23,6 +23,7 @@ router.register('posts', PostViewSet)
 router.register('comments', CommentViewSet)
 router.register('linklist', LinksViewSet)
 router.register('link', LinkViewSet)
+router.register('label', LabelViewSet)
 router.register('reports', ReportViewSet)
 router.register('users', UserViewSet)
 

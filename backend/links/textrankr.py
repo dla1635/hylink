@@ -14,7 +14,7 @@ from re import split
 from networkx import Graph
 from networkx import pagerank
 from itertools import combinations
-from sentence import Sentence
+from .sentence import Sentence
 
 from konlpy.tag import Okt
 

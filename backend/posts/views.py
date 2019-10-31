@@ -1,8 +1,10 @@
 from rest_framework import viewsets
 from .models import Post, PostComment, PostReport
+from backend.links.models import Link
 from .serializers import PostSerializer, CommentSerializer, ReportSerializer
-from rest_framework import permissions
+from rest_framework import permissions, status
 from rest_framework.response import Response
+from django.contrib.auth import get_user_model
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -10,8 +12,8 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save(user=self.request.user)
 
     # POST
     def create(self, request):
