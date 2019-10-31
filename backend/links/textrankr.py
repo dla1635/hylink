@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-import sys
-import io
+# import sys
+# import io
 
-sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
+# sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
+# sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
-import urllib.request
+# import urllib.request
 
-from urllib import parse #인코딩용 임포트
+# from urllib import parse #인코딩용 임포트
 
 
 from re import split
@@ -18,10 +18,10 @@ from sentence import Sentence
 
 from konlpy.tag import Okt
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.preprocessing import normalize
-import numpy as np
+# from sklearn.feature_extraction.text import TfidfVectorizer
+# from sklearn.feature_extraction.text import CountVectorizer
+# from sklearn.preprocessing import normalize
+# import numpy as np
 import re
 
 from collections import Counter
@@ -90,23 +90,23 @@ class TextRank(object):
         del dup
         del candidates
 
-    def _extract_nouns(self):
-        okt = Okt()
-        self.nouns = []
+    # def _extract_nouns(self):
+    #     okt = Okt()
+    #     self.nouns = []
         
-        for sentence in self.sentences:
-            if sentence.text is not '':
-                self.nouns.append(' '.join([noun for noun in okt.nouns(str(sentence.text))
-                if noun not in self.stopwords and len(noun) > 1]))
+    #     for sentence in self.sentences:
+    #         if sentence.text is not '':
+    #             self.nouns.append(' '.join([noun for noun in okt.nouns(str(sentence.text))
+    #             if noun not in self.stopwords and len(noun) > 1]))
 
-        # noun이 하나도 안뽑혔는지 재확인
-        # noun이 하나라도 있으면 true리턴
-        # 하나도 없으면 false리턴
-        for noun in self.nouns:
-            if noun:
-                return True
+    #     # noun이 하나도 안뽑혔는지 재확인
+    #     # noun이 하나라도 있으면 true리턴
+    #     # 하나도 없으면 false리턴
+    #     for noun in self.nouns:
+    #         if noun:
+    #             return True
         
-        return False
+    #     return False
 
 
     def _build_graph(self):
@@ -121,17 +121,17 @@ class TextRank(object):
             if weight:
                 self.graph.add_edge(sent1, sent2, weight=weight)
         
-    def _build_word_graph(self):
-        #단어 그래프 처리
-        self.tfidf = TfidfVectorizer()
-        self.cnt_vec = CountVectorizer()
-        cnt_vec_mat = normalize(self.cnt_vec.fit_transform(self.nouns).toarray().astype(float), axis=0)
+    # def _build_word_graph(self):
+    #     #단어 그래프 처리
+    #     self.tfidf = TfidfVectorizer()
+    #     self.cnt_vec = CountVectorizer()
+    #     cnt_vec_mat = normalize(self.cnt_vec.fit_transform(self.nouns).toarray().astype(float), axis=0)
         
-        vocab = self.cnt_vec.vocabulary_
+    #     vocab = self.cnt_vec.vocabulary_
 
-        self.words_graph = np.dot(cnt_vec_mat.T, cnt_vec_mat)
+    #     self.words_graph = np.dot(cnt_vec_mat.T, cnt_vec_mat)
         
-        self.idx2word = {vocab[word] : word for word in vocab}
+    #     self.idx2word = {vocab[word] : word for word in vocab}
         
 
     def _jaccard(self, sent1, sent2):
@@ -139,23 +139,23 @@ class TextRank(object):
         q = sum((sent1.bow | sent2.bow).values())
         return p / q if q else 0
 
-    def get_word_ranks(self, graph, d=0.85):
-        A = graph
-        matrix_size = A.shape[0]
-        for id in range(matrix_size):
-            A[id, id] = 0 # diagonal 부분을 0으로
-            link_sum = np.sum(A[:,id]) # A[:, id] = A[:][id]
-            if link_sum != 0:
-                A[:, id] /= link_sum
-            A[:, id] *= -d
-            A[id, id] = 1
+    # def get_word_ranks(self, graph, d=0.85):
+    #     A = graph
+    #     matrix_size = A.shape[0]
+    #     for id in range(matrix_size):
+    #         A[id, id] = 0 # diagonal 부분을 0으로
+    #         link_sum = np.sum(A[:,id]) # A[:, id] = A[:][id]
+    #         if link_sum != 0:
+    #             A[:, id] /= link_sum
+    #         A[:, id] *= -d
+    #         A[id, id] = 1
             
-        B = (1-d) * np.ones((matrix_size, 1))
+    #     B = (1-d) * np.ones((matrix_size, 1))
 
-        ranks = np.linalg.solve(A, B) # 연립방정식 Ax = b
+    #     ranks = np.linalg.solve(A, B) # 연립방정식 Ax = b
 
         
-        return {idx: r[0] for idx, r in enumerate(ranks)}
+    #     return {idx: r[0] for idx, r in enumerate(ranks)}
 
 
     def summarize(self, count=3, verbose=True):
@@ -185,26 +185,3 @@ class TextRank(object):
 
         return results
 
-if __name__ == "__main__":
-    input_text = '''
-    
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    '''
-    textrank = TextRank(input_text)
-    max_num = 3
-
-    print("=============== summarized ============")
-    sentences = textrank.summarize(max_num, verbose=False)
-    idx = 1
-    print("type : {}".format(type(sentences)))
-    for sentence in sentences:
-        print("{} : {}".format(idx,sentences[idx-1]))
-        idx+=1
-
-    print("=============== keywords ==============")
-    keywords = textrank.keywords(max_num)
-    idx = 1
-    print("type : {}".format(type(keywords)))
-    for keyword in keywords:
-        print("{}".format(keywords[idx-1]))
-        idx+=1

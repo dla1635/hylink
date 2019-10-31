@@ -1,20 +1,20 @@
-import sys
-import io
+# import sys
+# import io
 
-sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
+# sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
+# sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
-import urllib.request
+# import urllib.request
+# from urllib import parse #인코딩용 임포트
+
 from urllib.error import HTTPError
 import requests
-
-from urllib import parse #인코딩용 임포트
 import html
 
 headers = {'User-Agent': 'Chrome/66.0.3359.181'}
 
 from bs4 import BeautifulSoup
-from summary.textrankr import TextRank
+from textrankr import TextRank
 
 def urlparse(url):
     print("parsing : {}".format(url))

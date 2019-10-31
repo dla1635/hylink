@@ -9,8 +9,8 @@
 # from urllib import parse #인코딩용 임포트
 
 # from bs4 import BeautifulSoup
-# from summary.textrankr import TextRank
-# from summary.url2text import urlparse
+# from textrankr import TextRank
+# from url2text import urlparse
 
 # max_keyword = 3
 
@@ -48,5 +48,5 @@
 # idx = 1
 # print("type : {}".format(type(keywords)))
 # for keyword in keywords:
-#     print("{}".format(keywords[idx-1][0]))
+#     print("{}".format(keywords[idx-1]))
 #     idx+=1
