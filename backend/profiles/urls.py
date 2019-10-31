@@ -16,4 +16,5 @@ user_detail = UserViewSet.as_view({
 urlpatterns = format_suffix_patterns([
     path('api/users/', user_list, name='user_list'),
     path('api/users/<int:pk>/', user_detail, name='user_detail'),
+    path('api/users/login', LoginAPIView.as_view())
 ])

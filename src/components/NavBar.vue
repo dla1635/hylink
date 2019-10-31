@@ -1,5 +1,5 @@
 <template>
-<v-navigation-drawer v-model="drawer" fixed clipped class="grey lighten-4" app>
+<v-navigation-drawer fixed clipped class="grey lighten-4" app>
     <v-list dense class="grey lighten-4">
         <template v-for="(item, i) in items">
             <v-row v-if="item.heading" :key="i" align="center">
@@ -29,13 +29,11 @@
 </template>
 
 <script>
-import router from '@/router'
 
 export default {
-    name: "navBar",
+    name: "NavBar",
     data() {
         return {
-            drawer: false,
             items: [{
                     heading: 'Labels'
                 },
@@ -64,16 +62,6 @@ export default {
                 }
             ]
         }
-    },
-    computed: {
-        drawerState() {
-            return this.$store.getters.getNavBarState;
-        }
-    },
-    watch: {
-        drawerState(val) {
-            this.drawer = val;
-        },
     }
 }
 </script>

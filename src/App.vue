@@ -1,24 +1,50 @@
 <template>
-  <v-app>
+<v-app>
+
+    <!-- 상단 바 -->
+    <AppBar v-if="isLogin"></AppBar>
+
+    <!--  Side bar    -->
+    <NavBar v-if="navBarDrawer" />
+
+    <!-- 웰컴 바 -->
+    
+
     <v-content>
-      <router-view/>
+        <router-view />
     </v-content>
-  </v-app>
+
+</v-app>
 </template>
 
 <script>
-/*eslint no-console: "error"*/
 import AppBar from '@/components/AppBar'
 import NavBar from '@/components/NavBar'
 
 export default {
-  name: 'App',
-  data() {
-    return {
-    };
-  },
-  components: {
+    name: 'App',
+    data: () => ({
+        navBarDrawer: false,
+        AppBarDrawer: false,
+        isLogin: false,
+    }),
+    components: {
+        AppBar,
+        NavBar
+    },
+    methods: {
 
-  },
+    },
+    computed: {
+        drawerState() {
+            return this.$store.getters.getNavBarState;
+        },
+        
+    },
+    watch: {
+        drawerState(val) {
+            this.navBarDrawer = val;
+        },
+    }
 };
 </script>

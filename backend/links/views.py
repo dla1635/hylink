@@ -22,56 +22,18 @@ class LinkViewSet(viewsets.ModelViewSet):
     link 객체와 user tag를 인자로 받아 
     Tag table에 없는 user tag는 create하고 link 객체와 연결
     '''
-    def update_linktag(self, link, user_tags):
+    def update_linktag(self, link, tags_name):
         tags = Tag.objects.all()
-        for user_tag in user_tags:
+        for tag_name in tags_name:
             hasTag = False
             for tag in tags:
-                if tag.name == user_tag:
+                if tag.name == tag_name:
                     hasTag = True
                     break
             if hasTag == False:
-                Tag(name=user_tag).save()
-            link_tag = Tag.objects.get(name=user_tag)
+                Tag(name=link_tag).save()
+            link_tag = Tag.objects.get(name=tag_name)
             link.tag.add(link_tag)    
-
-        # if user_tags != None:
-
-        #     tags = Tag.objects.all()
-
-        #     for user_tag in user_tags:
-        #        hasTag = False
-        #         for tag in tags:
-        #             if tag.name == user_tag:
-        #                 hasTag = True
-        #                 break
-        #         if hasTag == False:
-        #             Tag(name=user_tag).save()
-        #         link_tag = Tag.objects.get(name=user_tag)
-        #         link.tag.add(link_tag)    
-        #     if Tag.objects.all().count() > 0:
-        #         tags = Tag.objects.all()
-        #         for user_tag in user_tags:
-        #             hasTag = False
-        #             for tag in tags:
-        #                 if tag.name == user_tag:
-        #                     hasTag = True
-        #                     break
-        
-        #         if hasTag == False:
-        #             Tag(name=user_tag).save()
-
-        #         link_tag = Tag.objects.get(name=user_tag)
-        #         link.tag.add(link_tag)
-        #     else:
-        #         for user_tag in user_tags:
-        #             link_tag = Tag(name=user_tag)
-        #             link_tag.save()
-        #             link.tag.add(link_tag)
-        # else:
-        #     print("TAG가 없습니당")
-    
-    
 
     def isvalid_value(self, user, url, title, thumbnail, summary, visible):
         msg = ""
@@ -111,33 +73,36 @@ class LinkViewSet(viewsets.ModelViewSet):
     '''
     def create(self, request):
         print("link create")
+
+        # 1. user가 유효한지 확인 
         user = request.user
-        # user가 유효한지 확인 
         valid, msg = self.isvalid_user(user)
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK) 
 
+        # 2. request에서 url & is_visible 가져오기
         url = request.data.get('url', None)
+        is_visible = request.data.get('is_visible', 3)
+
+        # 3. url로 썸네일, 태그, 제목, 3줄 요약 가져오기
         thumbnail, title, input_text, meta_tag = urlparse(url) # string으로 None이 넘어올 수 있음
-        ​
         textrank = TextRank(input_text) #TextRank생성되면서 내부에서 요약, 키워드 처리함
-        ​
         sentences = textrank.summarize(3, verbose=False) #sentences에 list형식으로 3개 돌려줌 verbose는 \n 추가할지 여부인데 필요없을듯
-        ​
         keywords = textrank.keywords(3) #keyword 3개 list형식, 다만 키워드값은 [idx][0]번째에 저장되있음
 
+        # 4. 가져온 태그와 3줄 요약 정리
         user_tags =[]
         for i in range(0,3):
             keyword = keywords[i]
-            if keyword != None:
+            if keyword != 'None':
                 user_tags.append(keyword)
         
         summary = ''
         for i in range(0,3):
             sentence = sentences[i]
-            if sentence != None:
-                summary += sentence
+            if sentence != 'None':
+                summary += (sentence+' ')
         
         if summary == '':
             summary = 'None'
@@ -151,49 +116,63 @@ class LinkViewSet(viewsets.ModelViewSet):
 
         # summary, thumbnail, tag 가져오는 method function(url)
 
-        new_link = Link(user=user, url=url, title=title, thumbnail=thumbnail, summary=summary, sharable=sharable)
+        # 5. link 객체 생성후, DB에 저장
+        new_link = Link(user=user, url=url, title=title, thumbnail=thumbnail, summary=summary, sharable=sharable, is_visible=is_visible)
         new_link.save()
 
-        user_tags = request.data.get('tags', None)
-        self.update_linktag(new_link, user_tags)
+        link_tags = request.data.get('tags', None)
+        self.update_linktag(new_link, link_tags)
 
         return Response(status=status.HTTP_200_OK)
 
     # PUT
     def update(self, request):
-        l_id = request.data.get('l_id', None)
+        # 1. user & link 유효성 체크
         # 유효한 link인지 확인
+        l_id = request.data.get('l_id', None)
         valid, msg = self.isvalid_link(l_id)
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK)
 
+        # user가 유효한지 확인
         user = request.user
-        # user가 유효한지 확인 
         valid, msg = self.isvalid_user(user)
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK) 
 
-        url = request.data.get('url', None)
+        # 2. request에서 data 받고 유효성 체크
+        # url = request.data.get('url', None)
         title = request.data.get('title',None)
         thumbnail = request.data.get('thumbnail',None)
         summary = request.data.get('summary',None)
-        # sharable = request.data.get('sharable',None)
-        # if sharable != None:
-        #     sharable = int(sharable)
+        is_valid = request.data.get('is_valid', None)
+        sharable = request.data.get('sharable',None)
+        if sharable != None:
+            sharable = int(sharable)
         # value가 유효한지 확인
         # isvalid_value()
 
+        # 2. link update
         update_link = Link.objects.get(id=l_id)
-        update_link.url = url
+        # update_link.url = url
         update_link.title = title
-        update_link.thumbnail = thumbnail
-        update_link.summary = summary
-        # update_link.sharable = sharable
+        update_link.sharable = sharable
+        
+        if is_valid == 1 or is_valid == 3:
+            update_link.thumbnail = thumbnail
+        if is_valid == 2 or is_valid == 3:
+            update_link.summary = summary
 
-        user_tags = request.data.get('tags', None)
-        update_linktag(update_link, user_tags)
+        update_link.is_valid = is_valid
+
+        # 3. tag update
+        link_tags = request.data.get('tags', None)
+        self.update_linktag(update_link, link_tags)
+
+        link_labels = request.data.get('labels', None)
+        # self.update_linklabel(update_link, link_labels)
 
         return Response(status=status.HTTP_200_OK)
 

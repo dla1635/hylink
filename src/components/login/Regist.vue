@@ -88,16 +88,14 @@ export default {
     methods: {
         signUp: function() {
             this.$axios.post('http://127.0.0.1:8000/api/users/', this.credentials)
-                .then(res => {
-                    this.$swal('회원가입 성공', '환영합니다!', 'OK')
+                .then(() => {
+                    this.$swal.fire('회원가입 성공', '환영합니다!', 'OK')
                     this.router.push({
-                        name: 'login'
+                        name: 'home'
                     });
-                    // eslint-disable-next-line no-console
-                    console.log(res)
                 })
                 .catch(() => {
-                    this.$swal({
+                    this.$swal.fire({
                         type: 'error',
                         title: 'Oops...',
                         text: '아이디, 이메일, 비밀번호를 확인해주세요!',
@@ -105,7 +103,7 @@ export default {
                     })
                 })
         }
-    } 
+    },
 }
 </script>
 

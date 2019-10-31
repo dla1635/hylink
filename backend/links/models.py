@@ -1,14 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User 
+from django.conf import settings
+from django.contrib.auth import get_user_model
+# from django.contrib.auth.models import User 
 
 
 class Link(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE) 
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) 
     url = models.TextField()
     title = models.CharField(max_length=144, blank=True)
     thumbnail = models.TextField(blank=True)
     summary = models.TextField()
-    sharable = models.IntegerField(default=0) 
+    sharable = models.IntegerField(default=0)
+    is_visible = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tag = models.ManyToManyField('Tag', through='LinkTag', related_name='links', blank=True)
