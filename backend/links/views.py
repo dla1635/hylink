@@ -106,6 +106,13 @@ class LinkViewSet(viewsets.ModelViewSet):
             keyword = keywords[i]
             if keyword != 'None':
                 user_tags.append(keyword)
+            else:
+                if i == 0:
+                    user_tags.append('Vue')
+                elif i == 1:
+                    user_tags.append('django')
+                else:
+                    user_tags.append('AWS')
         
         print(user_tags)
         summary = ''
@@ -131,8 +138,6 @@ class LinkViewSet(viewsets.ModelViewSet):
         new_link.save()
 
         link_tags = request.data.get('tags', None)
-        user_tags = ['Vue', 'Django','AWS']
-                
         self.update_linktag(new_link, user_tags)
 
         return Response(status=status.HTTP_200_OK)
