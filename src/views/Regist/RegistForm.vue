@@ -44,6 +44,7 @@
 
 <script>
 export default {
+    name: 'RegistForm',
     props: {
         source: String,
     },

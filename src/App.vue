@@ -2,10 +2,13 @@
 <v-app>
 
     <!-- 상단 바 -->
-    <AppBar></AppBar>
+    <AppBar v-if="isLogin"></AppBar>
 
     <!--  Side bar    -->
     <NavBar v-if="navBarDrawer" />
+
+    <!-- 웰컴 바 -->
+    
 
     <v-content>
         <router-view />
@@ -22,7 +25,8 @@ export default {
     name: 'App',
     data: () => ({
         navBarDrawer: false,
-        AppBarDrawer: false
+        AppBarDrawer: false,
+        isLogin: false,
     }),
     components: {
         AppBar,

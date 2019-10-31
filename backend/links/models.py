@@ -1,24 +1,27 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth import get_user_model
+# from django.contrib.auth.models import User 
+
 
 class Link(models.Model):
-    # l_id : pk (자동 삽입)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) 
     url = models.TextField()
     title = models.CharField(max_length=144, blank=True)
     thumbnail = models.TextField(blank=True)
     summary = models.TextField()
-    sharable = models.IntegerField(default=0) 
+    sharable = models.IntegerField(default=0)
+    is_visible = models.IntegerField(default=3)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    tag = models.ManyToManyField('Tag', through='LinkTag', blank=True)
-    label = models.ManyToManyField('Label', through='LinkLabel', blank=True)
+    tag = models.ManyToManyField('Tag', through='LinkTag', related_name='links', blank=True)
+    label = models.ManyToManyField('Label', through='LinkLabel', related_name='links',blank=True)
     
     class Meta:
         ordering = ['-created_at']
     
     def __str__(self):
-        return '[{}] {}'.format(self.user.nickname, self.title)
+        return '[{}] {}'.format(self.user.username, self.title)
 
 
 class Tag(models.Model):

@@ -1,19 +1,20 @@
-import sys
-import io
+# import sys
+# import io
 
-sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
+# sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
+# sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
-import urllib.request
+# import urllib.request
+# from urllib import parse #인코딩용 임포트
+
+from urllib.error import HTTPError
 import requests
-
-from urllib import parse #인코딩용 임포트
 import html
 
 headers = {'User-Agent': 'Chrome/66.0.3359.181'}
 
 from bs4 import BeautifulSoup
-from textrankr import TextRank
+from .textrankr import TextRank
 
 def urlparse(url):
     print("parsing : {}".format(url))
@@ -21,14 +22,18 @@ def urlparse(url):
     title = "None"
     parse_text = ""  
     meta_tag = [] 
-    # 주소 형식이 아닌경우 에러 후 종료
-    if "http://" not in url and "https://" not in url:
-        return "None","None","None"
     # 1. 주소의 html정보 파싱
-    res = requests.get(url, headers=headers)
-    # soup = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser")
-    soup = BeautifulSoup(res.text,"html.parser")
-    print("soup : {} ~~".format(str(soup)[:50]))
+    try:
+        # if "http://" not in url and "https://" not in url:
+        #     return "None","None","None"
+        res = requests.get(url, headers=headers)
+        # soup = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser")
+        soup = BeautifulSoup(res.text,"html.parser")
+    except HTTPError as e:
+        # 주소에서 404 혹은 500등 에러 발생
+        print(e)
+        return "None","None","None","None"
+
     # 2. 대표 이미지가 있는 경우 대표 이미지 추출
     img_tag = soup.find("meta",{"property":"og:image"})
     if str(img_tag) != "None":

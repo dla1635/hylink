@@ -13,6 +13,7 @@
 import Login from "./LoginForm"
 
 export default {
+    name: 'LoginPage',
     data: () => ({
         drawer: null,
         id : "",
