@@ -3,9 +3,10 @@ import Router from 'vue-router'
 
 import Welcome from '@/views/Welcome/WelcomePage'
 import HomePage from '@/views/Home/HomePage'
-import LoginPage from '@/views/Login/LoginPage'
-import RegisterPage from '@/views/Register/RegisterPage'
+import LoginForm from '@/views/Login/LoginForm'
+import RegistForm from '@/views/Regist/RegistForm'
 import NotFound from '@/components/NotFound'
+
 
 Vue.use(Router)
 
@@ -25,12 +26,12 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: LoginPage
+      component: LoginForm
     },
     {
-      path: '/register',
-      name: 'register',
-      component: RegisterPage,
+      path: '/regist',
+      name: 'regist',
+      component: RegistForm
     },
     {
       path: '/notfound',

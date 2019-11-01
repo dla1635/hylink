@@ -15,8 +15,7 @@ export default {
     name: 'RegisterPage',
     data: () => ({
         drawer: null,
-        id: "",
-        password: ""
+
     }),
     components: {
         Register
