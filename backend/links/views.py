@@ -58,6 +58,8 @@ class LinkViewSet(viewsets.ModelViewSet):
     '''
     def update_linktag(self, link, tags_name):
         tags = Tag.objects.all()
+        link.tag.all().delete()
+
         for tag_name in tags_name:
             hasTag = False
             for tag in tags:
@@ -68,6 +70,23 @@ class LinkViewSet(viewsets.ModelViewSet):
                 Tag(name=tag_name).save()
             link_tag = Tag.objects.get(name=tag_name)
             link.tag.add(link_tag)    
+
+    def update_linklabel(self, link, labels_name, user):
+        labels = Label.objects.filter(user=user)
+        link.label.all().delete()
+
+        for label_name in labels_name:
+            hasLabel = False
+            for label in labels:
+                if label.name == label_name:
+                    hasLabel = True
+                    break
+            
+            if hasLabel == False:
+                Label(name=label_name, user=user).save()
+            
+            link_label = Label.objects.get(name=label_name)
+            link.label.add(link_label)
 
     '''
     [method] = POST
@@ -85,6 +104,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK) 
+        ##############################################
 
         # 2. request에서 url & is_visible 가져오기
         url = request.data.get('url', None)
@@ -203,6 +223,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         self.update_linktag(update_link, link_tags)
 
         link_labels = request.data.get('labels', None)
+        update_linklabel(update_link, link_labels, user)
         # self.update_linklabel(update_link, link_labels)
 
         return Response(status=status.HTTP_200_OK)
@@ -274,10 +295,11 @@ class LabelViewSet(viewsets.ModelViewSet):
     def create(self, request):
         print("Label create")
 
-        label = request.data.get('label', None)
+        label_name = request.data.get('label_name', None)
+        user = request.user
 
-        if label != None and Label.objects.get(name=label).count == 0:
-            Label(name=label).save()
+        if label_name != None and Label.objects.filter(Q(name=label_name) & Q(user=user)).count() ==  0:
+            Label(name=label_name, user=user).save()
         else:
             print("이미 존재하는 label 또는 label 값이 제대로 입력되지 않음")
     
@@ -292,12 +314,28 @@ class LabelViewSet(viewsets.ModelViewSet):
             print(msg)
             return Response(status=status.HTTP_200_OK) 
 
-        name = request.data.get('name', None)
+        label_name = request.data.get('label_name', None)
         update_label = Link.objects.get(id=lb_id)
-        update_label.name = name
+        update_label.name = label_name
 
         return Response(status=status.HTTP_200_OK) 
+    
+    def list(self, request):
+        # 1. user가 유효한지 확인 
+        user = request.user
+        print(user)
+        valid, msg = isvalid_user(user)
+        print("here")
+        if not valid:
+            print(msg)
+            return Response(status=status.HTTP_200_OK) 
+        ##############################################
+
+        label_list = Label.objects.filter(user=user)
+        serializer = LabelSerializer(label_list, many=True)
         
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
 #         elif message == "UpdateOdds":
 #             event = request.data.pop('event')
 #             markets = event.pop('markets')[0]
