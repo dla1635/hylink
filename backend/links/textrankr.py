@@ -1,31 +1,21 @@
 # -*- coding: utf-8 -*-
-# import sys
-# import io
-
-# sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-# sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
-
-# import urllib.request
-
-# from urllib import parse #인코딩용 임포트
-
 
 from re import split
 from networkx import Graph
 from networkx import pagerank
 from itertools import combinations
-from sentence import Sentence
+from collections import Counter
 
 import nltk
 from konlpy.tag import Okt
+
+from sentence import Sentence
 
 # from sklearn.feature_extraction.text import TfidfVectorizer
 # from sklearn.feature_extraction.text import CountVectorizer
 # from sklearn.preprocessing import normalize
 # import numpy as np
-import re
 
-from collections import Counter
 
 
 class TextRank(object):
@@ -42,7 +32,6 @@ class TextRank(object):
     def build(self):
         self._build_sentences()
 
-        # self.test_word()
         # self.has_nouns = self._extract_nouns()
         
         # 문장 처리
@@ -57,7 +46,6 @@ class TextRank(object):
             # self._build_word_graph()
             # word_rank_idx = self.get_word_ranks(self.words_graph)
             # self.sorted_word_rank_idx = sorted(word_rank_idx, key=lambda k: word_rank_idx[k], reverse=True)
-
 
     def _build_sentences(self):
         okt= Okt()
@@ -109,25 +97,6 @@ class TextRank(object):
         del dup
         del candidates
 
-    # def _extract_nouns(self):
-    #     okt = Okt()
-    #     self.nouns = []
-        
-    #     for sentence in self.sentences:
-    #         if sentence.text is not '':
-    #             self.nouns.append(' '.join([noun for noun in okt.nouns(str(sentence.text))
-    #             if noun not in self.stopwords and len(noun) > 1]))
-
-    #     # noun이 하나도 안뽑혔는지 재확인
-    #     # noun이 하나라도 있으면 true리턴
-    #     # 하나도 없으면 false리턴
-    #     for noun in self.nouns:
-    #         if noun:
-    #             return True
-        
-    #     return False
-
-
     def _build_graph(self):
         
         #문장 그래프 처리
@@ -139,43 +108,11 @@ class TextRank(object):
             weight = self._jaccard(sent1, sent2)
             if weight:
                 self.graph.add_edge(sent1, sent2, weight=weight)
-        
-    # def _build_word_graph(self):
-    #     #단어 그래프 처리
-    #     self.tfidf = TfidfVectorizer()
-    #     self.cnt_vec = CountVectorizer()
-    #     cnt_vec_mat = normalize(self.cnt_vec.fit_transform(self.nouns).toarray().astype(float), axis=0)
-        
-    #     vocab = self.cnt_vec.vocabulary_
-
-    #     self.words_graph = np.dot(cnt_vec_mat.T, cnt_vec_mat)
-        
-    #     self.idx2word = {vocab[word] : word for word in vocab}
-        
 
     def _jaccard(self, sent1, sent2):
         p = sum((sent1.bow & sent2.bow).values())
         q = sum((sent1.bow | sent2.bow).values())
         return p / q if q else 0
-
-    # def get_word_ranks(self, graph, d=0.85):
-    #     A = graph
-    #     matrix_size = A.shape[0]
-    #     for id in range(matrix_size):
-    #         A[id, id] = 0 # diagonal 부분을 0으로
-    #         link_sum = np.sum(A[:,id]) # A[:, id] = A[:][id]
-    #         if link_sum != 0:
-    #             A[:, id] /= link_sum
-    #         A[:, id] *= -d
-    #         A[id, id] = 1
-            
-    #     B = (1-d) * np.ones((matrix_size, 1))
-
-    #     ranks = np.linalg.solve(A, B) # 연립방정식 Ax = b
-
-        
-    #     return {idx: r[0] for idx, r in enumerate(ranks)}
-
 
     def summarize(self, count=3, verbose=True):
         results = sorted(self.reordered[:count], key=lambda sentence: sentence.index)
@@ -205,3 +142,52 @@ class TextRank(object):
 
         return results
 
+    # def _extract_nouns(self):
+    #     okt = Okt()
+    #     self.nouns = []
+        
+    #     for sentence in self.sentences:
+    #         if sentence.text is not '':
+    #             self.nouns.append(' '.join([noun for noun in okt.nouns(str(sentence.text))
+    #             if noun not in self.stopwords and len(noun) > 1]))
+
+    #     # noun이 하나도 안뽑혔는지 재확인
+    #     # noun이 하나라도 있으면 true리턴
+    #     # 하나도 없으면 false리턴
+    #     for noun in self.nouns:
+    #         if noun:
+    #             return True
+        
+    #     return False
+
+            
+    # def _build_word_graph(self):
+    #     #단어 그래프 처리
+    #     self.tfidf = TfidfVectorizer()
+    #     self.cnt_vec = CountVectorizer()
+    #     cnt_vec_mat = normalize(self.cnt_vec.fit_transform(self.nouns).toarray().astype(float), axis=0)
+        
+    #     vocab = self.cnt_vec.vocabulary_
+
+    #     self.words_graph = np.dot(cnt_vec_mat.T, cnt_vec_mat)
+        
+    #     self.idx2word = {vocab[word] : word for word in vocab}
+        
+    
+    # def get_word_ranks(self, graph, d=0.85):
+    #     A = graph
+    #     matrix_size = A.shape[0]
+    #     for id in range(matrix_size):
+    #         A[id, id] = 0 # diagonal 부분을 0으로
+    #         link_sum = np.sum(A[:,id]) # A[:, id] = A[:][id]
+    #         if link_sum != 0:
+    #             A[:, id] /= link_sum
+    #         A[:, id] *= -d
+    #         A[id, id] = 1
+            
+    #     B = (1-d) * np.ones((matrix_size, 1))
+
+    #     ranks = np.linalg.solve(A, B) # 연립방정식 Ax = b
+
+        
+    #     return {idx: r[0] for idx, r in enumerate(ranks)}
