@@ -5,6 +5,7 @@ db.sqlite3
 /.venv
 __pycache__
 migrations
+package-lock.json
 
 # local env files
 .env.local

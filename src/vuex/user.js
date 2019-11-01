@@ -1,6 +1,6 @@
 export const layout = {
     state: { 
-        isLogined : false
+        isLogined : true
     },
     mutations: {
         login(state){

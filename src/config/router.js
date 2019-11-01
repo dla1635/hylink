@@ -1,13 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home/HomePage'
 
 import Welcome from '@/views/Welcome/WelcomePage'
-
-import Login from '@/views/Login/LoginPage'
-import Register from '@/views/Register/RegisterPage'
-
-import NotFound from '@/views/Error/NotFound404'
+import HomePage from '@/views/Home/HomePage'
+import LoginPage from '@/views/Login/LoginPage'
+import RegisterPage from '@/views/Register/RegisterPage'
+import NotFound from '@/components/NotFound'
 
 Vue.use(Router)
 
@@ -22,28 +20,27 @@ const router = new Router({
     {
       path: '/home',
       name: 'home',
-      component: Home,
-      meta: {authRequired: true}
+      component: HomePage
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: LoginPage
     },
     {
       path: '/register',
       name: 'register',
-      component: Register,
+      component: RegisterPage,
     },
     {
       path: '/notfound',
       name: 'notfound',
-      component : NotFound
+      component: NotFound
     },
     {
       path: '*',
-      redirect: '/notfound' 
-    },
+      redirect: '/notfound'
+    }
   ]
 })
 
