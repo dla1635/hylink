@@ -15,16 +15,23 @@
       .popup-main{
         width: 100%;
       }
+      #login-form{
+        display: block;
+      }
+      #link-form{
+        display: block;
+      }
     </style>
   </head>
   <body>
     <script type="text/javascript" src="popup.js"></script>
     <div class="popup-main">
-      <form class="form-horizontal">
+      <h1 class="text-center"> HYLINK </h1>
+      <form id="link-form" class="form-horizontal" action="localhost:8000/api/link/" method="post">
         <div class="form-group">
           <!-- <label for="inputRUL" class="col-xs-2 control-label">URL</label> -->
           <div class="col-xs-12">
-              <input type="text" class="form-control" id="inputURL" value="" placeholder="http://... or https://...">
+              <input type="text" class="form-control" id="url" name="url" value="" placeholder="http://... or https://...">
           </div>
         </div>
         <div class="form-group d-flex flex-row">
@@ -32,10 +39,29 @@
             <button class="btn btn-success btn-block" type="submit">저장하기</button>
           </div>
           <div class="col-xs-12">
-            <a class="btn btn-info btn-block" href="http://www.naver.com" target="_blank">Hylink 메인</a>
+            <a class="btn btn-info btn-block" href="localhost:8000" target="_blank">Hylink 메인</a>
           </div>
         </div>
       </form>
+      <form id="login-form" class="form-horizontal" action="localhost:8000/auth/login/" method="post">
+          <div class="form-group">
+              <!-- <label for="inputRUL" class="col-xs-2 control-label">URL</label> -->
+              <div class="col-xs-12">
+                  <input type="text" class="form-control" id="email" name="email" value="" placeholder="abcde@example.com">
+              </div>
+              <div class="col-xs-12">
+                  <input type="password" class="form-control" id="password" name="password" value="" placeholder="password">
+              </div>
+          </div>
+          <div class="form-group d-flex flex-row">
+            <div class="col-xs-12">
+              <button class="btn btn-success btn-block" type="submit">로그인</button>
+            </div>
+            <div class="col-xs-12">
+              <button class="btn btn-warning btn-block" type="reset">취소</button>
+            </div>
+          </div>
+        </form>
     </div>
   </body>
 </html>
