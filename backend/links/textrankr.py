@@ -93,7 +93,6 @@ class TextRank(object):
 
         # if len(self.nouns) > 0:
         #     self.has_noun = True
-                
         del dup
         del candidates
 
