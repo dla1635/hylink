@@ -1,9 +1,9 @@
 import session from './session';
 
 export default {
-    login(username, password) {
+    login(email, password) {
         return session.post('/auth/login/', {
-            username,
+            email,
             password
         });
     },
