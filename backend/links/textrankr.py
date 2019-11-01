@@ -95,8 +95,8 @@ class TextRank(object):
 
                 # 영어 문자열 
                 for pos in nltk.pos_tag(eng_list):
-                    if pos[1]=="NN" and pos[0] not in self.eng_stopwords and len(pos[0]) > 1:        
-                        eng_nouns.append(pos[0])
+                    if pos[1]=="NN" and pos[0].lower() not in self.eng_stopwords and len(pos[0]) > 1:        
+                        eng_nouns.append(pos[0].lower())
 
         if len(self.nouns) > 0:
             self.has_noun = True
