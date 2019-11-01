@@ -5,6 +5,7 @@ import Welcome from '@/views/Welcome/WelcomePage'
 import HomePage from '@/views/Home/HomePage'
 import LoginPage from '@/views/Login/LoginPage'
 import RegisterPage from '@/views/Register/RegisterPage'
+import SharePage from '@/views/Share/SharePage'
 import NotFound from '@/components/NotFound'
 
 Vue.use(Router)
@@ -31,6 +32,11 @@ const router = new Router({
       path: '/register',
       name: 'register',
       component: RegisterPage,
+    },
+    {
+      path: '/share',
+      name: 'share',
+      component: SharePage,
     },
     {
       path: '/notfound',
