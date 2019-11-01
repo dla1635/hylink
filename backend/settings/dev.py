@@ -27,11 +27,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django_extensions',
-    
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+
     # RESTful API 인증
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'rest_auth',
+    'rest_auth.registration',
 
     # 생성한 앱들
     'backend.api',
@@ -41,19 +50,21 @@ INSTALLED_APPS = [
     'backend.sharing',
 ]
 
+SITE_ID = 1
+
 AUTH_USER_MODEL = 'profiles.User'
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'backend.profiles.serializers.RegisterSerializer',
+    'USER_DETAILS_SERIALIZER': 'backend.profiles.serializers.UserSerializer',
+    'LOGIN_SERIALIZER': 'backend.profiles.serializers.LoginSerializer',
 }
+
+REST_USE_JWT = True
 
 JWT_AUTH = {
     'JWT_VERIFY': True,
@@ -64,6 +75,18 @@ JWT_AUTH = {
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
