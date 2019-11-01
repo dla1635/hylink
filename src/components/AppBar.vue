@@ -17,7 +17,7 @@ export default {
     name: 'AppBar',
     data() {
         return {
-            drawer: false
+            drawer: true
         }
     },
     methods: {

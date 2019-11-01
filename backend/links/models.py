@@ -35,6 +35,7 @@ class Tag(models.Model):
 class Label(models.Model):
     # lb_id : pk (자동 삽입)
     name = models.CharField(max_length=255)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) 
 
     def __str__(self):
         return self.name

@@ -2,10 +2,10 @@
 <v-app>
 
     <!-- 상단 바 -->
-    <AppBar v-if="isLogin"></AppBar>
+    <AppBar ></AppBar>
 
     <!--  Side bar    -->
-    <NavBar v-if="navBarDrawer" />
+    <NavBar  />
 
     <!-- 웰컴 바 -->
     
