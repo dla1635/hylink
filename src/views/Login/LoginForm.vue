@@ -68,13 +68,17 @@ export default {
         return {
             drawer: null,
             inputs: {
-                eamil: '',
+                email: '',
                 password: '',
             },
         }
     },
     methods: {
         login({ email, password }) {
+            // eslint-disable-next-line no-console
+            console.log(email)
+            // eslint-disable-next-line no-console
+            console.log(password)
             this.$store.dispatch('auth/login', { email, password })
                 .then(() => this.$router.push('/'));
         },
