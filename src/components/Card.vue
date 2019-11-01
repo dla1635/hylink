@@ -1,52 +1,63 @@
 <template>
-<v-hover v-slot:default="{ hover }">
-    <v-card class="card" :elevation="hover ? 5 : 2">
-        <CardModifyModal v-if="modal_flag" :card="card"></CardModifyModal>
-        <div v-if="hover" class="d-flex v-card--reveal display-3" style="height: 100%;  background-color:#0002;">
-            <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                    <v-btn class="mr-3" icon @click="goLink" v-on="on">
-                        <v-icon size=20>reply</v-icon>
-                    </v-btn>
-                </template>
-                <span>링크 이동</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                    <v-btn class="mr-3" icon @click="changeEditMode" v-on="on">
-                        <v-icon size=20>edit</v-icon>
-                    </v-btn>
-                </template>
-                <span>편집</span>
-            </v-tooltip>
-            <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                    <v-btn icon @click="copyToClipboard(card.url)" v-on="on">
-                        <v-icon size=20>file_copy</v-icon>
-                    </v-btn>
-                </template>
-                <span>클립보드 복사</span>
-            </v-tooltip>
-        </div>
-        <v-layout class="card_sub1">
-            <v-flex class="card_sub2">
-                <v-layout>
-                    <p id="card_title" v-if="!editFlag" style="font-size:20px;">{{card.title}}</p><br />
-                </v-layout>
-                <v-flex v-show="summary_flag">
-                    <p v-if="!editFlag" class="summary">{{card.summary}}</p>
+  <v-item v-slot:default="{ active, toggle }">
+    <v-hover v-slot:default="{ hover }">
+        <v-card class="card" :elevation="hover ? 5 : 2" @click="toggle" :color="active & sharing_flag ? 'primary' : ''" >
+            <CardModifyModal v-if="modal_flag" :card="card"></CardModifyModal>
+            <div v-if="hover & !sharing_flag" class="d-flex v-card--reveal display-3" style="height: 100%;  background-color:#0002;">
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn class="mr-3" icon @click="goLink" v-on="on">
+                            <v-icon size=20>reply</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>링크 이동</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn class="mr-3" icon @click="changeEditMode" v-on="on">
+                            <v-icon size=20>edit</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>편집</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-btn icon @click="copyToClipboard(card.url)" v-on="on">
+                            <v-icon size=20>file_copy</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>클립보드 복사</span>
+                </v-tooltip>
+            </div>
+            <v-layout class="card_sub1">
+                <v-flex class="card_sub2">
+                    <v-layout>
+                        <p id="card_title" v-if="!editFlag" style="font-size:20px;">{{card.title}}</p><br/>
+                    </v-layout>
+                    <v-flex v-show="summary_flag">
+                        <p v-if="!editFlag" class="summary">{{card.summary}}</p>
+                    </v-flex>
                 </v-flex>
+                <img v-show="thumnail_flag" class="card_img" :src="card.thumbnail" />
+            </v-layout>
+            <v-flex id="tagContainer">
+                <v-chip class="tag" v-for="tag in card.tagList" :key="tag">#{{tag}} </v-chip>
             </v-flex>
-            <img v-show="thumnail_flag" class="card_img" :src="card.thumbnail" />
-        </v-layout>
-        <v-flex id="tagContainer">
-            <v-chip class="tag" v-for="tag in card.tagList" :key="tag">#{{tag}} </v-chip>
-        </v-flex>
-    </v-card>
-</v-hover>
+            <v-scroll-y-transition>
+                  <div
+                    v-if="active & sharing_flag"
+                    class="d-flex v-card--reveal display-3" style="height: 100%;  background-color:#0002;"
+                  >
+                    Active
+                  </div>
+            </v-scroll-y-transition>
+        </v-card>
+    </v-hover>
+  </v-item>
 </template>
 
 <script>
+/* eslint-disable no-console */
 import CardModifyModal from '@/components/CardModifyModal'
 
 export default {
@@ -55,6 +66,7 @@ export default {
         return {
             editFlag: false,
             modal_flag: false,
+            selectedCard: []
         }
     },
     props: {
@@ -68,6 +80,9 @@ export default {
             type: Boolean
         },
         summary_flag: {
+            type: Boolean
+        },
+        sharing_flag: {
             type: Boolean
         },
     },

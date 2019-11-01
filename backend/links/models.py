@@ -10,7 +10,8 @@ class Link(models.Model):
     title = models.CharField(max_length=144, blank=True)
     thumbnail = models.TextField(blank=True)
     summary = models.TextField()
-    sharable = models.IntegerField(default=0) 
+    sharable = models.IntegerField(default=0)
+    is_visible = models.IntegerField(default=3)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tag = models.ManyToManyField('Tag', through='LinkTag', related_name='links', blank=True)
@@ -34,6 +35,7 @@ class Tag(models.Model):
 class Label(models.Model):
     # lb_id : pk (자동 삽입)
     name = models.CharField(max_length=255)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) 
 
     def __str__(self):
         return self.name
