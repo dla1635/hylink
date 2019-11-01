@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'backend.posts',
     'backend.links',
     'backend.profiles',
+    'backend.sharing',
 ]
 
 AUTH_USER_MODEL = 'profiles.User'
