@@ -45,7 +45,10 @@ export default {
     mounted() {
         this.getCards()
         this.card_list = Store.state.layout.card_list
-    },  
+    },
+    beforeUpdate() {
+        this.card_list = Store.state.layout.card_list
+    }
 };
 </script>
 

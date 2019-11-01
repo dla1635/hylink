@@ -16,7 +16,8 @@ link = LinkViewSet.as_view({
 
 label = LabelViewSet.as_view({
     'post' : 'create',
-    'put' : 'update'
+    'put' : 'update',
+    'get' : 'list'
 })
 
 

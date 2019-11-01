@@ -19,12 +19,14 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class LabelSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Label
         fields = (
             'id',
             'name',
+            'user'
         )
 
 class LinkTagSerializer(serializers.ModelSerializer):
