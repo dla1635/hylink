@@ -6,7 +6,7 @@ headers = {'User-Agent': 'Chrome/66.0.3359.181'}
 
 from bs4 import BeautifulSoup
 
-from textrankr import TextRank
+from .textrankr import TextRank
 
 def urlparse(url):
     img_url = "None"

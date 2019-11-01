@@ -5,14 +5,9 @@ from .models import PostReport
 from backend.links.models import Link 
 from backend.links.serializers import LinkSerializer
 # from django.contrib.auth.models import User
-# from django.conf import settings
+from django.conf import settings
 from django.contrib.auth import get_user_model
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = get_user_model(),
-        fields = ('id', 'email', 'nickname')
+from backend.profiles.serializers import UserSerializer
 
 
 class PostSerializer(serializers.ModelSerializer):

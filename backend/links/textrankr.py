@@ -9,7 +9,7 @@ from collections import Counter
 import nltk
 from konlpy.tag import Okt
 
-from sentence import Sentence
+from .sentence import Sentence
 
 # from sklearn.feature_extraction.text import TfidfVectorizer
 # from sklearn.feature_extraction.text import CountVectorizer

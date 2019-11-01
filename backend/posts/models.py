@@ -1,10 +1,11 @@
 from django.db import models
 # from django.contrib.auth.models import User 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from backend.links.models import Link 
 
 class Post(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # CASCADE = 삭제시 foreignkey를 포함하는 모델 인스턴스도 삭제
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) # CASCADE = 삭제시 foreignkey를 포함하는 모델 인스턴스도 삭제
     title = models.CharField(max_length=255)
     contents = models.TextField(blank=True) # 빈칸 가능 
     links = models.ManyToManyField(Link, related_name='link_posts') # M:N 모델 
@@ -12,7 +13,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     view_count = models.IntegerField(default=0)
     like_count = models.IntegerField(default=0)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts', blank=True)
+    like_users = models.ManyToManyField(get_user_model(), related_name="like_posts", blank=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -22,7 +23,7 @@ class Post(models.Model):
         return '[{}] {}'.format(self.user.email, self.title)
 
 class PostComment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="users")
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="users")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="post_comments")
     contents = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -36,7 +37,7 @@ class PostComment(models.Model):
 
 
 class PostReport(models.Model):
-    report_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='report_posts', blank=True)
+    report_users = models.ManyToManyField(get_user_model(), related_name='report_posts', blank=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="report_list")
     contents = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

@@ -6,17 +6,27 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from rest_framework import routers
+
 from .api.views import index_view, MessageViewSet
 from .posts.views import PostViewSet, CommentViewSet, ReportViewSet
-from .links.views import LinkViewSet 
+from .links.views import LinkViewSet, LinksViewSet, LabelViewSet 
+from .profiles.views import UserViewSet
+
+
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh_jwt_token
+
 
 router = routers.DefaultRouter()
 router.register('messages', MessageViewSet)
 router.register('posts', PostViewSet)
 router.register('comments', CommentViewSet)
-router.register('links', LinkViewSet)
+router.register('linklist', LinksViewSet)
+router.register('link', LinkViewSet)
+router.register('label', LabelViewSet)
 router.register('reports', ReportViewSet)
+router.register('users', UserViewSet)
 
 
 urlpatterns = [
@@ -29,4 +39,13 @@ urlpatterns = [
 
     # http://localhost:8000/api/admin/
     path('api/admin/', admin.site.urls),
+
+    path('api/auth/', obtain_jwt_token),
+
+    path('api/auth/verify', verify_jwt_token),
+
+    path('api/auth/refresh', refresh_jwt_token),
+
+    url(r'^.*$',  index_view, name='index')
+
 ]

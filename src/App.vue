@@ -1,20 +1,50 @@
 <template>
-  <v-app>
-    <!-- 라우터뷰는 NavBar에 존재    -->
-    <NavBar/>
-  </v-app>
+<v-app>
+
+    <!-- 상단 바 -->
+    <AppBar v-if="isLogin"></AppBar>
+
+    <!--  Side bar    -->
+    <NavBar v-if="navBarDrawer" />
+
+    <!-- 웰컴 바 -->
+    
+
+    <v-content>
+        <router-view />
+    </v-content>
+
+</v-app>
 </template>
 
 <script>
+import AppBar from '@/components/AppBar'
 import NavBar from '@/components/NavBar'
 
 export default {
-  data() {
-    return {
-    };
-  },
-  components: {
-    NavBar
-  },
+    name: 'App',
+    data: () => ({
+        navBarDrawer: false,
+        AppBarDrawer: false,
+        isLogin: false,
+    }),
+    components: {
+        AppBar,
+        NavBar
+    },
+    methods: {
+
+    },
+    computed: {
+        drawerState() {
+            return this.$store.getters.getNavBarState;
+        },
+        
+    },
+    watch: {
+        drawerState(val) {
+            this.navBarDrawer = val;
+        },
+    }
 };
-</script>s
+</script>
