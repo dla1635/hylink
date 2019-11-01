@@ -55,6 +55,6 @@ urlpatterns = [
 
     # path('api/auth/refresh', refresh_jwt_token),
 
-    # url(r'^.*$',  index_view, name='index')
+    url(r'^.*$',  index_view, name='index')
 
 ]

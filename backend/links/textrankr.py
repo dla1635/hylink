@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import re
 from re import split
 from networkx import Graph
 from networkx import pagerank
