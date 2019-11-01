@@ -4,6 +4,9 @@
     <AppBar></AppBar>
 
     <v-container>
+        <v-card flat outlined class="pl-5">
+            <h1>title!</h1>
+        </v-card>
         <v-list three-line>
             <template v-for="(card, index) in cards">
 
@@ -17,7 +20,7 @@
                                 <v-col :cols="10">
                                     <v-row>
                                         <v-list-item-title>
-                                            <h1>{{card.title}}</h1>
+                                            <h2>{{card.title}}</h2>
                                         </v-list-item-title>
                                     </v-row>
                                     <v-row>
