@@ -38,15 +38,15 @@ urlpatterns = [
     path('api/', include(router.urls)),
 
     # http://localhost:8000/api/admin/
-    path('admin/', admin.site.urls),
+    path('api/admin/', admin.site.urls),
 
     path('auth/token/', obtain_jwt_token, name='api_token'),
 
     path('auth/', include('rest_auth.urls')),
 
-    url(r'^registration/', include('rest_auth.registration.urls')),
+    url(r'^auth/registration/', include('rest_auth.registration.urls')),
 
-    url(r'^accounts/', include('allauth.urls')),
+    url(r'^auth/accounts/', include('allauth.urls')),
 
     # path('api/auth/verify', verify_jwt_token),
 
