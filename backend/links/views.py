@@ -58,6 +58,8 @@ class LinkViewSet(viewsets.ModelViewSet):
     '''
     def update_linktag(self, link, tags_name):
         tags = Tag.objects.all()
+        link.tag.all().delete()
+
         for tag_name in tags_name:
             hasTag = False
             for tag in tags:
@@ -68,6 +70,23 @@ class LinkViewSet(viewsets.ModelViewSet):
                 Tag(name=tag_name).save()
             link_tag = Tag.objects.get(name=tag_name)
             link.tag.add(link_tag)    
+
+    def update_linklabel(self, link, labels_name, user):
+        labels = Label.objects.filter(user=user)
+        link.label.all().delete()
+
+        for label_name in labels_name:
+            hasLabel = False
+            for label in labels:
+                if label.name == label_name:
+                    hasLabel = True
+                    break
+            
+            if hasLabel == False:
+                Label(name=label_name, user=user).save()
+            
+            link_label = Label.objects.get(name=label_name)
+            link.label.add(link_label)
 
     '''
     [method] = POST
@@ -85,6 +104,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK) 
+        ##############################################
 
         # 2. request에서 url & is_visible 가져오기
         url = request.data.get('url', None)
@@ -93,11 +113,25 @@ class LinkViewSet(viewsets.ModelViewSet):
         print("url : "+url)
         print("isVisible : "+ str(is_visible))
 
+        # user & link 존재하면 return
+        if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
+            print("user가 이미 등록한 URL")
+            return Response(status=status.HTTP_200_OK) 
+
         # 3. url로 썸네일, 태그, 제목, 3줄 요약 가져오기
         thumbnail, title, input_text, meta_tag = urlparse(url) # string으로 None이 넘어올 수 있음
+        print(meta_tag)
+
+        if title=='None':
+            print("유효하지 않는 URL")
+            return Response(status=status.HTTP_200_OK) 
+        
         textrank = TextRank(input_text) #TextRank생성되면서 내부에서 요약, 키워드 처리함
         sentences = textrank.summarize(3, verbose=False) #sentences에 list형식으로 3개 돌려줌 verbose는 \n 추가할지 여부인데 필요없을듯
-        keywords = textrank.keywords(3) #keyword 3개 list형식, 다만 키워드값은 [idx][0]번째에 저장되있음
+        if len(meta_tag) > 1:
+            keywords = meta_tag
+        else:
+            keywords = textrank.keywords(3) #keyword 3개 list형식, 다만 키워드값은 [idx][0]번째에 저장되있음
 
         print(keywords)
         # 4. 가져온 태그와 3줄 요약 정리
@@ -106,13 +140,13 @@ class LinkViewSet(viewsets.ModelViewSet):
             keyword = keywords[i]
             if keyword != 'None':
                 user_tags.append(keyword)
-            else:
-                if i == 0:
-                    user_tags.append('Vue')
-                elif i == 1:
-                    user_tags.append('django')
-                else:
-                    user_tags.append('AWS')
+            # else:
+            #     if i == 0:
+            #         user_tags.append('Vue')
+            #     elif i == 1:
+            #         user_tags.append('django')
+            #     else:
+            #         user_tags.append('AWS')
         
         print(user_tags)
         summary = ''
@@ -189,6 +223,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         self.update_linktag(update_link, link_tags)
 
         link_labels = request.data.get('labels', None)
+        update_linklabel(update_link, link_labels, user)
         # self.update_linklabel(update_link, link_labels)
 
         return Response(status=status.HTTP_200_OK)
@@ -260,10 +295,11 @@ class LabelViewSet(viewsets.ModelViewSet):
     def create(self, request):
         print("Label create")
 
-        label = request.data.get('label', None)
+        label_name = request.data.get('label_name', None)
+        user = request.user
 
-        if label != None and Label.objects.get(name=label).count == 0:
-            Label(name=label).save()
+        if label_name != None and Label.objects.filter(Q(name=label_name) & Q(user=user)).count() ==  0:
+            Label(name=label_name, user=user).save()
         else:
             print("이미 존재하는 label 또는 label 값이 제대로 입력되지 않음")
     
@@ -278,12 +314,28 @@ class LabelViewSet(viewsets.ModelViewSet):
             print(msg)
             return Response(status=status.HTTP_200_OK) 
 
-        name = request.data.get('name', None)
+        label_name = request.data.get('label_name', None)
         update_label = Link.objects.get(id=lb_id)
-        update_label.name = name
+        update_label.name = label_name
 
         return Response(status=status.HTTP_200_OK) 
+    
+    def list(self, request):
+        # 1. user가 유효한지 확인 
+        user = request.user
+        print(user)
+        valid, msg = isvalid_user(user)
+        print("here")
+        if not valid:
+            print(msg)
+            return Response(status=status.HTTP_200_OK) 
+        ##############################################
+
+        label_list = Label.objects.filter(user=user)
+        serializer = LabelSerializer(label_list, many=True)
         
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
 #         elif message == "UpdateOdds":
 #             event = request.data.pop('event')
 #             markets = event.pop('markets')[0]

@@ -1,38 +1,32 @@
-# import sys
-# import io
-
-# sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-# sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
-
-# import urllib.request
-# from urllib import parse #인코딩용 임포트
 
 from urllib.error import HTTPError
 import requests
 import html
-
 headers = {'User-Agent': 'Chrome/66.0.3359.181'}
 
 from bs4 import BeautifulSoup
+
 from .textrankr import TextRank
 
 def urlparse(url):
-    print("parsing : {}".format(url))
     img_url = "None"
     title = "None"
     parse_text = ""  
     meta_tag = [] 
     # 1. 주소의 html정보 파싱
     try:
-        # if "http://" not in url and "https://" not in url:
-        #     return "None","None","None"
         res = requests.get(url, headers=headers)
-        # soup = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser")
         soup = BeautifulSoup(res.text,"html.parser")
-    except HTTPError as e:
+        # soup = BeautifulSoup(urllib.request.urlopen(url).read(), "html.parser")
+    except HTTPError:
         # 주소에서 404 혹은 500등 에러 발생
-        print(e)
-        return "None","None","None","None"
+        parse_text="None"
+        meta_tag.append("None")
+        return img_url, title, parse_text, meta_tag
+    except:
+        parse_text="None"
+        meta_tag.append("None")
+        return img_url, title, parse_text, meta_tag
 
     # 2. 대표 이미지가 있는 경우 대표 이미지 추출
     img_tag = soup.find("meta",{"property":"og:image"})
@@ -52,37 +46,41 @@ def urlparse(url):
         if len(parse_text)<=1:
             #메타 태그에 본문 없는거
             parse_text= "None"
-
-        # print("after parsing naver :\n img_url : {}\n title : {}\n parse_text : {}".format(img_url,title,parse_text))
-        return img_url, title, parse_text, meta_tag
-        
-    if "tistory" in url:
+      
+    elif "tistory" in url:
         all_p = soup.find_all("p")
         for line in all_p:
             parse_text += line.get_text().strip() +"\n"
 
-        return img_url, title, parse_text,meta_tag
-
-    if "youtube" in url:
+    elif "youtube" in url:
         parse_text="None"
         for tag in soup.find_all("meta",{"property":"og:video:tag"}):
             tag_text = html.unescape(tag.get("content",None).strip()) #html unescape문자 처리
             meta_tag.append(tag_text)
-        return img_url, title, parse_text, meta_tag
     
-    if "stackoverflow" in url:
+    elif "stackoverflow" in url:
         for main_text in soup.find(class_="post-layout").find_all("p"):
             parse_text += main_text.get_text() #html unescape문자 처리
-            
-        return img_url, title, parse_text, meta_tag
    
-   
-    #나머지 주소들
-    all_p = soup.find_all("p")
-    for line in all_p:
-        parse_text += line.get_text().strip() +"\n"
+    else:
+        #나머지 주소들
+        all_p = soup.find_all("p")
+        for line in all_p:
+            parse_text += line.get_text().strip() +"\n"
 
-    # print("return",img_url,title,parse_text)
-    return img_url, title, parse_text, meta_tag
+     # 5. Null처리, 없는거있으면 "None"으로 처리
+    if len(parse_text)<=1:
+        parse_text="None"
+
+    if len(meta_tag) < 1:
+        #리턴값 최소 1개 보장
+        meta_tag.append("None")
+
+    if not img_url.startswith("http"):
+        img_url="None"
     
-
+    # print("return",img_url,title,parse_text,meta_tag)
+    if len(meta_tag)<3:
+        return img_url, title, parse_text, meta_tag
+    else:
+        return img_url, title, parse_text, meta_tag[:3]

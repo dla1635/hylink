@@ -1,26 +1,25 @@
 from rest_framework import viewsets
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .serializers import UserSerializer, RegisterSerializer
 from rest_framework import permissions
 
-from rest_framework.response import Response
-from rest_framework.views import APIView
+# from rest_framework.response import Response
+# from rest_framework.views import APIView
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
-    login_serializer_class = LoginSerializer
     regist_serializer_class = RegisterSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     ordering_fields = '__all__'
 
     def get_serializer_class(self):
-        if self.action == 'post':
-            if hasattr(self, 'regist_serializer_class'):
-                return self.regist_serializer_class
+        # if self.action == 'post':
+        #     if hasattr(self, 'regist_serializer_class'):
+        #         return self.regist_serializer_class
         return super().get_serializer_class()
 
     def create(self, request, *args, **kwargs):
@@ -33,7 +32,7 @@ class UserViewSet(viewsets.ModelViewSet):
         #         context=self.get_serializer_context()).data,
         #     "token": AuthToken.objects.create(user)[1]
         # })
-        return Response(serializer.data)
+        # return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
         # There is nothing to validate or save here. Instead, we just want the
@@ -53,22 +52,5 @@ class UserViewSet(viewsets.ModelViewSet):
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
-
-        return Response(serializer.data)
-
-
-class LoginAPIView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = LoginSerializer
-
-    def post(self, request):
-        user = request.data.get('user', {})
-
-        # Notice here that we do not call `serializer.save()` like we did for
-        # the registration endpoint. This is because we don't  have
-        # anything to save. Instead, the `validate` method on our serializer
-        # handles everything we need.
-        serializer = self.serializer_class(data=user)
-        serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data)
