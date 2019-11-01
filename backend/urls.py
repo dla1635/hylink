@@ -40,21 +40,18 @@ urlpatterns = [
     # http://localhost:8000/api/admin/
     path('api/admin/', admin.site.urls),
 
-    path('api/token/', obtain_jwt_token, name='api_token'),
+    path('auth/token/', obtain_jwt_token, name='api_token'),
 
-    path('api/rest-auth/', include('rest_auth.urls')),
+    path('auth/', include('rest_auth.urls')),
 
-    url('api/rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^auth/registration/', include('rest_auth.registration.urls')),
 
-    url('api/accounts/', include('allauth.urls')),
-
-
-    # path('api/auth/', obtain_jwt_token),
+    url(r'^auth/accounts/', include('allauth.urls')),
 
     # path('api/auth/verify', verify_jwt_token),
 
     # path('api/auth/refresh', refresh_jwt_token),
 
-    # url(r'^.*$',  index_view, name='index')
+    url(r'^.*$',  index_view, name='index')
 
 ]
