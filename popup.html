@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <style scoped>
+      body{
+        width:300px;
+        padding: 1rem;
+        background-color: beige;
+      }
+      div{
+       padding:1px;
+      }
+      .popup-main{
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript" src="popup.js"></script>
+    <div class="popup-main">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <!-- <label for="inputRUL" class="col-xs-2 control-label">URL</label> -->
+          <div class="col-xs-12">
+              <input type="text" class="form-control" id="inputURL" value="" placeholder="http://... or https://...">
+          </div>
+        </div>
+        <div class="form-group d-flex flex-row">
+          <div class="col-xs-12">
+            <button class="btn btn-success btn-block" type="submit">저장하기</button>
+          </div>
+          <div class="col-xs-12">
+            <button class="btn btn-info btn-block" id="toMain">Hylink 메인</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
