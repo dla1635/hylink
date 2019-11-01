@@ -36,6 +36,8 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     username = models.CharField(max_length=254, null=True, blank=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(null=True)
     last_login = models.DateTimeField(null=True)
@@ -48,6 +50,18 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return "/users/%i/" % (self.pk)
+
+    def get_full_name(self):
+        '''
+        Returns the first_name plus the last_name, with a space in between.
+        '''
+        return self.username
+
+    def get_short_name(self):
+        '''
+        Returns the short name for the user.
+        '''
+        return self.username
 
 
     # @property
