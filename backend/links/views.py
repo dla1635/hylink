@@ -208,7 +208,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_200_OK)
 
     def retrieve(self, request):
-
+        print("성공!!")
         return Response(status=status.HTTP_200_OK)
     
     def destroy(self, request):
