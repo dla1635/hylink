@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
     name: 'RegistForm',
     props: {
@@ -50,6 +52,12 @@ export default {
     },
     data: () => ({
         drawer: null,
+        input: {
+            username: '',
+            password1: '',
+            password2: '',
+            email: '',
+        }
     }),
 }
 </script>
