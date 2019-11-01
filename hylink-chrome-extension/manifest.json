@@ -1,0 +1,28 @@
+{
+  "name": "Hylink",
+  "version": "1.0",
+  "description": "Easy to manage hyperlink with Hylink!",
+  "permissions": [
+    "activeTab"
+    ,"storage"
+    ,"tabs"
+  ],
+  
+  "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "images/link_16.png",
+        "32": "images/link_32.png",
+        "48": "images/link_48.png",
+        "128": "images/link_128.png"
+      }
+    },
+  "icons": {
+      "16": "images/link_16.png",
+      "32": "images/link_32.png",
+      "48": "images/link_48.png",
+      "128": "images/link_128.png"
+    },
+  
+  "manifest_version": 2
+}
