@@ -23,6 +23,7 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import AppBar from './AppBar'
 import NavBar from './NavBar'
 import CardList from '@/components/CardList'
@@ -51,7 +52,6 @@ export default {
     computed: {
     },
     methods: {
-<<<<<<< HEAD
         ...mapActions({
             getCards: 'getCards'
         }),
@@ -82,14 +82,6 @@ export default {
             }
             console.log(this.card_list)
         }
-=======
-        // ...mapActions({
-        //     getCards: 'getCards'
-        // }),
-        // ...mapActions({
-        //     postCard: 'postCard'
-        // }),
->>>>>>> feature/share
     },
     mounted() {
         this.getCards()
