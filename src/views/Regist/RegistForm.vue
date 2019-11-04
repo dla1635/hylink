@@ -67,7 +67,6 @@ export default {
     methods: mapActions('signup', [
         'createAccount',
         'clearRegistrationStatus',
-        'activateAccount',
     ]),
     beforeRouteLeave(to, from, next) {
         this.clearRegistrationStatus();
