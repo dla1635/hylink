@@ -55,7 +55,13 @@ export default {
         }
     },
     methods: {
-        ...mapActions({getCards: 'getCards'}),
+<<<<<<< HEAD
+        ...mapActions({
+            getCards: 'getCards'
+        }),
+        // ...mapActions({
+        //     postCard: 'postCard'
+        // }),
         tmp() {
             this.card_list=[]
             const type = this.$route.params.type
