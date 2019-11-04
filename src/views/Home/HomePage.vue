@@ -4,11 +4,11 @@
     <AppBar></AppBar>
 
     <!--  Side bar    -->
-    <NavBar v-if="navBarDrawer" />
+    <NavBar />
 
     <v-container fluid>
         <v-text-field
-            id="url_input"
+          id="url_input"
           solo
           text
           hide-details
@@ -28,7 +28,7 @@ import AppBar from './AppBar'
 import NavBar from './NavBar'
 import CardList from '@/components/CardList'
 import Store from '@/vuex/store'
-import mapActions from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
     name: "HomePage",
@@ -40,7 +40,7 @@ export default {
     data() {
         return {
             card_list:[],
-            tmp_list: []
+            tmp_list: [],
         };
     },
     watch: {
