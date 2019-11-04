@@ -55,7 +55,6 @@ export default {
         }
     },
     methods: {
-<<<<<<< HEAD
         ...mapActions({
             getCards: 'getCards'
         }),
@@ -71,6 +70,7 @@ export default {
             console.log(type)
             console.log(content)
             if(content === "") {
+                console.log("totallllll")
                 this.card_list = tmpCards;
             } else if(type === "label") {
                 this.card_list = tmpCards.filter(function(item){

@@ -1,7 +1,7 @@
 <template>
 <v-navigation-drawer fixed clipped class="grey lighten-4" app>
     <v-list dense class="grey lighten-4">
-      <v-list-item @click="moveToLabel('total')">
+      <v-list-item @click="moveToLabel('')">
             <v-list-item-action>
                 <v-icon>local_offer</v-icon>
             </v-list-item-action>
