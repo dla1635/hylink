@@ -23,9 +23,6 @@
 </template>
 
 <script>
-
-import {mapActions} from 'vuex'
-
 import AppBar from './AppBar'
 import NavBar from './NavBar'
 import CardList from '@/components/CardList'

@@ -4,8 +4,8 @@
     <AppBar></AppBar>
 
     <v-container>
-        <v-card flat outlined class="pl-5">
-            <h1>title!</h1>
+        <v-card flat outlined class="pl-5" v-if="title != ''">
+            <h1> {{title}} </h1>
         </v-card>
         <v-list three-line>
             <template v-for="(card, index) in cards">
@@ -17,7 +17,7 @@
                     <v-list-item-content justify="center" >
                         <v-container to="login">
                             <v-row>
-                                <v-col :cols="10">
+                                <v-col :cols="8">
                                     <v-row>
                                         <v-list-item-title>
                                             <h2>{{card.title}}</h2>
@@ -37,8 +37,8 @@
                                     </v-row>
 
                                 </v-col>
-                                <v-col :cols="2">
-                                    <v-img :src="card.thumbnail"></v-img>
+                                <v-col :cols="4" >
+                                    <v-img :src="card.thumbnail" height="200"></v-img>
                                 </v-col>
 
                             </v-row>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import AppBar from './AppBar'
 
 export default {
@@ -66,6 +67,7 @@ export default {
     },
     data() {
         return {
+            title : "",
             cards: [{
                     thumbnail: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
                     title: 'Brunch this weekend?',
@@ -102,8 +104,24 @@ export default {
             ]
         }
     },
-    created: {
+    mounted() {
         //axios를 이용해 데이터 가져오기
+        this.getCards();
+    },
+    methods : {
+        getCards : function(){
+            this.$axios.get('http://13.125.61.163:8000/api/share/')
+            .then(
+                function(response){
+                    console.log(response);
+                }
+            )
+            .catch(
+                function(error){
+                    console.log(error);
+                }
+            );
+        }
     }
 
 };
