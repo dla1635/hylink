@@ -11,7 +11,8 @@ from rest_framework import routers
 
 from .api.views import index_view, MessageViewSet
 from .posts.views import PostViewSet, CommentViewSet, ReportViewSet
-from .links.views import LinkViewSet, LinksViewSet, LabelViewSet 
+from .links.views import LinkViewSet, LinksViewSet, LabelViewSet
+from .sharing.views import ShareViewSet 
 from .profiles.views import UserViewSet
 
 # from rest_framework.authtoken.views import obtain_auth_token
@@ -25,6 +26,7 @@ router.register('comments', CommentViewSet)
 router.register('linklist', LinksViewSet)
 router.register('link', LinkViewSet)
 router.register('label', LabelViewSet)
+router.register('share', ShareViewSet)
 router.register('reports', ReportViewSet)
 router.register('users', UserViewSet)
 
