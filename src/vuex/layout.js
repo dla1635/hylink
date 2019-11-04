@@ -51,8 +51,14 @@ export const layout = {
         },
         async postCard({commit}, payload) {
             alert("postCard")
+            const config = {
+                headers: {
+                    'X-CSRFToken': localStorage.getItem('TOKEN_STORAGE_KEY')
+                }
+            }
             console.log(payload)
-            var resp = await Axios.post("http://localhost:8000/api/link/", payload, {"token":localStorage.getItem(TOKEN_STORAGE_KEY)})
+            console.log(localStorage.getItem('TOKEN_STORAGE_KEY'))
+            var resp = await Axios.post("http://localhost:8000/api/link/", payload, config)
             
             console.log(resp)
 

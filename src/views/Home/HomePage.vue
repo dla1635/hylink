@@ -81,14 +81,6 @@ export default {
         postCard() {
             this.$store.dispatch("postCard",{url:this.url_input})
         }
-=======
-        // ...mapActions({
-        //     getCards: 'getCards'
-        // }),
-        // ...mapActions({
-        //     postCard: 'postCard'
-        // }),
->>>>>>> feature/share
     },
     async mounted() {
         await this.getCards()
