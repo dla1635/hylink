@@ -38,7 +38,7 @@
 
         <v-flex d-flex="inline-block" justify-center text-center col-xs-12 mt-5 width="200">
             <v-btn rounded class="mx-2" color="#B5D4B8">Back</v-btn>
-            <v-btn rounded class="mx-2" color="#B6DCCC" @click="createAccount(inputs)">Sign Up</v-btn>
+            <v-btn rounded class="mx-2" color="#B6DCCC" @click="mySignup(inputs)">Sign Up</v-btn>
         </v-flex>
     </v-container>
 
@@ -66,11 +66,25 @@ export default {
         'registrationCompleted',
         'registrationError',
         'registrationLoading',
-    ]),
-    methods: mapActions('signup', [
-        'createAccount',
-        'clearRegistrationStatus',
-    ]),
+        ]),
+    methods: {
+        ...mapActions('signup', [
+            'createAccount',
+            'clearRegistrationStatus',
+        ]),
+        ...mapActions('auth', ['login']),
+        mySignup(inputs) {
+            this.createAccount(inputs)
+            .then(()=>{
+                var email = inputs.email
+                var password = inputs.password1
+                if (this.registrationCompleted) {
+                    this.$store.dispatch('auth/login', { email, password })
+                }
+            })
+
+        },    
+    },    
     beforeRouteLeave(to, from, next) {
         this.clearRegistrationStatus();
         next();
