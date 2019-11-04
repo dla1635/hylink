@@ -1,5 +1,6 @@
 /* eslint-disable */
 import Axios from "axios";
+import session from '../api/session';
 
 export const layout = {
     state: { 
@@ -51,14 +52,9 @@ export const layout = {
         },
         async postCard({commit}, payload) {
             alert("postCard")
-            const config = {
-                headers: {
-                    'X-CSRFToken': localStorage.getItem('TOKEN_STORAGE_KEY')
-                }
-            }
+            
             console.log(payload)
-            console.log(localStorage.getItem('TOKEN_STORAGE_KEY'))
-            var resp = await Axios.post("http://localhost:8000/api/link/", payload, config)
+            var resp = await session.post("http://localhost:8000/api/link/", payload)
             
             console.log(resp)
 

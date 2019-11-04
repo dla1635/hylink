@@ -1,21 +1,24 @@
 <template>
 <v-navigation-drawer fixed clipped class="grey lighten-4" app>
     <v-list dense class="grey lighten-4">
-      <v-row  align="center">
-          <v-col cols="6">
-            <v-subheader>
-                Labels
-            </v-subheader>
-          </v-col>
-      </v-row>
-      <v-divider  dark class="my-4"/>
-      <template v-for="(item, i) in labels">
-        <v-list-item :key="i" >
+      <v-list-item @click="moveToLabel('total')">
             <v-list-item-action>
                 <v-icon>local_offer</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-                <v-list-item-title class="grey--text" @click="moveToLabel(item.name)">
+                <v-list-item-title class="grey--text">
+                    전체
+                </v-list-item-title>
+            </v-list-item-content>
+        </v-list-item>
+      <v-divider  dark class="my-4"/>
+      <template v-for="(item, i) in labels">
+        <v-list-item :key="i" @click="moveToLabel(item.name)">
+            <v-list-item-action>
+                <v-icon>local_offer</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+                <v-list-item-title class="grey--text">
                     {{ item.name }}
                 </v-list-item-title>
             </v-list-item-content>
@@ -44,6 +47,7 @@ export default {
         }),
         moveToLabel(content) {
           // catch문 => dupalate Component error 해결
+          console.log(content)
           this.$router.push({name:'home', params: { type:"label", content: content }}).catch(err => {})
         }
     },

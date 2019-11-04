@@ -62,7 +62,11 @@ export default {
             const content = this.$route.params.content
             const tmpCards = Store.state.layout.card_list;
 
-            if(type === "label") {
+            console.log(type)
+            console.log(content)
+            if(content === "") {
+                this.card_list = tmpCards;
+            } else if(type === "label") {
                 this.card_list = tmpCards.filter(function(item){
                     if(item.label.find(function(item){return item.name === content})) {
                         return item;
@@ -74,8 +78,6 @@ export default {
                         return item;
                     }
                 });
-            } else {
-                this.card_list = tmpCards;
             }
         },
         postCard() {
