@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 import auth from '../api/auth';
+import router from '../config/router';
+
 
 import {
     ACTIVATION_BEGIN,
@@ -40,7 +42,10 @@ export default {
                     commit(REGISTRATION_SUCCESS)
                     Swal.fire({
                         text: "회원가입에 성공하였습니다",
-                        type: "success"
+                        type: "success",
+                        onClose: () =>{
+                            router.push({ name: 'home'})
+                        }
                     })
                 })
                 .catch(() => {
@@ -48,7 +53,10 @@ export default {
                     commit(REGISTRATION_FAILURE)
                     Swal.fire({
                         text: "회원가입에 실패하였습니다",
-                        type: "warnig"
+                        type: "warning",
+                        onClose: () =>{
+                            router.push({name: 'regist'})
+                        }
                     })
                 });
         },

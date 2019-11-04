@@ -1,5 +1,6 @@
 import auth from '../api/auth';
 import session from '../api/session';
+
 import {
     LOGIN_BEGIN,
     LOGIN_FAILURE,
@@ -10,7 +11,8 @@ import {
 } from './types';
 
 const TOKEN_STORAGE_KEY = 'TOKEN_STORAGE_KEY';
-const isProduction = process.env.NODE_ENV === 'production';
+// const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = false;
 
 const initialState = {
     authenticating: false,
@@ -33,8 +35,14 @@ const actions = {
         return auth.login(email, password)
             .then(({
                 data
-            }) => commit(SET_TOKEN, data.key))
+            }) => commit(SET_TOKEN, data.token))
+<<<<<<< HEAD
+            .then(() => {
+                commit(LOGIN_SUCCESS)
+            })
+=======
             .then(() => commit(LOGIN_SUCCESS))
+>>>>>>> feature/share
             .catch(() => commit(LOGIN_FAILURE));
     },
     logout({
