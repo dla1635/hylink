@@ -30,6 +30,7 @@ import AppBar from './AppBar'
 import NavBar from './NavBar'
 import CardList from '@/components/CardList'
 import Store from '@/vuex/store'
+// import mapActions from 'vuex'
 
 export default {
     name: "HomePage",
@@ -46,12 +47,12 @@ export default {
     computed: {
     },
     methods: {
-        ...mapActions({
-            getCards: 'getCards'
-        }),
-        ...mapActions({
-            postCard: 'postCard'
-        }),
+        // ...mapActions({
+        //     getCards: 'getCards'
+        // }),
+        // ...mapActions({
+        //     postCard: 'postCard'
+        // }),
     },
     mounted() {
         this.getCards()
