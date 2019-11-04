@@ -1,9 +1,9 @@
 <template>
 <v-card flat width="500" color="#ffffff00">
     <v-toolbar flat borderless height="200" color="#ffffff00">
-            <v-container>
-                <v-row justify="center" class="display-4">HyLink</v-row>
-            </v-container>
+        <v-container>
+            <v-row justify="center" class="display-4">HyLink</v-row>
+        </v-container>
     </v-toolbar>
 
     <v-card-text class="pb-0">
@@ -46,14 +46,14 @@
 
     <v-card-actions>
         <v-container>
-            <v-row justify="center">
+            <v-flex col-xs-12 justify-center text-center>
                 <v-btn 
                 color="#B6DCCC" 
-                rounded width="100" 
+                rounded 
+                width="100" 
                 height="25"
                 @click="login(inputs)">Login</v-btn>
-            </v-row>
-
+            </v-flex>
         </v-container>
     </v-card-actions>
 </v-card>
@@ -74,11 +74,10 @@ export default {
     },
     methods: {
         login({ email, password }) {
-
             console.log(email, password)
             this.$store.dispatch('auth/login', { email, password })
                 .then(() =>
-                    this.$router.push('/'));
+                    this.$router.push({ name: 'home' }));
         },
     }
 }

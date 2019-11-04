@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import Register from "./RegisterForm"
+import Register from "./RegistForm"
 
 export default {
-    name: 'RegisterPage',
+    name: 'RegistPage',
     data: () => ({
         drawer: null,
 

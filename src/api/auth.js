@@ -18,7 +18,7 @@ export default {
             username,
             password1,
             password2,
-        });
+        })
     },
     changeAccountPassword(password1, password2) {
         return session.post('/auth/password/change/', {
