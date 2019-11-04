@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import session from './session';
 
 export default {
     login(username, password) {
+        console.log("api", username, password)
         return session.post('/auth/login/', {
             username,
             password

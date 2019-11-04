@@ -26,11 +26,11 @@ const actions = {
     login({
         commit
     }, {
-        username,
+        email,
         password
     }) {
         commit(LOGIN_BEGIN);
-        return auth.login(username, password)
+        return auth.login(email, password)
             .then(({
                 data
             }) => commit(SET_TOKEN, data.key))
