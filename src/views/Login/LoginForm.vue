@@ -77,7 +77,8 @@ export default {
 
             console.log(email, password)
             this.$store.dispatch('auth/login', { email, password })
-                .then(() => this.$router.push('/'));
+                .then(() =>
+                    this.$router.push('/'));
         },
     }
 }
