@@ -106,12 +106,13 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
-CORS_ORIGIN_WHITELIST = [
-    'localhost:8080',
-    'localhost',
-    'chrome://',
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'localhost:8080',
+#     'localhost',
+#     'chrome://',
+# ]
 
 CORS_URLS_REGEX = r'^/api/.*$'
 
