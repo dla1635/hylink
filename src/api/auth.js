@@ -12,12 +12,12 @@ export default {
     logout() {
         return session.post('/auth/logout/', {});
     },
-    createAccount(email, password1, password2, username) {
+    createAccount(email, username, password1, password2) {
         return session.post('/auth/registration/', {
             email,
+            username,
             password1,
             password2,
-            username
         });
     },
     changeAccountPassword(password1, password2) {
