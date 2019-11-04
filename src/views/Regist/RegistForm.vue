@@ -35,20 +35,11 @@
                 <router-link to="/password_reset">reset password</router-link>
             </v-flex>
         </v-row>
-<<<<<<< HEAD
 
         <v-flex d-flex="inline-block" justify-center text-center col-xs-12 mt-5 width="200">
             <v-btn rounded class="mx-2" color="#B5D4B8">Back</v-btn>
             <v-btn rounded class="mx-2" color="#B6DCCC" @click="mySignup(inputs)">Sign Up</v-btn>
         </v-flex>
-=======
-        <v-row justify="center" width="200">
-                <v-btn rounded color="#B5D4B8">Back</v-btn>
-                <v-spacer></v-spacer>
-                <v-btn rounded color="#B6DCCC" @click="createAccount(inputs)">Sign Up</v-btn>
-
-        </v-row>
->>>>>>> feature/share
     </v-container>
 
 </v-card>

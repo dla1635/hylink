@@ -55,7 +55,12 @@ export default {
         }
     },
     methods: {
-        ...mapActions({getCards: 'getCards'}),
+        ...mapActions({
+            getCards: 'getCards'
+        }),
+        // ...mapActions({
+        //     postCard: 'postCard'
+        // }),
         tmp() {
             this.card_list=[]
             const type = this.$route.params.type
@@ -65,6 +70,7 @@ export default {
             console.log(type)
             console.log(content)
             if(content === "") {
+                console.log("totallllll")
                 this.card_list = tmpCards;
             } else if(type === "label") {
                 this.card_list = tmpCards.filter(function(item){
