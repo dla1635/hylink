@@ -10,8 +10,34 @@
         <v-container>
             <v-row justify="center">
                 <v-form>
-                    <v-text-field class="form_input" background-color="#C8EBCC" label="Email" id="email" name="email" prepend-icon="person" type="text" outlined="true" rounded="true" persistent-hint="false" single-line="true" loading="false" dense = "true"></v-text-field>
-                    <v-text-field class="form_input" background-color="#C8EBCC" label="Password" id="password" name="password" prepend-icon="lock" type="password" outlined="true" rounded="true" persistent-hint="false" single-line="true" loading="false" dense = "true"></v-text-field>
+                    <v-text-field class="form_input" 
+                                  background-color="#C8EBCC" 
+                                  label="Email" 
+                                  id="email" 
+                                  name="email" 
+                                  v-model="inputs.email"
+                                  prepend-icon="person" 
+                                  type="text" 
+                                  outlined
+                                  rounded
+                                  single-line
+                                  persistentHint= false
+                                  loading=false
+                                  dense></v-text-field>
+                    <v-text-field class="form_input" 
+                                  background-color="#C8EBCC" 
+                                  label="Password" 
+                                  id="password" 
+                                  name="password" 
+                                  v-model="inputs.password"
+                                  prepend-icon="lock" 
+                                  type="password" 
+                                  outlined
+                                  rounded
+                                  single-line
+                                  persistentHint=false
+                                  loading=false
+                                  dense></v-text-field>
                     <p class="caption ma-0">Forgot password?</p>
                 </v-form>
             </v-row>
@@ -23,7 +49,11 @@
     <v-card-actions>
         <v-container>
             <v-row justify="center">
-                <v-btn color="#B6DCCC" rounded="true" width="100" height="25">Login</v-btn>
+                <v-btn 
+                color="#B6DCCC" 
+                rounded width="100" 
+                height="25"
+                @click="login(inputs)">Login</v-btn>
             </v-row>
 
         </v-container>
@@ -32,17 +62,24 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 export default {
     name: 'LoginForm',
-    data: () => ({
-        drawer: null,
-        id: "",
-        password: ""
-    }),
-    method: {
-        async signUp() {
-            // 로그인 프로세스
+    data() {
+        return {
+            drawer: null,
+            inputs: {
+                email: '',
+                password: '',
+            },
+        }
+    },
+    methods: {
+        login({ email, password }) {
 
+            console.log(email, password)
+            this.$store.dispatch('auth/login', { email, password })
+                .then(() => this.$router.push('/'));
         },
     }
 }
