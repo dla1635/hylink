@@ -1,5 +1,5 @@
 <template>
-<v-app>    
+<v-app>
 
     <v-content>
         <router-view />
@@ -13,6 +13,7 @@
 export default {
     name: 'App',
     data: () => ({
+        
     }),
     components: {
         
