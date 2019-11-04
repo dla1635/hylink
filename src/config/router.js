@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Welcome from '@/views/Welcome/WelcomePage'
+import Landing from '@/views/Landing/LandingPage'
 import HomePage from '@/views/Home/HomePage'
 import LoginPage from '@/views/Login/LoginPage'
 import RegisterPage from '@/views/Register/RegisterPage'
 import SharePage from '@/views/Share/SharePage'
 import NotFound from '@/components/NotFound'
+
 
 Vue.use(Router)
 
@@ -16,7 +17,7 @@ const router = new Router({
     {
       path: '/',
       name: 'welcome',
-      component: Welcome
+      component: Landing
     },
     {
       path: '/home',
@@ -29,9 +30,9 @@ const router = new Router({
       component: LoginPage
     },
     {
-      path: '/register',
-      name: 'register',
-      component: RegisterPage,
+      path: '/regist',
+      name: 'regist',
+      component: RegisterPage
     },
     {
       path: '/share',
