@@ -1,5 +1,11 @@
 <template>
 <v-app id="container">
+    <!-- 상단 바 -->
+    <AppBar></AppBar>
+
+    <!--  Side bar    -->
+    <NavBar v-if="navBarDrawer" />
+
     <v-container fluid>
         <v-text-field
             id="url_input"
@@ -17,14 +23,16 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
-import {mapActions} from 'vuex'
+import AppBar from './AppBar'
+import NavBar from './NavBar'
 import CardList from '@/components/CardList'
 import Store from '@/vuex/store'
 
 export default {
     name: "HomePage",
     components: {
+        AppBar,
+        NavBar,
         CardList
     },
     data() {
@@ -35,12 +43,12 @@ export default {
     computed: {
     },
     methods: {
-        ...mapActions({
-            getCards: 'getCards'
-        }),
-        ...mapActions({
-            postCard: 'postCard'
-        }),
+        // ...mapActions({
+        //     getCards: 'getCards'
+        // }),
+        // ...mapActions({
+        //     postCard: 'postCard'
+        // }),
     },
     mounted() {
         this.getCards()

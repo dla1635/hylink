@@ -10,7 +10,7 @@ import NotFound from '@/components/NotFound'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode : 'history',
   routes: [
     {
@@ -44,3 +44,17 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach(function (to, from, next) {
+  // to: 이동할 url에 해당하는 라우팅 객체
+  if (to.matched.some(function(routeInfo) {
+    return routeInfo.meta.authRequired;
+  })) {
+    // 인증 정보가 없으면 이전 페이지로 돌아감
+    next(false);
+  } else {
+    next(); // 페이지 전환
+  }
+});
+
+export default router

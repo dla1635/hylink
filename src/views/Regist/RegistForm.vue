@@ -30,7 +30,6 @@
             </v-form>
 
         </v-row>
-
         <v-row justify="center" width="200">
                 <v-btn rounded color="#B5D4B8">Back</v-btn>
                 <v-spacer></v-spacer>
