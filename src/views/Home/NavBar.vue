@@ -12,11 +12,11 @@
       <template v-for="(item, i) in labels">
         <v-list-item :key="i" >
             <v-list-item-action>
-                <v-icon>{{ item.icon }}</v-icon>
+                <v-icon>local_offer</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-                <v-list-item-title class="grey--text">
-                    {{ item.text }}
+                <v-list-item-title class="grey--text" @click="moveToLabel(item)">
+                    {{ item }}
                 </v-list-item-title>
             </v-list-item-content>
         </v-list-item>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import {mapActions} from 'vuex'
 import Store from '@/vuex/store'
 
@@ -39,9 +40,14 @@ export default {
     methods: {
       ...mapActions({
             getLabels: 'getLabels'
-        })
+        }),
+        moveToLabel(content) {
+          console.log("ads", content)
+          this.$router.push({name:'home', params: { type:"label", content: content }})
+        }
     },
     mounted() {
+      
       this.labels = Store.state.layout.labels
 
     }
