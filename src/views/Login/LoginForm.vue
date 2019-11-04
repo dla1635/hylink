@@ -66,7 +66,7 @@ export default {
         return {
             drawer: null,
             inputs: {
-                eamil: '',
+                email: '',
                 password: '',
             },
         }
