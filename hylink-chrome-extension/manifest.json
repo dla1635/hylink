@@ -6,6 +6,7 @@
     "activeTab"
     ,"storage"
     ,"tabs"
+    ,"cookies"
     ,"http://*/*"
     ,"https://*/*"
   ],
@@ -25,6 +26,6 @@
       "48": "images/link_48.png",
       "128": "images/link_128.png"
     },
-  
+  "content_security_policy":"script-src 'self' https://unpkg.com/axios/dist/axios.min.js; object-src 'self'",
   "manifest_version": 2
 }

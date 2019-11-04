@@ -2,6 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <!-- <meta id="_csrf" name="_csrf" th:content="{{csrf_token()}}"/> -->
+    <!-- default header name is X-CSRF-TOKEN -->
+    <!-- <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <style scoped>
       body{
@@ -24,10 +27,24 @@
     </style>
   </head>
   <body>
-    <script type="text/javascript" src="popup.js"></script>
+      
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script type="text/javascript">
+     const axios = require('axios').default;
+      const session = axios.create({
+          xsrfCookieName: CSRF_COOKIE_NAME,
+          xsrfHeaderName: CSRF_HEADER_NAME,
+      }); 
+      alert("b");
+      console.log("axios!",axios);
+      alert("c")
+    </script> -->
+    <script type="text/javascript" src="popup.js">
+     
+    </script>
     <div class="popup-main">
       <h1 class="text-center"> HYLINK </h1>
-      <form id="linkform" class="form-horizontal" action="localhost:8000/api/link/" method="post">
+      <form id="linkform" class="form-horizontal" >
         <div class="form-group">
           <!-- <label for="inputRUL" class="col-xs-2 control-label">URL</label> -->
           <div class="col-xs-12">
@@ -36,14 +53,14 @@
         </div>
         <div class="form-group d-flex flex-row">
           <div class="col-xs-12">
-            <button class="btn btn-success btn-block" type="submit">저장하기</button>
+            <button id="linkButton" class="btn btn-success btn-block" type="button">저장하기</button>
           </div>
           <div class="col-xs-12">
             <a class="btn btn-info btn-block" href="localhost:8000" target="_blank">Hylink 메인</a>
           </div>
         </div>
       </form>
-      <form id="loginform" class="form-horizontal" action="localhost:8000/auth/login/" method="post">
+      <form id="loginform" class="form-horizontal" >
           <div class="form-group">
               <!-- <label for="inputRUL" class="col-xs-2 control-label">URL</label> -->
               <div class="col-xs-12">
@@ -55,7 +72,7 @@
           </div>
           <div class="form-group d-flex flex-row">
             <div class="col-xs-12">
-              <button class="btn btn-success btn-block" type="submit">로그인</button>
+              <button id="loginButton" class="btn btn-success btn-block" type="button">로그인</button>
             </div>
             <div class="col-xs-12">
               <button class="btn btn-warning btn-block" id="closePopUp"type="button">취소</button>

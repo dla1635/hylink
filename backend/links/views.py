@@ -160,7 +160,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         new_link = Link(user=user, url=url, title=title, thumbnail=thumbnail, summary=summary, sharable=sharable, is_visible=is_visible)
         new_link.save()
 
-        link_tags = request.data.get('tags', None)
+        # link_tags = request.data.get('tags', None)
         self.update_linktag(new_link, user_tags)
 
         return Response(status=status.HTTP_200_OK)
