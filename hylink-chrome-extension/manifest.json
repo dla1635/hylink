@@ -6,6 +6,8 @@
     "activeTab"
     ,"storage"
     ,"tabs"
+    ,"http://*/*"
+    ,"https://*/*"
   ],
   
   "browser_action": {

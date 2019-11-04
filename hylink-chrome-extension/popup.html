@@ -27,7 +27,7 @@
     <script type="text/javascript" src="popup.js"></script>
     <div class="popup-main">
       <h1 class="text-center"> HYLINK </h1>
-      <form id="link-form" class="form-horizontal" action="localhost:8000/api/link/" method="post">
+      <form id="linkform" class="form-horizontal" action="localhost:8000/api/link/" method="post">
         <div class="form-group">
           <!-- <label for="inputRUL" class="col-xs-2 control-label">URL</label> -->
           <div class="col-xs-12">
@@ -43,7 +43,7 @@
           </div>
         </div>
       </form>
-      <form id="login-form" class="form-horizontal" action="localhost:8000/auth/login/" method="post">
+      <form id="loginform" class="form-horizontal" action="localhost:8000/auth/login/" method="post">
           <div class="form-group">
               <!-- <label for="inputRUL" class="col-xs-2 control-label">URL</label> -->
               <div class="col-xs-12">
@@ -58,7 +58,7 @@
               <button class="btn btn-success btn-block" type="submit">로그인</button>
             </div>
             <div class="col-xs-12">
-              <button class="btn btn-warning btn-block" type="reset">취소</button>
+              <button class="btn btn-warning btn-block" id="closePopUp"type="button">취소</button>
             </div>
           </div>
         </form>
