@@ -3,14 +3,14 @@ import Router from 'vue-router'
 
 import Welcome from '@/views/Welcome/WelcomePage'
 import HomePage from '@/views/Home/HomePage'
-import LoginForm from '@/views/Login/LoginForm'
-import RegistForm from '@/views/Regist/RegistForm'
+import LoginPage from '@/views/Login/LoginPage'
+import RegistPage from '@/views/Regist/RegistPage'
 import NotFound from '@/components/NotFound'
 
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode : 'history',
   routes: [
     {
@@ -31,12 +31,12 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: LoginForm
+      component: LoginPage
     },
     {
       path: '/regist',
       name: 'regist',
-      component: RegistForm
+      component: RegistPage
     },
     {
       path: '/notfound',
@@ -49,3 +49,17 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach(function (to, from, next) {
+  // to: 이동할 url에 해당하는 라우팅 객체
+  if (to.matched.some(function(routeInfo) {
+    return routeInfo.meta.authRequired;
+  })) {
+    // 인증 정보가 없으면 이전 페이지로 돌아감
+    next(false);
+  } else {
+    next(); // 페이지 전환
+  }
+});
+
+export default router

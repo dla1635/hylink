@@ -2,14 +2,14 @@
 <v-container fill-height>
     <v-row justify="center">
 
-        <Regist></Regist>
+        <Register></Register>
     </v-row>
 
 </v-container>
 </template>
 
 <script>
-import Regist from "./RegistForm"
+import Register from "./RegistForm"
 
 export default {
     name: 'RegistPage',
@@ -18,7 +18,7 @@ export default {
 
     }),
     components: {
-        Regist
+        Register
     },
     method: {
 

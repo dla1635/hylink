@@ -1,5 +1,8 @@
 <template>
 <v-container>
+    <!-- 상단 바 -->
+    <AppBar></AppBar>
+
     <v-layout text-center wrap>
         <v-flex xs12>
             <v-img :src="require('@/assets/logo.svg')" class="my-3" contain height="200"></v-img>
@@ -30,10 +33,17 @@
 </template>
 
 <script>
+import AppBar from './AppBar'
+
 export default {
     name: 'WelcomePage',
-    data: () => ({
-    
-    }),
+    components: {
+        AppBar,
+    },
+    data() {
+        return {
+        }
+    },
+
 };
 </script>

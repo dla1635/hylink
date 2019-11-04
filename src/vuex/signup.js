@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import auth from '../api/auth';
 
 import {
@@ -10,6 +11,8 @@ import {
     REGISTRATION_FAILURE,
     REGISTRATION_SUCCESS,
 } from './types';
+
+import Swal from 'sweetalert2';
 
 export default {
     namespaced: true,
@@ -31,9 +34,23 @@ export default {
             email
         }) {
             commit(REGISTRATION_BEGIN);
-            return auth.createAccount(username, password1, password2, email)
-                .then(() => commit(REGISTRATION_SUCCESS))
-                .catch(() => commit(REGISTRATION_FAILURE));
+            return auth.createAccount(email, username, password1, password2)
+                .then(() => {
+                    console.log("회원가입 성공")
+                    commit(REGISTRATION_SUCCESS)
+                    Swal.fire({
+                        text: "회원가입에 성공하였습니다",
+                        type: "success"
+                    })
+                })
+                .catch(() => {
+                    console.log("회원가입 실패")
+                    commit(REGISTRATION_FAILURE)
+                    Swal.fire({
+                        text: "회원가입에 실패하였습니다",
+                        type: "warnig"
+                    })
+                });
         },
         activateAccount({
             commit
