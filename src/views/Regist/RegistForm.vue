@@ -25,12 +25,11 @@
                     <v-text-field class="input-with-icon form_input" name='email' label='E-Mail' v-model='inputs.email' type='email' prepend-icon="mail_outline" required></v-text-field>
                     <v-text-field class="input-with-icon form_input" name='username' label='UserName' v-model='inputs.username' type='text' prepend-icon="face" required></v-text-field>
                     <v-text-field class="input-with-icon form_input" name='password1' label='Password' v-model='inputs.password1' type='password' prepend-icon="lock" required></v-text-field>
-                    <v-text-field class="input-with-icon form_input" name='password2' label='confirmPassword' v-model='inputs.password2' type='password' prepend-icon="check_circle" :rules="[comfirmPassword]" required></v-text-field>
+                    <v-text-field class="input-with-icon form_input" name='password2' label='confirmPassword' v-model='inputs.password2' type='password' prepend-icon="check_circle" required></v-text-field>
                 </v-container>
             </v-form>
 
         </v-row>
-
         <v-row justify="center" width="200">
                 <v-btn rounded color="#B5D4B8">Back</v-btn>
                 <v-spacer></v-spacer>
@@ -67,6 +66,7 @@ export default {
     methods: mapActions('signup', [
         'createAccount',
         'clearRegistrationStatus',
+        'activateAccount',
     ]),
     beforeRouteLeave(to, from, next) {
         this.clearRegistrationStatus();

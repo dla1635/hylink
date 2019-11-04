@@ -4,26 +4,7 @@ import Axios from "axios";
 export const layout = {
     state: { 
         isNavBarOpen : false,
-        labels:[{
-            icon: 'local_offer',
-            text: 'Algorithm'
-        },
-        {
-            icon: 'local_offer',
-            text: 'BigData'
-        },
-        {
-            icon: 'local_offer',
-            text: 'BlockChain'
-        },
-        {
-            icon: 'local_offer',
-            text: 'AI'
-        },
-        {
-            icon: 'local_offer',
-            text: 'jAVA'
-        }],
+        labels:['AI','BlockChain','BigData'],
         card_list: [
             // {
             //   title: "알고리즘 분석1",

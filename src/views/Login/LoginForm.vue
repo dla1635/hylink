@@ -21,7 +21,6 @@
                                   outlined
                                   rounded
                                   single-line
-                                  persistentHint= false
                                   loading=false
                                   dense></v-text-field>
                     <v-text-field class="form_input" 
@@ -35,7 +34,6 @@
                                   outlined
                                   rounded
                                   single-line
-                                  persistentHint=false
                                   loading=false
                                   dense></v-text-field>
                     <p class="caption ma-0">Forgot password?</p>
@@ -79,7 +77,8 @@ export default {
 
             console.log(email, password)
             this.$store.dispatch('auth/login', { email, password })
-                .then(() => this.$router.push('/'));
+                .then(() =>
+                    this.$router.push('/'));
         },
     }
 }
