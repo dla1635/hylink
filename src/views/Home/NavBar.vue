@@ -15,8 +15,8 @@
                 <v-icon>local_offer</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-                <v-list-item-title class="grey--text" @click="moveToLabel(item)">
-                    {{ item }}
+                <v-list-item-title class="grey--text" @click="moveToLabel(item.name)">
+                    {{ item.name }}
                 </v-list-item-title>
             </v-list-item-content>
         </v-list-item>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 /* eslint-disable no-console */
 import {mapActions} from 'vuex'
 import Store from '@/vuex/store'
@@ -42,12 +43,12 @@ export default {
             getLabels: 'getLabels'
         }),
         moveToLabel(content) {
-          console.log("ads", content)
-          this.$router.push({name:'home', params: { type:"label", content: content }})
+          // catch문 => dupalate Component error 해결
+          this.$router.push({name:'home', params: { type:"label", content: content }}).catch(err => {})
         }
     },
-    mounted() {
-      
+    async mounted() {
+      await this.getLabels()
       this.labels = Store.state.layout.labels
 
     }
