@@ -35,8 +35,6 @@ def isvalid_link(l_id):
     return valid, msg
 
 def isvalid_user( user):
-    print(user.id)
-    print(get_user_model().objects.filter(id=2).count())
     valid = True if get_user_model().objects.filter(id=user.id).count() > 0 else False
     print(valid)
     msg = "user valid" if valid == True else "user invalid"
@@ -140,13 +138,6 @@ class LinkViewSet(viewsets.ModelViewSet):
             keyword = keywords[i]
             if keyword != 'None':
                 user_tags.append(keyword)
-            # else:
-            #     if i == 0:
-            #         user_tags.append('Vue')
-            #     elif i == 1:
-            #         user_tags.append('django')
-            #     else:
-            #         user_tags.append('AWS')
         
         print(user_tags)
         summary = ''
@@ -164,8 +155,6 @@ class LinkViewSet(viewsets.ModelViewSet):
         # value가 유효한지 확인
         # isvalid_value()
         print(url+" "+title+" "+thumbnail+" "+summary)
-
-        # summary, thumbnail, tag 가져오는 method function(url)
 
         # 5. link 객체 생성후, DB에 저장
         new_link = Link(user=user, url=url, title=title, thumbnail=thumbnail, summary=summary, sharable=sharable, is_visible=is_visible)
@@ -223,7 +212,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         self.update_linktag(update_link, link_tags)
 
         link_labels = request.data.get('labels', None)
-        update_linklabel(update_link, link_labels, user)
+        self.update_linklabel(update_link, link_labels, user)
         # self.update_linklabel(update_link, link_labels)
 
         return Response(status=status.HTTP_200_OK)

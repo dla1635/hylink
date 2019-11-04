@@ -36,9 +36,13 @@ const actions = {
             .then(({
                 data
             }) => commit(SET_TOKEN, data.token))
+<<<<<<< HEAD
             .then(() => {
                 commit(LOGIN_SUCCESS)
             })
+=======
+            .then(() => commit(LOGIN_SUCCESS))
+>>>>>>> feature/share
             .catch(() => commit(LOGIN_FAILURE));
     },
     logout({
