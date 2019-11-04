@@ -26,7 +26,6 @@
 import AppBar from './AppBar'
 import NavBar from './NavBar'
 import CardList from '@/components/CardList'
-import Store from '@/vuex/store'
 // import mapActions from 'vuex'
 
 export default {
@@ -51,45 +50,12 @@ export default {
     computed: {
     },
     methods: {
-<<<<<<< HEAD
-        ...mapActions({
-            getCards: 'getCards'
-        }),
-        // ...mapActions({
-        //     postCard: 'postCard'
-        // }),
-        tmp() {
-            const type = this.$route.params.type
-            const content = this.$route.params.content
-            console.log(type, content)
-
-            const tmpCards = Store.state.layout.card_list;
-            console.log(tmpCards)
-            if(type === "label") {
-                this.card_list = tmpCards.map(function(item){
-                    if(item.labels.find() != 'undefind') {
-                        return item;
-                    }
-                });
-            } else if(type === 'tag') {
-                this.card_list = tmpCards.map(function(item){
-                    if(item.tags.find() != 'undefind') {
-                        return item;
-                    }
-                });
-            } else {
-                this.card_list = tmpCards;
-            }
-            console.log(this.card_list)
-        }
-=======
         // ...mapActions({
         //     getCards: 'getCards'
         // }),
         // ...mapActions({
         //     postCard: 'postCard'
         // }),
->>>>>>> feature/share
     },
     mounted() {
         this.getCards()

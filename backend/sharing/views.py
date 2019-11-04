@@ -17,6 +17,8 @@ from django.db.models import Count, F, Q
 # def items(request):
 #    return Response({"message":"Hello world!"})
 
+# def get_context_data():
+#     sharelinks = Share.objects.annotate(link)
 def isvalid_user(user):
     valid = True if get_user_model().objects.filter(id=user.id).count() > 0 else False
     print(valid)
@@ -76,15 +78,15 @@ class ShareViewSet(viewsets.ModelViewSet):
 
     #     return Response(status=status.HTTP_200_OK)
     
-    # def list(self, request):
-    #     s_id = request.data.GET('id', None)
-    #     valid, msg = isvalid_share(s_id)
-    #     if not valid:
-    #         print(msg)
-    #         return Response(status=status.HTTP_200_OK)
+    def list(self, request):
+        # s_id = request.data.GET('id', None)
+        # valid, msg = isvalid_share(s_id)
+        # if not valid:
+        #     print(msg)
+        #     return Response(status=status.HTTP_200_OK)
         
-    #     link_list = ShareLink.objects.filter(id=s_id).order_by('order')
-    #     serializer = ShareLinkSerializer(link_list, many=True)
-    #     return Response(data=serializer.data, status=status.HTTP_200_OK)
+        link_list = ShareLink.objects.filter().order_by('order')
+        serializer = ShareLinkSerializer(link_list, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
     
 

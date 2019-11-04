@@ -12,5 +12,5 @@ class ShareLink(models.Model):
         unique_together = (('share', 'order'),)
     
     share = models.ForeignKey(Share, on_delete=models.CASCADE)
-    link = models.ForeignKey(Link, on_delete=models.CASCADE)
+    link = models.ForeignKey(Link, on_delete=models.CASCADE, related_name='sharelink')
     order = models.IntegerField(default=0)
