@@ -27,7 +27,7 @@ import AppBar from './AppBar'
 import NavBar from './NavBar'
 import CardList from '@/components/CardList'
 import Store from '@/vuex/store'
-// import mapActions from 'vuex'
+import mapActions from 'vuex'
 
 export default {
     name: "HomePage",
