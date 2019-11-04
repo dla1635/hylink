@@ -21,7 +21,7 @@
                                   outlined
                                   rounded
                                   single-line
-                                  persistentHint=false
+                                  persistentHint= false
                                   loading=false
                                   dense></v-text-field>
                     <v-text-field class="form_input" 
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 export default {
     name: 'LoginForm',
     data() {
@@ -75,6 +76,8 @@ export default {
     },
     methods: {
         login({ email, password }) {
+
+            console.log(email, password)
             this.$store.dispatch('auth/login', { email, password })
                 .then(() => this.$router.push('/'));
         },
