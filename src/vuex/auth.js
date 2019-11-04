@@ -33,7 +33,7 @@ const actions = {
         return auth.login(email, password)
             .then(({
                 data
-            }) => commit(SET_TOKEN, data.key))
+            }) => commit(SET_TOKEN, data.token))
             .then(() => commit(LOGIN_SUCCESS))
             .catch(() => commit(LOGIN_FAILURE));
     },

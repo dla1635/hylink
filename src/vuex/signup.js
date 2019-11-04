@@ -48,7 +48,7 @@ export default {
                     commit(REGISTRATION_FAILURE)
                     Swal.fire({
                         text: "회원가입에 실패하였습니다",
-                        type: "warnig"
+                        type: "warning"
                     })
                 });
         },

@@ -1,5 +1,5 @@
 <template>
-<v-card flat width="300" color="#ffffff00">
+<v-card flat width="500" color="#ffffff00">
     <v-toolbar flat borderless color="#ffffff00">
         <v-container>
             <v-row justify="center" class="display-3">
@@ -29,13 +29,17 @@
                 </v-container>
             </v-form>
 
+            <v-flex justify-content-center text-center>
+                <span>Already have an account?</span>
+                <router-link to="/login">login</router-link> |
+                <router-link to="/password_reset">reset password</router-link>
+            </v-flex>
         </v-row>
 
         <v-row justify="center" width="200">
                 <v-btn rounded color="#B5D4B8">Back</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn rounded color="#B6DCCC" @click="createAccount(inputs)">Sign Up</v-btn>
-
         </v-row>
     </v-container>
 
