@@ -1,21 +1,23 @@
+/* eslint-disable no-console */
 import session from './session';
 
 export default {
-    login(username, password) {
+    login(email, password) {
+        console.log("api", email, password)
         return session.post('/auth/login/', {
-            username,
+            email,
             password
         });
     },
     logout() {
         return session.post('/auth/logout/', {});
     },
-    createAccount(username, password1, password2, email) {
+    createAccount(email, password1, password2, username) {
         return session.post('/auth/registration/', {
-            username,
+            email,
             password1,
             password2,
-            email
+            username
         });
     },
     changeAccountPassword(password1, password2) {
