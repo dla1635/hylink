@@ -36,9 +36,7 @@ const actions = {
             .then(({
                 data
             }) => commit(SET_TOKEN, data.token))
-            .then(() => {
-                commit(LOGIN_SUCCESS)
-            })
+            .then(() => commit(LOGIN_SUCCESS))
             .catch(() => commit(LOGIN_FAILURE));
     },
     logout({

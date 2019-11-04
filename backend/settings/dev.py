@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'backend.posts',
     'backend.links',
     'backend.profiles',
+    'backend.sharing',
 ]
 
 REST_SESSION_LOGIN = True
