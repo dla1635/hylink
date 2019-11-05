@@ -237,6 +237,31 @@ class LinkViewSet(viewsets.ModelViewSet):
         #         print("can't update")
 
         return Response(status=status.HTTP_200_OK)
+    
+    def exlink_create(self, request):
+        print("link create")
+
+        # 1. user가 유효한지 확인 
+        email = request.data.get('email', None)
+        user = get_user_model().objects.get(email=email)
+        valid, msg = isvalid_user(user)
+        
+        if not valid:
+            print(msg)
+            return Response(status=status.HTTP_200_OK) 
+
+        url = request.data.get('url', None)
+        is_visible = request.get('is_visible', 3)
+
+        if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
+            print("user가 이미 등록한 URL")
+            return Response(status=status.HTTP_200_OK)
+        
+        isok = self.link_create(user, url, is_visible)
+        if not isok:
+            print("유효하지 않는 URL")
+
+        return Response(status=status.HTTP_200_OK)
 
     # PUT
     def update(self, request):
