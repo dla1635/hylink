@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Welcome from '@/views/Welcome/WelcomePage'
+import Welcome from '@/views/Landing/LandingPage'
 import HomePage from '@/views/Home/HomePage'
 import LoginPage from '@/views/Login/LoginPage'
 import RegistPage from '@/views/Regist/RegistPage'
-import NotFound from '@/components/NotFound'
+import NotFound404 from '@/views/Error/NotFound404'
 
 
 Vue.use(Router)
@@ -41,7 +41,7 @@ const router = new Router({
     {
       path: '/notfound',
       name: 'notfound',
-      component: NotFound
+      component: NotFound404
     },
     {
       path: '*',

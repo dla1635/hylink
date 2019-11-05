@@ -1,5 +1,5 @@
 <template>
-<v-app-bar app clipped-left color="amber">
+<v-app-bar app clipped-left color="white">
 
     <router-link to="home">
         <v-img src="@/assets/logo.png" max-width="50"></v-img>
@@ -12,10 +12,10 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn flat depressed to="login" color="transparent">
+    <v-btn text depressed to="login" color="transparent">
         Login
     </v-btn>
-    <v-btn flat depressed to="register" color="transparent">
+    <v-btn text depressed to="register" color="transparent">
         Register
     </v-btn>
 </v-app-bar>

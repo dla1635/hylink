@@ -82,7 +82,7 @@ const mutations = {
     },
     [SET_TOKEN](state, token) {
         if (!isProduction) localStorage.setItem(TOKEN_STORAGE_KEY, token);
-        session.defaults.headers.Authorization = `Token ${token}`;
+        session.defaults.headers.Authorization = `Bearer ${token}`;
         state.token = token;
     },
     [REMOVE_TOKEN](state) {
