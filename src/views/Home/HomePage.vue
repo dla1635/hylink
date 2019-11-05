@@ -67,7 +67,8 @@ export default {
             console.log(type)
             console.log(content)
             console.log("tmpcard",tmpCards)
-            if(content === "") {
+
+            if(content == null) {
                 console.log("totallllll")
                 this.card_list = tmpCards;
             } else if(type === "label") {
