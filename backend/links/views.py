@@ -130,18 +130,18 @@ class LinkViewSet(viewsets.ModelViewSet):
         self.update_linktag(new_link, user_tags)
         return True
     
-    def link_update(self, l_id, user, title, thumbnail, summary, is_visible, sharable,link_tags, link_labels):
+    def link_update(self, l_id, user, title, thumbnail, summary, is_visible,link_tags, link_labels):
         update_link = Link.objects.get(id=l_id)
         # update_link.url = url
         update_link.title = title
-        update_link.sharable = sharable
         
         if is_visible == 1 or is_visible == 3:
             update_link.thumbnail = thumbnail
         if is_visible == 2 or is_visible == 3:
             update_link.summary = summary
-
+        update_link.sharable = update_link.sharable
         update_link.is_visible = is_visible
+        update_link.save()
         self.update_linktag(update_link, link_tags)
         self.update_linklabel(update_link, link_labels, user)
         return True
@@ -165,19 +165,12 @@ class LinkViewSet(viewsets.ModelViewSet):
 
 
         l_id = request.data.get('l_id', None)
+        remove = request.data.get('del', None)
 
-        if l_id == None:
-            url = request.data.get('url', None)
-            is_visible = request.get('is_visible', 3)
-
-            if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
-                print("user가 이미 등록한 URL")
-                return Response(status=status.HTTP_200_OK)
-            
-            isok = link_create(user, url, is_visible)
-            if not isok:
-                print("유효하지 않는 URL")
-        else:
+        if remove != None:
+            #delete
+            Link.objects.get(id=l_id).delete()
+        elif l_id != None:
             valid, msg = isvalid_link(l_id)
             if not valid:
                 print(msg)
@@ -187,16 +180,61 @@ class LinkViewSet(viewsets.ModelViewSet):
             thumbnail = request.data.get('thumbnail',None)
             summary = request.data.get('summary',None)
             is_visible = request.data.get('is_visible', None)
-            sharable = request.data.get('sharable',None)
-            if sharable != None:
-                sharable = int(sharable)
+
+            print(title+" "+thumbnail+" "+summary)
+            # if sharable != None:
+            #     sharable = int(sharable)
             
             link_tags = request.data.get('tags', None)
             link_labels = request.data.get('labels', None)
-            isok = link_update(l_id, user, title, thumbnail, summary, is_visible, sharable,link_tags,link_labels)
+            isok = self.link_update(l_id, user, title, thumbnail, summary, is_visible, link_tags,link_labels)
 
             if not isok:
                 print("can't update")
+        else:
+            url = request.data.get('url', None)
+            is_visible = request.get('is_visible', 3)
+
+            if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
+                print("user가 이미 등록한 URL")
+                return Response(status=status.HTTP_200_OK)
+            
+            isok = self.link_create(user, url, is_visible)
+            if not isok:
+                print("유효하지 않는 URL")
+
+        # if l_id == None and del == None:
+        #     url = request.data.get('url', None)
+        #     is_visible = request.get('is_visible', 3)
+
+        #     if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
+        #         print("user가 이미 등록한 URL")
+        #         return Response(status=status.HTTP_200_OK)
+            
+        #     isok = self.link_create(user, url, is_visible)
+        #     if not isok:
+        #         print("유효하지 않는 URL")
+        # else:
+        #     valid, msg = isvalid_link(l_id)
+        #     if not valid:
+        #         print(msg)
+        #         return Response(status=status.HTTP_200_OK)
+            
+        #     title = request.data.get('title',None)
+        #     thumbnail = request.data.get('thumbnail',None)
+        #     summary = request.data.get('summary',None)
+        #     is_visible = request.data.get('is_visible', None)
+
+        #     print(title+" "+thumbnail+" "+summary)
+        #     # if sharable != None:
+        #     #     sharable = int(sharable)
+            
+        #     link_tags = request.data.get('tags', None)
+        #     link_labels = request.data.get('labels', None)
+        #     isok = self.link_update(l_id, user, title, thumbnail, summary, is_visible, link_tags,link_labels)
+
+        #     if not isok:
+        #         print("can't update")
 
         return Response(status=status.HTTP_200_OK)
 

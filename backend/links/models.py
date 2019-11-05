@@ -16,7 +16,7 @@ class Link(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     tag = models.ManyToManyField('Tag', through='LinkTag', related_name='links', blank=True)
     label = models.ManyToManyField('Label', through='LinkLabel', related_name='links',blank=True)
-    
+
     class Meta:
         ordering = ['-created_at']
     

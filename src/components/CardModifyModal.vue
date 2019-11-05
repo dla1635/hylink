@@ -80,8 +80,8 @@ export default {
           tags : this.selectedTags,
           labels : this.selectedLabels,
           thumbnail : this.thumbnail,
-          summary : this.thumbnail,
-          is_visible : 1,
+          summary : this.summary,
+          is_visible : 3,
         }
         // const config = {
         //         headers: {
@@ -96,6 +96,7 @@ export default {
       async remove() {
         const payload = {
           l_id: this.card.id,
+          del: "delete"
         }
         const config = {
                 headers: {

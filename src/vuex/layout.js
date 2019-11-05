@@ -44,7 +44,7 @@ export const layout = {
             var resp = await Axios.get("http://localhost:8000/api/label/")
             commit("setLabels", resp.data)
         },
-        async getCards() {
+        async getCards({commit}) {
             // console.log("getCard")
             // header = {headers: {'token': payload.token}}
             var resp = await Axios.get("http://localhost:8000/api/linklist/")
@@ -59,7 +59,7 @@ export const layout = {
             console.log(resp)
         },
         async deleteCard({commit}, payload) {
-            var resp = await session.delete("http://localhost:8000/api/link/", payload)
+            var resp = await session.post("http://localhost:8000/api/link/", payload)
             console.log(resp)
         }
     },
