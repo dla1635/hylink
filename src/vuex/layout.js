@@ -59,7 +59,7 @@ export const layout = {
             console.log(resp)
         },
         async deleteCard({commit}, payload) {
-            var resp = await session.delete("http://localhost:8000/api/link/", payload)
+            var resp = await session.post("http://localhost:8000/api/link/", payload)
             console.log(resp)
         }
     },
