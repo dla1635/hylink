@@ -169,6 +169,7 @@ class LinkViewSet(viewsets.ModelViewSet):
     def update(self, request):
         # 1. user & link 유효성 체크
         # 유효한 link인지 확인
+        print("link update")
         l_id = request.data.get('l_id', None)
         valid, msg = isvalid_link(l_id)
         if not valid:
