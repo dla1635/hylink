@@ -4,17 +4,18 @@
     <AppBar></AppBar>
 
     <!--  Side bar    -->
-    <NavBar v-if="navBarDrawer" />
+    <NavBar />
 
     <v-container fluid>
         <v-text-field
             id="url_input"
-          solo
-          text
-          hide-details
-          label="URL"
-          prepend-inner-icon="link"
-          style="width:900px; padding:0 10%;"
+            v-model="url_input"
+            solo
+            text
+            hide-details
+            label="URL"
+            prepend-inner-icon="link"
+            style="width:900px; padding:0 10%;"
             @keyup.enter="postCard"
       ></v-text-field>
         <CardList :cardList="card_list" />
@@ -28,7 +29,7 @@ import AppBar from './AppBar'
 import NavBar from './NavBar'
 import CardList from '@/components/CardList'
 import Store from '@/vuex/store'
-import mapActions from 'vuex'
+import {mapActions} from 'vuex'
 
 export default {
     name: "HomePage",
@@ -40,16 +41,18 @@ export default {
     data() {
         return {
             card_list:[],
-            tmp_list: []
+            url_input:""
         };
     },
     watch: {
         changeParams: function() {
             this.tmp()
-            return this.$route.params
         }
     },
     computed: {
+        changeParams: function(){
+            return this.$route.params;
+        }
     },
     methods: {
         ...mapActions({
@@ -59,32 +62,36 @@ export default {
         //     postCard: 'postCard'
         // }),
         tmp() {
+            this.card_list=[]
             const type = this.$route.params.type
             const content = this.$route.params.content
-            console.log(type, content)
-
             const tmpCards = Store.state.layout.card_list;
-            console.log(tmpCards)
-            if(type === "label") {
-                this.card_list = tmpCards.map(function(item){
-                    if(item.labels.find() != 'undefind') {
+
+            console.log(type)
+            console.log(content)
+            if(content === "") {
+                console.log("totallllll")
+                this.card_list = tmpCards;
+            } else if(type === "label") {
+                this.card_list = tmpCards.filter(function(item){
+                    if(item.label.find(function(item){return item.name === content})) {
                         return item;
                     }
                 });
             } else if(type === 'tag') {
-                this.card_list = tmpCards.map(function(item){
-                    if(item.tags.find() != 'undefind') {
+                this.card_list = tmpCards.filter(function(item){
+                    if(item.tag.find(function(item){return item.name === content})) {
                         return item;
                     }
                 });
-            } else {
-                this.card_list = tmpCards;
             }
-            console.log(this.card_list)
+        },
+        postCard() {
+            this.$store.dispatch("postCard",{url:this.url_input})
         }
     },
-    mounted() {
-        this.getCards()
+    async mounted() {
+        await this.getCards()
         this.tmp()
     }
 };
