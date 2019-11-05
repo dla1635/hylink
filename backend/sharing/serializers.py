@@ -12,8 +12,7 @@ class ShareSerializer(serializers.ModelSerializer):
         model = Share
         fields=(
             'id',
-            'user',
-            'title'
+            'user'
         )
 
 class ShareLinkSerializer(serializers.ModelSerializer):

@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from ..links.models import Link
 
 class Share(models.Model):
-    title = models.CharField(max_length=144, blank=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
 
 class ShareLink(models.Model):

@@ -8,7 +8,7 @@
             <h1> {{title}} </h1>
         </v-card>
         <v-list three-line>
-            <template v-for="(card, index) in cards">
+            <template v-for="(card, index) in card_list">
 
                 <v-divider v-if="card.divider" :key="index"></v-divider>
 
@@ -68,40 +68,7 @@ export default {
     data() {
         return {
             title : "",
-            cards: [{
-                    thumbnail: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                    title: 'Brunch this weekend?',
-                    content: "Ali Connors I'll be in your neighborhood doing errands this weekend. Do you want to hang out?",
-                    tags: ['algo', 'bigdata']
-                },
-                {
-                    divider: true,
-                    inset: true
-                }, {
-                    thumbnail: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                    title: 'Brunch this weekend?',
-                    content: "Ali Connors &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?",
-                    tags: ['algo', 'bigdata']
-                },
-                {
-                    divider: true,
-                    inset: true
-                }, {
-                    thumbnail: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                    title: 'Brunch this weekend?',
-                    content: "Ali Connors &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?",
-                    tags: ['algo', 'bigdata']
-                }, {
-                    divider: true,
-                    inset: true
-                }, {
-                    thumbnail: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                    title: 'Brunch this weekend?',
-                    content: "Ali Connors &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?",
-                    tags: ['algo', 'bigdata']
-                },
-
-            ]
+            card_list:[],
         }
     },
     mounted() {
@@ -110,10 +77,15 @@ export default {
     },
     methods : {
         getCards : function(){
-            this.$axios.get('http://13.125.61.163:8000/api/share/')
+            this.$axios.get('http://127.0.0.1:8000/api/share/')
             .then(
                 function(response){
                     console.log(response);
+                    for(var link in response.data){
+                        console.log(link.link)
+                        this.cards.push({ thumbnail: link.thumbnail, title: link.title, summary: link.summary, tags: link.tag });
+                        this.cards.push({ divider: true, inset: true });
+                    }
                 }
             )
             .catch(

@@ -4,17 +4,18 @@
     <AppBar></AppBar>
 
     <!--  Side bar    -->
-    <NavBar v-if="navBarDrawer" />
+    <NavBar />
 
     <v-container fluid>
         <v-text-field
             id="url_input"
-          solo
-          text
-          hide-details
-          label="URL"
-          prepend-inner-icon="link"
-          style="width:900px; padding:0 10%;"
+            v-model="url_input"
+            solo
+            text
+            hide-details
+            label="URL"
+            prepend-inner-icon="link"
+            style="width:900px; padding:0 10%;"
             @keyup.enter="postCard"
       ></v-text-field>
         <CardList :cardList="card_list" />
@@ -23,10 +24,16 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import AppBar from './AppBar'
 import NavBar from './NavBar'
 import CardList from '@/components/CardList'
+<<<<<<< HEAD
 // import mapActions from 'vuex'
+=======
+import Store from '@/vuex/store'
+import {mapActions} from 'vuex'
+>>>>>>> afed8838d38178ddde3b1ffb453a299a8e6d7d19
 
 export default {
     name: "HomePage",
@@ -38,27 +45,57 @@ export default {
     data() {
         return {
             card_list:[],
-            tmp_list: []
+            url_input:""
         };
     },
     watch: {
         changeParams: function() {
             this.tmp()
-            return this.$route.params
         }
     },
     computed: {
+        changeParams: function(){
+            return this.$route.params;
+        }
     },
     methods: {
-        // ...mapActions({
-        //     getCards: 'getCards'
-        // }),
+        ...mapActions({
+            getCards: 'getCards'
+        }),
         // ...mapActions({
         //     postCard: 'postCard'
         // }),
+        tmp() {
+            this.card_list=[]
+            const type = this.$route.params.type
+            const content = this.$route.params.content
+            const tmpCards = Store.state.layout.card_list;
+
+            console.log(type)
+            console.log(content)
+            if(content === "") {
+                console.log("totallllll")
+                this.card_list = tmpCards;
+            } else if(type === "label") {
+                this.card_list = tmpCards.filter(function(item){
+                    if(item.label.find(function(item){return item.name === content})) {
+                        return item;
+                    }
+                });
+            } else if(type === 'tag') {
+                this.card_list = tmpCards.filter(function(item){
+                    if(item.tag.find(function(item){return item.name === content})) {
+                        return item;
+                    }
+                });
+            }
+        },
+        postCard() {
+            this.$store.dispatch("postCard",{url:this.url_input})
+        }
     },
-    mounted() {
-        this.getCards()
+    async mounted() {
+        await this.getCards()
         this.tmp()
     }
 };
