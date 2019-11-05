@@ -1,4 +1,4 @@
-from .serializers import ShareLinkSerializer, ShareSerializer
+from .serializers import ShareLinkSerializer, ShareSerializer, UrlSerializer
 from .models import ShareLink, Share
 from ..links.models import Link
 from django.contrib.auth import get_user_model
@@ -49,7 +49,7 @@ class ShareViewSet(viewsets.ModelViewSet):
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK)
-        
+
         link_list = request.data.get('link_list', None)
         valid, msg = isvalid_link(link_list)
         if not valid:

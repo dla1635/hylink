@@ -14,4 +14,3 @@ urlpatterns = [
     path('share/', share, name='share'),
     path('share/<int:pk>/', sharelist, name='sharelist')
 ]
-#

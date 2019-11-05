@@ -28,3 +28,10 @@ class ShareSerializer(serializers.ModelSerializer):
             'user',
             'sharelink'
         )
+
+class UrlSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields=(
+            'url'    
+        )
