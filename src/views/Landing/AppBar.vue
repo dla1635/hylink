@@ -1,5 +1,5 @@
 <template>
-<v-app-bar app clipped-left color="amber">
+<v-app-bar app clipped-left color="white">
 
     <router-link to="home">
         <v-img src="@/assets/logo.png" max-width="50"></v-img>
