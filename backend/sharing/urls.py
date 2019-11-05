@@ -3,11 +3,14 @@ from django.urls import path
 from .views import ShareViewSet
 
 share = ShareViewSet.as_view({
-    'post' : 'create',
+    'post' : 'create'
+})
+
+sharelist = ShareViewSet.as_view({
     'get' : 'list'
 })
 
 urlpatterns = [
-    path('share/$', share, name='share')
+    path('share/', share, name='share'),
+    path('share/<int:pk>/', sharelist, name='sharelist')
 ]
-#
