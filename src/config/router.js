@@ -40,7 +40,7 @@ const router = new Router({
       component: RegistPage
     },
     {
-      path: '/share',
+      path: '/share/:shareCode',
       name: 'share',
       component: SharePage
     },

@@ -79,7 +79,8 @@ export default {
     },
     methods : {
         async getCards(){
-            this.card_list = await this.$axios.get('http://127.0.0.1:8000/api/share/1/')
+            const shareCode = this.$route.shareCode;
+            this.card_list = await this.$axios.get('http://127.0.0.1:8000/api/share/'+shareCode+"/")
             .then(
                 function(response){
                     var cardList = [];
