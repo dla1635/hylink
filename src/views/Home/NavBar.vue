@@ -54,7 +54,6 @@ export default {
     async mounted() {
       await this.getLabels()
       this.labels = Store.state.layout.labels
-
     }
 }
 </script>

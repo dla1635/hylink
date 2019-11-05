@@ -147,6 +147,7 @@ export default {
 .card_img {
     width: 100px;
     height: 100px;
+    min-width: 100px;
 }
 
 .tag {

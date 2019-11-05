@@ -10,7 +10,6 @@ link = LinkViewSet.as_view({
     'post': 'create',
     'get': 'retrieve',
     'put': 'update',
-    'patch': 'partial_update',
     'delete': 'destroy'
 })
 
