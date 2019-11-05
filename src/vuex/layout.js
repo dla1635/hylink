@@ -10,7 +10,7 @@ export const layout = {
         ],
         card_list: [
             {
-              title: "알고리즘 분석1",
+              title: "알고리즘 분석1알고리즘 분석1알고리즘 분석1알고리즘 분석1",
               summary:"책상이나 바닥처럼 평평한 곳 어디에서든 무선으로 전자기기를 충전할 수 있는 기술이 나왔다.기존의 무선 충전 기술은 공기를 이용해 전력을 주고받는 자기장 신호를 전달해 충전한다.연구팀은 실험과 시뮬레이션을 통해 실제로 이 무선충전 시스템이 기존 방식보다 훨씬 효율적으로 충전할 수 있음을 확인했다.책상이나 바닥처럼 평평한 곳 어디에서든 무선으로 전자기기를 충전할 수 있는 기술이 나왔다.기존의 무선 충전 기술은 공기를 이용해 전력을 주고받는 자기장 신호를 전달해 충전한다.연구팀은 실험과 시뮬레이션을 통해 실제로 이 무선충전 시스템이 기존 방식보다 훨씬 효율적으로 충전할 수 있음을 확인했다.책상이나 바닥처럼 평평한 곳 어디에서든 무선으로 전자기기를 충전할 수 있는 기술이 나왔다.기존의 무선 충전 기술은 공기를 이용해 전력을 주고받는 자기장 신호를 전달해 충전한다.연구팀은 실험과 시뮬레이션을 통해 실제로 이 무선충전 시스템이 기존 방식보다 훨씬 효율적으로 충전할 수 있음을 확인했다.",
               tag: [{name:"알고리즘"},{name:"자바"},{name:"백준"}],
               label: [{name:"Algorithm"},{name:"BigData"}],
@@ -54,8 +54,8 @@ export const layout = {
             var resp = await session.post("http://localhost:8000/api/link/", payload)
             console.log(resp)
         },
-        async setCard({commit}, payload, config) {
-            var resp = await session.put("http://localhost:8000/api/link/", payload, config)
+        async setCard({commit}, payload) {
+            var resp = await session.post("http://localhost:8000/api/link/", payload)
             console.log(resp)
         },
         async deleteCard({commit}, payload) {
