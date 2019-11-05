@@ -41,7 +41,7 @@
                 <img v-show="thumnail_flag" class="card_img" :src="card.thumbnail" />
             </v-layout>
             <v-flex id="tagContainer">
-                <v-chip class="tag" v-for="tag in card.tagList" :key="tag">#{{tag}} </v-chip>
+                <v-chip class="tag" v-for="tag in card.tag" :key="tag">#{{tag.name}} </v-chip>
             </v-flex>
             <v-scroll-y-transition>
                   <div

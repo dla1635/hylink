@@ -30,7 +30,7 @@
               <v-col cols="12">
                 <v-combobox
                     v-model="selectedTags"
-                    :items="tagList"
+                    :items="tag"
                     label="Tag"
                     multiple
                     chips
@@ -52,13 +52,14 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
     data: () => ({
         dialog: true,
         title:"",
         summary:"",
-        tagList:[],
-        labelList:[],
+        tag:[],
+        label:[],
         thumbnail:"",
         selectedLabels:[],
         selectedTags:[]
@@ -69,9 +70,14 @@ export default {
     mounted(){
         this.title = this.card.title;
         this.summary = this.card.summary;
-        this.tagList = this.card.tagList;
-        this.labelList = this.card.labelList;
         this.thumbnail = this.card.thumbnail;
+        this.tag = this.card.tag.map(element => {
+          return element.name
+        });
+        console.log(this.tag)
+        this.label = this.card.label.map(element => {
+          return element.name
+        });
     }
 }
 </script>
