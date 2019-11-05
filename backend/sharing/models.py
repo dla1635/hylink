@@ -5,11 +5,8 @@ from ..links.models import Link
 
 class Share(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    sharelink = models.ManyToManyField('ShareLink',related_name='share')
 
 class ShareLink(models.Model):
-    class Meta:
-        unique_together = (('share', 'order'),)
-    
-    share = models.ForeignKey(Share, on_delete=models.CASCADE)
     link = models.ForeignKey(Link, on_delete=models.CASCADE, related_name='sharelink')
     order = models.IntegerField(default=0)

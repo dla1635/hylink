@@ -5,25 +5,26 @@ from django.contrib.auth import get_user_model
 from backend.profiles.serializers import UserSerializer
 from backend.links.serializers import LinkSerializer
 
-class ShareSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-
-    class Meta:
-        model = Share
-        fields=(
-            'id',
-            'user'
-        )
 
 class ShareLinkSerializer(serializers.ModelSerializer):
     link = LinkSerializer()
-    share = ShareSerializer()
 
     class Meta:
         model=ShareLink
         fields=(
             'id',
             'order',
-            'share',
             'link'
+        )
+
+class ShareSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    sharelink = ShareLinkSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Share
+        fields=(
+            'id',
+            'user',
+            'sharelink'
         )

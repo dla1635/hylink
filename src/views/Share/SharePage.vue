@@ -20,25 +20,29 @@
                                 <v-col :cols="8">
                                     <v-row>
                                         <v-list-item-title>
+                                            <a v-bind:href="card.url" style="color: black; text-decoration: none;">
                                             <h2>{{card.title}}</h2>
+                                            </a>
                                         </v-list-item-title>
                                     </v-row>
                                     <v-row>
                                         <v-list-item-content>
-                                            {{card.content}}
+                                            {{card.summary}}
                                         </v-list-item-content>
                                     </v-row>
                                     <v-row align-self="end">
                                         <v-chip-group multiple column>
-                                            <v-chip v-for="tag in card.tags" :key="tag">
-                                                {{ tag }}
+                                            <v-chip v-for="t in card.tag" :key="t.name">
+                                                {{ t.name }}
                                             </v-chip>
                                         </v-chip-group>
                                     </v-row>
 
                                 </v-col>
                                 <v-col :cols="4" >
-                                    <v-img :src="card.thumbnail" height="200"></v-img>
+                                    <a v-bind:href="card.url" style="color: black; text-decoration: none;">
+                                    <v-img :src="card.thumbnail" height="150" contain></v-img>
+                                    </a>
                                 </v-col>
 
                             </v-row>
@@ -50,8 +54,6 @@
             </template>
 
         </v-list>
-
-        <CardList :cardList="card_list" />
     </v-container>
 </v-container>
 </template>
@@ -76,17 +78,18 @@ export default {
         this.getCards();
     },
     methods : {
-        getCards : function(){
-            this.$axios.get('http://127.0.0.1:8000/api/share/')
+        async getCards(){
+            this.card_list = await this.$axios.get('http://127.0.0.1:8000/api/share/1/')
             .then(
                 function(response){
+                    var cardList = [];
                     console.log(response);
-                    for(var link in response.data){
-                        console.log(link.link)
-                        this.cards.push({ thumbnail: link.thumbnail, title: link.title, summary: link.summary, tags: link.tag });
-                        this.cards.push({ divider: true, inset: true });
+                    for(var i = 0; i< response.data.sharelink.length; i+=1){
+                        cardList.push(response.data.sharelink[i].link);
+                        cardList.push({ divider: true, inset: true });
                     }
-                }
+                    return cardList;
+                    }
             )
             .catch(
                 function(error){
@@ -100,6 +103,7 @@ export default {
 </script>
 
 <style>
+
 img {
     max-height: 100%;
 }
