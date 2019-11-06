@@ -1,7 +1,7 @@
 <template>
-<v-app-bar app clipped-left color="white">
+<v-app-bar app clipped-left color="amber">
 
-    <router-link to="home">
+    <router-link class="pl-10" to="home">
         <v-img src="@/assets/logo.png" max-width="50"></v-img>
 
     </router-link>
@@ -10,14 +10,6 @@
 
     </router-link>
 
-    <v-spacer></v-spacer>
-
-    <v-btn text depressed to="login" color="transparent">
-        Login
-    </v-btn>
-    <v-btn text depressed to="register" color="transparent">
-        Register
-    </v-btn>
 </v-app-bar>
 </template>
 

@@ -74,20 +74,21 @@ export default {
       async modify() {
 
         const payload = {
+          'token': localStorage.getItem('TOKEN_STORAGE_KEY'),
           l_id: this.card.id,
           title: this.title,
           tags : this.selectedTags,
           labels : this.selectedLabels,
           thumbnail : this.thumbnail,
-          summary : this.thumbnail,
-          is_visible : 1,
+          summary : this.summary,
+          is_visible : 3,
         }
-        const config = {
-                headers: {
-                    'token': localStorage.getItem('TOKEN_STORAGE_KEY')
-                }
-        }
-        var res = await Store.dispatch("setCard", payload, config);
+        // const config = {
+        //         headers: {
+        //             'token': localStorage.getItem('TOKEN_STORAGE_KEY')
+        //         }
+        // }
+        var res = await this.$store.dispatch("setCard", payload);
 
         alert('수정사항이 저장되었습니다.')
         this.dialog = false
@@ -95,6 +96,7 @@ export default {
       async remove() {
         const payload = {
           l_id: this.card.id,
+          del: "delete"
         }
         const config = {
                 headers: {

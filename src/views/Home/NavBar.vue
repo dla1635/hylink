@@ -1,5 +1,5 @@
 <template>
-<v-navigation-drawer fixed clipped class="grey lighten-4" app>
+<v-navigation-drawer v-model="drawer" fixed clipped class="grey lighten-4" app>
     <v-list dense class="grey lighten-4">
       <v-list-item @click="moveToLabel('')">
             <v-list-item-action>
@@ -54,6 +54,11 @@ export default {
     async mounted() {
       await this.getLabels()
       this.labels = Store.state.layout.labels
+    },
+    computed: {
+      drawer() {
+            return this.$store.getters.getNavBarState;
+        }
     }
 }
 </script>
