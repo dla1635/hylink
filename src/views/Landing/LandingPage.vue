@@ -4,18 +4,23 @@
         <AppBar />
 
         <Banner />
+
+        <Team />
+       
     </div>
 </template>
 
 <script>
 import AppBar from './AppBar'
 import Banner from './Banner'
+import Team from './Team'
 
 export default {
     name: 'LandingPage',
     components: {
         AppBar,
         Banner,
+        Team,
     },
     data() {
         return {
