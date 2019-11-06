@@ -1,32 +1,28 @@
 <template>
     <div id="banner-canvas">
-        <v-content>
-        <section>
-            <v-parallax src="../../assets/cover.jpg" height="500">
-            <v-layout
-                column
-                align-center
-                justify-center
-                row
-                fill-height
-                class="white--text"
-            >
-                <v-flex class="banner-title">
-                    <div class="white--text mb-2 display-1 text-center">Share Your Links</div>
-                    <v-btn
-                        class="banner-text"
-                        color="#009CEE"
-                        large
-                        dark
-                        @click='toHome'
-                    >
-                        Get Started
-                    </v-btn>
-                </v-flex>
-            </v-layout>
-            </v-parallax>
-      </section>
-      </v-content>
+            <v-img src="../../assets/cover.jpg" height="500">
+                <v-layout
+                    column
+                    align-center
+                    justify-center
+                    row
+                    fill-height
+                    class="white--text"
+                >
+                    <v-flex col-xs-12 class="banner-title">
+                        <div class="white--text mb-2 display-1 text-center">Share Your Links</div>
+                        <v-btn
+                            class="banner-text"
+                            color="#009CEE"
+                            large
+                            dark
+                            @click='toHome'
+                        >
+                            Get Started
+                        </v-btn>
+                    </v-flex>
+                </v-layout>
+            </v-img>
     </div>
 </template>
 
@@ -46,9 +42,9 @@ export default {
 </script>
 
 <style scoped>
-#banner-canvas{
+/* #banner-canvas{
     margin-top: -10vh;
-}
+} */
 .banner-title{
     padding-top: 25vh;
     text-align: center;
