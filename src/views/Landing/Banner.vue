@@ -33,7 +33,7 @@ export default {
     name: 'Banner',
     methods: {
         toHome: () => {
-            router.push('/home')
+            router.push('/home/label/total')
         }
     },
     created() {
