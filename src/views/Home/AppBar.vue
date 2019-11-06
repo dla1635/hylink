@@ -29,13 +29,13 @@ export default {
         },
         async search() {
             console.log('search1')
-            const payload = {
-                type: 'word',
-                word: this.search_word,
-            }
-            await this.$store.dispatch('search', payload)
-
-            await this.$router.push({name:'home', params: { type:'search'}}).catch(err => {})
+            // const payload = {
+            //     type: 'word',
+            //     word: this.search_word,
+            // }
+            // await this.$store.dispatch('search', payload)
+            console.log(this.search_word)
+            this.$router.push({name:'home', params: { type:'search', content:this.search_word}}).catch(err => {})
         }
     }
 }

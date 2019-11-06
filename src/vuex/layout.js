@@ -53,7 +53,7 @@ export const layout = {
         async search({commit}, payload) {
             console.log("search", payload)
             var resp = await session.get("http://localhost:8000/api/linklist/",{
-                payload,
+                payload ,
               })
             console.log(resp.data)
             commit("setCards", resp.data)

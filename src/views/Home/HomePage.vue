@@ -46,11 +46,8 @@ export default {
     },
     watch: {
         changeParams: function() {
-            this.init()
-        },
-        getCards: function() {
             this.routing()
-        }
+        },
     },
     computed: {
         changeParams: function(){
@@ -69,7 +66,7 @@ export default {
 
             console.log(type)
             console.log(content)
-            console.log("tmpcard",tmpCards)
+            // console.log("tmpcard",tmpCards)
 
             if(content === "total") {
                 this.card_list = tmpCards;
@@ -86,8 +83,16 @@ export default {
                     }
                 });
             } else if (type === 'search') {
-                this.card_list = tmpCards
+                this.card_list = tmpCards.filter(function(item){
+                    console.log(item.title)
+                    console.log(item.title.indexOf(content))
+                    if(item.title.indexOf(content) !== -1|| item.summary.indexOf(content)!== -1 || item.tag.find(function(item){return item.name === content})) {
+                        console.log(item)
+                       return item;
+                    }
+                });
             }
+            console.log(this.card_list)
         },
         async postCard() {
             await this.$store.dispatch("postCard",{url:this.url_input})
