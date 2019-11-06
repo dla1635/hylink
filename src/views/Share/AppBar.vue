@@ -1,7 +1,7 @@
 <template>
-<v-app-bar app clipped-left color="white">
+<v-app-bar app clipped-left color="amber">
 
-    <router-link to="home">
+    <router-link class="pl-10" to="home">
         <v-img src="@/assets/logo.png" max-width="50"></v-img>
 
     </router-link>
@@ -19,8 +19,6 @@ export default {
     data() {
         return {}
     },
-    methods: {
-
-    }
+    methods: {}
 }
 </script>

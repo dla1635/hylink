@@ -58,9 +58,6 @@ export default {
         ...mapActions({
             getCards: 'getCards'
         }),
-        // ...mapActions({
-        //     postCard: 'postCard'
-        // }),
         tmp() {
             this.card_list=[]
             const type = this.$route.params.type
@@ -69,7 +66,9 @@ export default {
 
             console.log(type)
             console.log(content)
-            if(content === "") {
+            console.log("tmpcard",tmpCards)
+
+            if(content == null) {
                 console.log("totallllll")
                 this.card_list = tmpCards;
             } else if(type === "label") {
@@ -88,6 +87,7 @@ export default {
         },
         postCard() {
             this.$store.dispatch("postCard",{url:this.url_input})
+            this.url_input= ""
         }
     },
     async mounted() {

@@ -2,7 +2,7 @@
   <v-item v-slot:default="{ active, toggle }">
     <v-hover v-slot:default="{ hover }">
         <v-card class="card" :elevation="hover ? 5 : 2" @click="toggle" :color="active & sharing_flag ? 'primary' : ''" >
-            <CardModifyModal v-if="modal_flag" :card="card"></CardModifyModal>
+            <CardModifyModal v-if="modal_flag" :card="card"/>
             <div v-if="hover & !sharing_flag" class="d-flex v-card--reveal display-3" style="height: 100%;  background-color:#0002;">
                 <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -147,6 +147,7 @@ export default {
 .card_img {
     width: 100px;
     height: 100px;
+    min-width: 100px;
 }
 
 .tag {

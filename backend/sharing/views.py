@@ -1,4 +1,4 @@
-from .serializers import ShareLinkSerializer, ShareSerializer
+from .serializers import ShareLinkSerializer, ShareSerializer, UrlSerializer
 from .models import ShareLink, Share
 from ..links.models import Link
 from django.contrib.auth import get_user_model
@@ -17,6 +17,8 @@ from django.db.models import Count, F, Q
 # def items(request):
 #    return Response({"message":"Hello world!"})
 
+# def get_context_data():
+#     sharelinks = Share.objects.annotate(link)
 def isvalid_user(user):
     valid = True if get_user_model().objects.filter(id=user.id).count() > 0 else False
     print(valid)
@@ -47,7 +49,7 @@ class ShareViewSet(viewsets.ModelViewSet):
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK)
-        
+
         link_list = request.data.get('link_list', None)
         valid, msg = isvalid_link(link_list)
         if not valid:
@@ -57,33 +59,28 @@ class ShareViewSet(viewsets.ModelViewSet):
         ###### user & linklist 유효성 검사 ######
 
         # 1. Share 객체 만들기
-        title = request.data('title', None)
-        # if title
-        new_share = Share(user=user,title=title)
+        new_share = Share(user=user)
         new_share.save()
 
         for order, l_id in enumerate(link_list):
             link = Link.objects.get(id=l_id)
-            link_share = ShareLink(order=order)
+            link_share = ShareLink(order=order, link=link)
             link_share.save()
-            link_share.link.add(link)
-            link_share.share.add(new_share)
+            new_share.sharelink.add(link_share)
         
         serializer = ShareSerializer(new_share, many=False)
         return Response(data=serializer.data,status=status.HTTP_200_OK)
-
-    # def update(self, request):
-
-    #     return Response(status=status.HTTP_200_OK)
     
-    # def list(self, request):
-    #     s_id = request.data.GET('id', None)
-    #     valid, msg = isvalid_share(s_id)
-    #     if not valid:
-    #         print(msg)
-    #         return Response(status=status.HTTP_200_OK)
-        
-    #     link_list = ShareLink.objects.filter(id=s_id).order_by('order')
+    # def list(self, request, pk):
+    #     print(type(pk))
+    #     print("here")
+    #     # s_id = request.data.GET('id', None)
+    #     # valid, msg = isvalid_share(s_id)
+    #     # if not valid:
+    #     #     print(msg)
+    #     #     return Response(status=status.HTTP_200_OK)
+    #     # share = Share.objects.get(id=pk)
+    #     link_list = ShareLink.objects.filter().order_by('order')
     #     serializer = ShareLinkSerializer(link_list, many=True)
     #     return Response(data=serializer.data, status=status.HTTP_200_OK)
     

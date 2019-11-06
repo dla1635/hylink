@@ -1,9 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+<<<<<<< HEAD
 import WelcomePage from '@/views/Welcome/WelcomePage'
+=======
+import Landing from '@/views/Landing/LandingPage'
+>>>>>>> 09dc263d52de5f3b065dd59d28994b55967a6bd3
 import HomePage from '@/views/Home/HomePage'
 import LoginPage from '@/views/Login/LoginPage'
+import SharePage from '@/views/Share/SharePage'
 import RegistPage from '@/views/Regist/RegistPage'
 import NotFound404 from '@/views/Error/NotFound404'
 
@@ -37,6 +42,11 @@ const router = new Router({
       path: '/regist',
       name: 'regist',
       component: RegistPage
+    },
+    {
+      path: '/share/:shareCode',
+      name: 'share',
+      component: SharePage
     },
     {
       path: '/notfound',
