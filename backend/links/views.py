@@ -3,32 +3,11 @@ from .serializers import LinkTagSerializer, LinkTagDetailSerializer, LinkLabelSe
 from .models import Link, Tag, Label, LinkTag, LinkLabel
 from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view
 from django.db.models import Count, F, Q
 from .textrankr import TextRank
 from .url2text import urlparse
 from django.contrib.auth import get_user_model
-from rest_framework.permissions import AllowAny
-
-# from django_filters.rest_framework import DjangoFilterBackend 
-# from rest_framework.filters import OrderingFilter
-
-def isvalid_value(user, url, title, thumbnail, summary, visible):
-    msg = ""
-    if user == None:
-        msg += 'user '
-    
-    if url == None:
-        msg += 'url '
-
-    if title == None:
-        msg += 'title '
-
-    if thumbnail == None:
-        msg += 'thumbnail '
-
-    if summary == None:
-        msg += 'summary '
 
 def isvalid_link(l_id):
     valid = True if Link.objects.filter(id=l_id).count() > 0 else False
@@ -46,7 +25,6 @@ def isvalid_label(lb_id):
     msg = "label valid" if valid == True else "label invalid"
     return valid, msg
 
-@permission_classes((AllowAny, ))
 class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
@@ -122,8 +100,6 @@ class LinkViewSet(viewsets.ModelViewSet):
             summary = 'None'
 
         # value가 유효한지 확인
-        # isvalid_value()
-        print(url+" "+title+" "+thumbnail+" "+summary)
 
         # 5. link 객체 생성후, DB에 저장
         new_link = Link(user=user, url=url, title=title, thumbnail=thumbnail, summary=summary, sharable=0, is_visible=is_visible)
@@ -204,64 +180,6 @@ class LinkViewSet(viewsets.ModelViewSet):
             if not isok:
                 print("유효하지 않는 URL")
 
-        # if l_id == None and del == None:
-        #     url = request.data.get('url', None)
-        #     is_visible = request.get('is_visible', 3)
-
-        #     if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
-        #         print("user가 이미 등록한 URL")
-        #         return Response(status=status.HTTP_200_OK)
-            
-        #     isok = self.link_create(user, url, is_visible)
-        #     if not isok:
-        #         print("유효하지 않는 URL")
-        # else:
-        #     valid, msg = isvalid_link(l_id)
-        #     if not valid:
-        #         print(msg)
-        #         return Response(status=status.HTTP_200_OK)
-            
-        #     title = request.data.get('title',None)
-        #     thumbnail = request.data.get('thumbnail',None)
-        #     summary = request.data.get('summary',None)
-        #     is_visible = request.data.get('is_visible', None)
-
-        #     print(title+" "+thumbnail+" "+summary)
-        #     # if sharable != None:
-        #     #     sharable = int(sharable)
-            
-        #     link_tags = request.data.get('tags', None)
-        #     link_labels = request.data.get('labels', None)
-        #     isok = self.link_update(l_id, user, title, thumbnail, summary, is_visible, link_tags,link_labels)
-
-        #     if not isok:
-        #         print("can't update")
-
-        return Response(status=status.HTTP_200_OK)
-    
-    def exlink_create(self, request):
-        print("link create")
-
-        # 1. user가 유효한지 확인 
-        email = request.data.get('email', None)
-        user = get_user_model().objects.get(email=email)
-        valid, msg = isvalid_user(user)
-        
-        if not valid:
-            print(msg)
-            return Response(status=status.HTTP_200_OK) 
-
-        url = request.data.get('url', None)
-        is_visible = request.get('is_visible', 3)
-
-        if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
-            print("user가 이미 등록한 URL")
-            return Response(status=status.HTTP_200_OK)
-        
-        isok = self.link_create(user, url, is_visible)
-        if not isok:
-            print("유효하지 않는 URL")
-
         return Response(status=status.HTTP_200_OK)
 
     # PUT
@@ -283,7 +201,6 @@ class LinkViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_200_OK) 
 
         # 2. request에서 data 받고 유효성 체크
-        # url = request.data.get('url', None)
         title = request.data.get('title',None)
         thumbnail = request.data.get('thumbnail',None)
         summary = request.data.get('summary',None)
@@ -291,8 +208,6 @@ class LinkViewSet(viewsets.ModelViewSet):
         sharable = request.data.get('sharable',None)
         if sharable != None:
             sharable = int(sharable)
-        # value가 유효한지 확인
-        # isvalid_value()
 
         # 2. link update
         update_link = Link.objects.get(id=l_id)
@@ -313,7 +228,6 @@ class LinkViewSet(viewsets.ModelViewSet):
 
         link_labels = request.data.get('labels', None)
         self.update_linklabel(update_link, link_labels, user)
-        # self.update_linklabel(update_link, link_labels)
 
         return Response(status=status.HTTP_200_OK)
 
@@ -340,10 +254,7 @@ class LinksViewSet(viewsets.ModelViewSet):
     # permission_classes = (permissions.IsAuthenticated,)
 
     def list(self, request):
-        print("linklist GET")
         
-        print(request.user)
-        # print('type'+request.data.get('type',None))
         user = request.user
         valid, msg = isvalid_user(user)
         if not valid:
@@ -352,12 +263,7 @@ class LinksViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_200_OK)
 
         search_type = request.GET.get('type',None)
-        print("type!!!!!!!")
-        print()
-        print(search_type)
-        # word = request.GET.get('word', None)
-        # print("word!!!")
-        # print(word)
+
         if search_type != 'tag' and search_type != None and search_type != 'label' and search_type != 'word':
             print("잘못된 입력으로 검색했습니다.")
             return Response(status=status.HTTP_200_OK)
@@ -368,7 +274,6 @@ class LinksViewSet(viewsets.ModelViewSet):
         if search_type == None: # ALL
             result = link_list
         elif search_type == 'word': # search word를 포함한 links
-            # content_filter = link_list.filter(Q(summary__icontains=word)|Q(title__icontains=word)) if link_list.filter(Q(summary__icontains=word)|Q(title__icontains=word)).count() > 0 else None
             word = request.data.get('word', None)
             if word == None:
                 print("검색 단어가 입력되지 않았습니다.")
@@ -392,7 +297,6 @@ class LabelViewSet(viewsets.ModelViewSet):
     serializer_class = LabelSerializer
 
     def create(self, request):
-        print("Label create")
 
         label_name = request.data.get('label_name', None)
         user = request.user
@@ -422,28 +326,13 @@ class LabelViewSet(viewsets.ModelViewSet):
     def list(self, request):
         # 1. user가 유효한지 확인 
         user = request.user
-        print(user)
         valid, msg = isvalid_user(user)
         print("here")
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK) 
-        ##############################################
 
         label_list = Label.objects.filter(user=user)
         serializer = LabelSerializer(label_list, many=True)
         
         return Response(data=serializer.data, status=status.HTTP_200_OK)
-
-#         elif message == "UpdateOdds":
-#             event = request.data.pop('event')
-#             markets = event.pop('markets')[0]
-#             selections = markets.pop('selections')
-#             for selection in selections:
-#                 s = Selection.objects.get(id=selection['id'])
-#                 s.odds = selection['odds']
-#                 s.save()
-#             match = Match.objects.get(id=event['id'])
-#             return Response(status=status.HTTP_201_CREATED)
-#         else:
-#             return Response(status=status.HTTP_400_BAD_REQUEST)
