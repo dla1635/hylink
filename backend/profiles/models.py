@@ -41,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(null=True)
     last_login = models.DateTimeField(null=True)
-    
+     
     USERNAME_FIELD = 'email'
     # EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
