@@ -77,7 +77,7 @@ export default {
             console.log(email, password)
             this.$store.dispatch('auth/login', { email, password })
                 .then(() =>
-                    this.$router.push('/home'));
+                    this.$router.push('/home/label/total'));
         },
     }
 }
