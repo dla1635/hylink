@@ -18,7 +18,7 @@
                         color="#009CEE"
                         large
                         dark
-                        :to="{ name: 'home' }"
+                        @click='toHome'
                     >
                         Get Started
                     </v-btn>
@@ -31,10 +31,14 @@
 </template>
 
 <script>
+import router from '../../config/router'
+
 export default {
     name: 'Banner',
     methods: {
-        
+        toHome: () => {
+            router.push('/home')
+        }
     },
     created() {
     }
