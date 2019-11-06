@@ -9,6 +9,7 @@
     ,"cookies"
     ,"http://*/*"
     ,"https://*/*"
+    
   ],
   
   "browser_action": {
