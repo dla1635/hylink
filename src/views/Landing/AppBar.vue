@@ -4,19 +4,22 @@
     <router-link to="home/label/total">
         <v-img src="@/assets/logo.png" max-width="50"></v-img>
     </router-link>
-    <router-link to="home/label/total">
+    <!-- <router-link to="home/label/total">
         <v-img src="@/assets/txtLogo.png" max-width="100"></v-img>
-    </router-link>
+    </router-link> -->
     <v-img src="@/assets/txtLogo.png" max-width="100"></v-img>
-    <v-btn text depressed to="login" color="#009CEE">
-        Login
-    </v-btn>
-    <v-btn v-if="islogin" text depressed to="logout" color="#009CEE">
-        Logout
-    </v-btn>
-    <v-btn text depressed to="regist" color="#009CEE">
-        Register
-    </v-btn>
+    <v-flex d-flex flex-row-reverse>
+        <v-btn text depressed to="login" color="#009CEE">
+            Login
+        </v-btn>
+        <v-btn v-if="islogin" text depressed to="logout" color="#009CEE">
+            Logout
+        </v-btn>
+        <v-btn text depressed to="regist" color="#009CEE">
+            Register
+        </v-btn>
+    </v-flex>
+
 
     </v-app-bar>
 </template>
