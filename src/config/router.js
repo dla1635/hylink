@@ -1,11 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-<<<<<<< HEAD
 import WelcomePage from '@/views/Welcome/WelcomePage'
-=======
-import Landing from '@/views/Landing/LandingPage'
->>>>>>> 09dc263d52de5f3b065dd59d28994b55967a6bd3
 import HomePage from '@/views/Home/HomePage'
 import LoginPage from '@/views/Login/LoginPage'
 import SharePage from '@/views/Share/SharePage'
