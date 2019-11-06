@@ -1,8 +1,9 @@
 <template>
   <v-layout column id="container">
     <v-layout>
+      <v-flex v-if="sharing_flag" style="font-size:18px; font-weight:bold;">현재 선택된 카드 수 {{selectedCard.length}} <v-btn @click="sharing" icon><v-icon>done_outline</v-icon></v-btn></v-flex>
       <v-spacer/>
-      <v-btn @click="sharing_flag=!sharing_flag" icon><v-icon>sharing</v-icon></v-btn>
+      <v-btn @click="sharing_flag=!sharing_flag" icon><v-icon>share</v-icon></v-btn>
       <v-menu transition="slide-y-transition" :close-on-content-click="false">
         <template v-slot:activator="{ on }">
           <v-btn icon><v-icon style="width:40px; height:40px;"  v-on="on">apps</v-icon> </v-btn>
@@ -52,7 +53,8 @@ export default {
       thumnail_flag:true,
       summary_flag:true,
       sharing_flag:false,
-      selectedCard:[]
+      selectedCard:[],
+      card_num:0
     }
   },
   components: {
@@ -67,6 +69,27 @@ export default {
       }
   },
   methods: {
+    updateCardNum(event) {
+      this.card_num= event
+    },
+    sharing() {
+      var card_id = []
+      this.cardList.forEach((element, index) => {
+        if(this.selectedCard[0]===index) {
+          card_id.push(element.id)
+          this.selectedCard.splice(0, 1)
+        }
+      });
+
+      console.log(card_id)
+
+      const payload= {
+        link_list: card_id
+      }
+
+      this.$store.dispatch("shareCard", payload)
+      this.sharing_flag=false
+    }
   }
 }
 </script>

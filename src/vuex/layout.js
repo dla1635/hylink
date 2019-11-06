@@ -62,6 +62,10 @@ export const layout = {
             var resp = await session.post("http://localhost:8000/api/link/", payload)
             console.log(resp)
         },
+        async shareCard({commit}, payload) {            
+            var resp = await session.post("http://localhost:8000/api/share/", payload)
+            console.log(resp)
+        },
         async setCard({commit}, payload) {
             var resp = await session.post("http://localhost:8000/api/link/", payload)
             console.log(resp)
