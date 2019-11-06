@@ -1,16 +1,5 @@
 <template>
-<<<<<<< HEAD:src/views/Welcome/AppBar.vue
-    <v-app-bar app clipped-left hide-on-scroll color="ffffff00">
-        <!-- <router-link to="home">
-            <v-img src="@/assets/logo.png" max-width="50"></v-img>
-        </router-link> -->
-        <router-link to="home" id=welcome-logo>
-            Hylink
-            <!-- <v-img src="@/assets/txtLogo.png" max-width="100"></v-img> -->
-        </router-link>
-=======
 <v-app-bar app clipped-left color="white">
->>>>>>> 09dc263d52de5f3b065dd59d28994b55967a6bd3:src/views/Landing/AppBar.vue
 
         <v-spacer></v-spacer>
 

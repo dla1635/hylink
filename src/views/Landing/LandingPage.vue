@@ -12,7 +12,7 @@ import AppBar from './AppBar'
 import Banner from './Banner'
 
 export default {
-    name: 'WelcomePage',
+    name: 'LandingPage',
     components: {
         AppBar,
         Banner,

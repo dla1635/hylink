@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import WelcomePage from '@/views/Welcome/WelcomePage'
+import LandingPage from '@/views/Landing/LandingPage'
 import HomePage from '@/views/Home/HomePage'
 import LoginPage from '@/views/Login/LoginPage'
 import SharePage from '@/views/Share/SharePage'
@@ -16,8 +16,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'welcome',
-      component: WelcomePage
+      name: 'landing',
+      component: LandingPage
     },
     {
       path: '/home/:type/:content',
