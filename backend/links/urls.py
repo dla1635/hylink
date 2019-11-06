@@ -19,10 +19,15 @@ label = LabelViewSet.as_view({
     'get' : 'list'
 })
 
+exlink = LinkViewSet.as_view({
+    'get':'exlink_create'
+})
+
 
 urlpatterns = format_suffix_patterns([
     # path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('linklist/$', linklist, name='linklist'),
     path('link/$', link, name='link'),
-    path('label/$', label, name='label')
+    path('label/$', label, name='label'),
+    path('exlink/', exlink, name='exlink')
 ])

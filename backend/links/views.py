@@ -3,11 +3,12 @@ from .serializers import LinkTagSerializer, LinkTagDetailSerializer, LinkLabelSe
 from .models import Link, Tag, Label, LinkTag, LinkLabel
 from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.db.models import Count, F, Q
 from .textrankr import TextRank
 from .url2text import urlparse
 from django.contrib.auth import get_user_model
+from rest_framework.permissions import AllowAny
 
 # from django_filters.rest_framework import DjangoFilterBackend 
 # from rest_framework.filters import OrderingFilter
@@ -45,10 +46,11 @@ def isvalid_label(lb_id):
     msg = "label valid" if valid == True else "label invalid"
     return valid, msg
 
+@permission_classes((AllowAny, ))
 class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
     '''
     link 객체와 user tag를 인자로 받아 
@@ -234,6 +236,31 @@ class LinkViewSet(viewsets.ModelViewSet):
 
         #     if not isok:
         #         print("can't update")
+
+        return Response(status=status.HTTP_200_OK)
+    
+    def exlink_create(self, request):
+        print("link create")
+
+        # 1. user가 유효한지 확인 
+        email = request.data.get('email', None)
+        user = get_user_model().objects.get(email=email)
+        valid, msg = isvalid_user(user)
+        
+        if not valid:
+            print(msg)
+            return Response(status=status.HTTP_200_OK) 
+
+        url = request.data.get('url', None)
+        is_visible = request.get('is_visible', 3)
+
+        if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
+            print("user가 이미 등록한 URL")
+            return Response(status=status.HTTP_200_OK)
+        
+        isok = self.link_create(user, url, is_visible)
+        if not isok:
+            print("유효하지 않는 URL")
 
         return Response(status=status.HTTP_200_OK)
 
