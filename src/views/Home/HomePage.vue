@@ -46,19 +46,22 @@ export default {
     },
     watch: {
         changeParams: function() {
-            this.tmp()
+            this.init()
+        },
+        getCards: function() {
+            this.routing()
         }
     },
     computed: {
         changeParams: function(){
             return this.$route.params;
-        }
+        },
     },
     methods: {
         ...mapActions({
             getCards: 'getCards'
         }),
-        tmp() {
+        routing() {
             this.card_list=[]
             const type = this.$route.params.type
             const content = this.$route.params.content
@@ -68,8 +71,7 @@ export default {
             console.log(content)
             console.log("tmpcard",tmpCards)
 
-            if(content == null) {
-                console.log("totallllll")
+            if(content === "total") {
                 this.card_list = tmpCards;
             } else if(type === "label") {
                 this.card_list = tmpCards.filter(function(item){
@@ -83,16 +85,22 @@ export default {
                         return item;
                     }
                 });
+            } else if (type === 'search') {
+                this.card_list = tmpCards
             }
         },
-        postCard() {
-            this.$store.dispatch("postCard",{url:this.url_input})
+        async postCard() {
+            await this.$store.dispatch("postCard",{url:this.url_input})
             this.url_input= ""
+            this.init()
+        },
+        async init() {
+            await this.getCards()
+            this.routing()
         }
     },
     async mounted() {
-        await this.getCards()
-        this.tmp()
+        this.init()
     }
 };
 </script>
