@@ -3,11 +3,12 @@ from .serializers import LinkTagSerializer, LinkTagDetailSerializer, LinkLabelSe
 from .models import Link, Tag, Label, LinkTag, LinkLabel
 from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.db.models import Count, F, Q
 from .textrankr import TextRank
 from .url2text import urlparse
 from django.contrib.auth import get_user_model
+from rest_framework.permissions import AllowAny
 
 # from django_filters.rest_framework import DjangoFilterBackend 
 # from rest_framework.filters import OrderingFilter
@@ -45,10 +46,11 @@ def isvalid_label(lb_id):
     msg = "label valid" if valid == True else "label invalid"
     return valid, msg
 
+@permission_classes((AllowAny, ))
 class LinkViewSet(viewsets.ModelViewSet):
     queryset = Link.objects.all()
     serializer_class = LinkSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
     '''
     link 객체와 user tag를 인자로 받아 
@@ -127,6 +129,7 @@ class LinkViewSet(viewsets.ModelViewSet):
         new_link = Link(user=user, url=url, title=title, thumbnail=thumbnail, summary=summary, sharable=0, is_visible=is_visible)
         new_link.save()
 
+        # link_tags = request.data.get('tags', None)
         self.update_linktag(new_link, user_tags)
         return True
     
