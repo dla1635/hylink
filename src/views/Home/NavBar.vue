@@ -1,7 +1,7 @@
 <template>
 <v-navigation-drawer v-model="drawer" fixed clipped class="grey lighten-4" app>
     <v-list dense class="grey lighten-4">
-      <v-list-item @click="moveToLabel('')">
+      <v-list-item @click="moveToLabel('total')">
             <v-list-item-action>
                 <v-icon>local_offer</v-icon>
             </v-list-item-action>
@@ -48,8 +48,8 @@ export default {
         }),
         moveToLabel(content) {
           // catch문 => dupalate Component error 해결
-          console.log(content)
-          this.$router.push({name:'home', params: { type:"label", content: content }}).catch(err => {})
+          
+          this.$router.push({name:'home', params: { type:'label', content: content }}).catch(err => {})
         }
     },
     async mounted() {

@@ -24,11 +24,7 @@ const router = new Router({
       name: 'home',
       component: HomePage
     },
-    {
-      path: '/home',
-      name: 'home',
-      component: HomePage
-    },
+ 
     {
       path: '/login',
       name: 'login',

@@ -107,6 +107,7 @@ export default {
 
         alert('링크가 삭제 되었습니다.')
         this.dialog = false
+        location = location
       }
     },
     mounted(){
@@ -116,12 +117,10 @@ export default {
         this.tag = this.card.tag.map(element => {
           return element.name
         });
-        console.log(this.tag)
         this.label = this.card.label.map(element => {
           return element.name
         });
-        console.log(this.card)
-        console.log(this.label)
+
 
     }
 }

@@ -50,6 +50,14 @@ export const layout = {
             var resp = await Axios.get("http://localhost:8000/api/linklist/")
             commit("setCards", resp.data)
         },
+        async search({commit}, payload) {
+            console.log("search", payload)
+            var resp = await session.get("http://localhost:8000/api/linklist/",{
+                payload,
+              })
+            console.log(resp.data)
+            commit("setCards", resp.data)
+        },
         async postCard({commit}, payload) {            
             var resp = await session.post("http://localhost:8000/api/link/", payload)
             console.log(resp)

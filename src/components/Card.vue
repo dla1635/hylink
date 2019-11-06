@@ -46,7 +46,7 @@
             <v-scroll-y-transition>
                   <div
                     v-if="active & sharing_flag"
-                    class="d-flex v-card--reveal display-3" style="height: 100%;  background-color:#0002;"
+                    class="d-flex v-card--reveal display-3" style="height: 100%; border:1px solid grey;"
                   >
                     Active
                   </div>

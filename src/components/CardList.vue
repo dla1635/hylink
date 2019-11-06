@@ -2,7 +2,7 @@
   <v-layout column id="container">
     <v-layout>
       <v-spacer/>
-      <v-btn @click="sharing_flag=!sharing_flag">공유</v-btn>
+      <v-btn @click="sharing_flag=!sharing_flag" icon><v-icon>sharing</v-icon></v-btn>
       <v-menu transition="slide-y-transition" :close-on-content-click="false">
         <template v-slot:activator="{ on }">
           <v-btn icon><v-icon style="width:40px; height:40px;"  v-on="on">apps</v-icon> </v-btn>

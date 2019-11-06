@@ -184,16 +184,15 @@ class LinkViewSet(viewsets.ModelViewSet):
             print(title+" "+thumbnail+" "+summary)
             # if sharable != None:
             #     sharable = int(sharable)
-            
             link_tags = request.data.get('tags', None)
             link_labels = request.data.get('labels', None)
             isok = self.link_update(l_id, user, title, thumbnail, summary, is_visible, link_tags,link_labels)
-
+            print()
             if not isok:
                 print("can't update")
         else:
             url = request.data.get('url', None)
-            is_visible = request.get('is_visible', 3)
+            is_visible = request.data.get('is_visible', 3)
 
             if Link.objects.filter(Q(user=user)&Q(url=url)).count() > 0:
                 print("user가 이미 등록한 URL")
@@ -315,17 +314,27 @@ class LinksViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         print("linklist GET")
+        
+        print(request.user)
+        # print('type'+request.data.get('type',None))
         user = request.user
         valid, msg = isvalid_user(user)
         if not valid:
+            print('valid')
             print(msg)
             return Response(status=status.HTTP_200_OK)
 
-        search_type = request.data.get('type',None)
+        search_type = request.GET.get('type',None)
+        print("type!!!!!!!")
+        print()
         print(search_type)
+        # word = request.GET.get('word', None)
+        # print("word!!!")
+        # print(word)
         if search_type != 'tag' and search_type != None and search_type != 'label' and search_type != 'word':
             print("잘못된 입력으로 검색했습니다.")
             return Response(status=status.HTTP_200_OK)
+        
         
         link_list = Link.objects.all().filter(user=user)
 

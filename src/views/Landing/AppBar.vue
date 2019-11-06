@@ -1,8 +1,12 @@
 <template>
 <v-app-bar app clipped-left color="white">
 
-        <v-spacer></v-spacer>
+    <router-link to="home/label/total">
+        <v-img src="@/assets/logo.png" max-width="50"></v-img>
 
+    </router-link>
+    <router-link to="home/label/total">
+        <v-img src="@/assets/txtLogo.png" max-width="100"></v-img>
         <v-btn text depressed to="login" color="#009CEE">
             Login
         </v-btn>
