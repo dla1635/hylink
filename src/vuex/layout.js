@@ -24,7 +24,7 @@ export const layout = {
               ,label: ["BlockChain","AI"],
               url:"https://www.naver.com"
             },
-          ]
+          ],
     },
     mutations: {
         changeNavBarState(state){
@@ -37,7 +37,8 @@ export const layout = {
         setLabels(state, payload) {
             console.log(payload)
             state.labels = payload
-        }
+        },
+
     },
     actions: {
         async getLabels({commit}) {
@@ -65,6 +66,7 @@ export const layout = {
         async shareCard({commit}, payload) {            
             var resp = await session.post("http://localhost:8000/api/share/", payload)
             console.log(resp)
+            return resp.data.id
         },
         async setCard({commit}, payload) {
             var resp = await session.post("http://localhost:8000/api/link/", payload)
