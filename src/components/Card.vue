@@ -1,7 +1,7 @@
 <template>
   <v-item v-slot:default="{ active, toggle }">
     <v-hover v-slot:default="{ hover }">
-        <v-card class="card" :elevation="hover ? 5 : 2" @click="toggle" :color="active & sharing_flag ? 'primary' : ''" >
+        <v-card class="card" :elevation="hover ? 5 : 2" @click="toggle" >
             <CardModifyModal v-if="modal_flag" :card="card"/>
             <div v-if="hover & !sharing_flag" class="d-flex v-card--reveal display-3" style="height: 100%;  background-color:#0002;">
                 <v-tooltip bottom>
@@ -43,14 +43,11 @@
             <v-flex id="tagContainer">
                 <v-chip class="tag" v-for="tag in card.tag" :key="tag">#{{tag.name}} </v-chip>
             </v-flex>
-            <v-scroll-y-transition>
-                  <div
-                    v-if="active & sharing_flag"
-                    class="d-flex v-card--reveal display-3" style="height: 100%; border:1px solid grey;"
-                  >
-                    Active
-                  </div>
-            </v-scroll-y-transition>
+            <div
+            v-if="active & sharing_flag"
+            class="d-flex v-card--reveal display-3" style="height:100%; border:2px solid black;"
+            >
+            </div>
         </v-card>
     </v-hover>
   </v-item>

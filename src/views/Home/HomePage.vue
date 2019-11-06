@@ -84,10 +84,7 @@ export default {
                 });
             } else if (type === 'search') {
                 this.card_list = tmpCards.filter(function(item){
-                    console.log(item.title)
-                    console.log(item.title.indexOf(content))
                     if(item.title.indexOf(content) !== -1|| item.summary.indexOf(content)!== -1 || item.tag.find(function(item){return item.name === content})) {
-                        console.log(item)
                        return item;
                     }
                 });

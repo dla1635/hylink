@@ -55,7 +55,7 @@ class ShareViewSet(viewsets.ModelViewSet):
         if not valid:
             print(msg)
             return Response(status=status.HTTP_200_OK)
-
+        
         ###### user & linklist 유효성 검사 ######
 
         # 1. Share 객체 만들기
