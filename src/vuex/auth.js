@@ -33,9 +33,10 @@ const actions = {
     }) {
         commit(LOGIN_BEGIN);
         return auth.login(email, password)
-            .then(({
-                data
-            }) => commit(SET_TOKEN, data.token))
+            .then(({data}) => {
+                // eslint-disable-next-line no-console
+                console.log(data);
+                commit(SET_TOKEN, data.token)})
             .then(() => {
                 commit(LOGIN_SUCCESS)
             })

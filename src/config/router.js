@@ -1,23 +1,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Landing from '@/views/Landing/LandingPage'
+import LandingPage from '@/views/Landing/LandingPage'
 import HomePage from '@/views/Home/HomePage'
 import LoginPage from '@/views/Login/LoginPage'
 import SharePage from '@/views/Share/SharePage'
 import RegistPage from '@/views/Regist/RegistPage'
 import NotFound404 from '@/views/Error/NotFound404'
 
-
 Vue.use(Router)
 
 const router = new Router({
+  
   mode : 'history',
   routes: [
     {
       path: '/',
       name: 'landing',
-      component: Landing
+      component: LandingPage
     },
     {
       path: '/home/:type/:content',
@@ -63,5 +63,6 @@ router.beforeEach(function (to, from, next) {
     next(); // 페이지 전환
   }
 });
+
 
 export default router
