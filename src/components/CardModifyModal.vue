@@ -121,6 +121,9 @@ export default {
           return element.name
         });
 
+        this.selectedLabels = this.label
+        this.selectedTags = this.tag
+
 
     }
 }

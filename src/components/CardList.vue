@@ -1,7 +1,21 @@
 <template>
   <v-layout column id="container">
     <v-layout>
-      <v-flex v-if="sharing_flag" style="font-size:18px; font-weight:bold;">현재 선택된 카드 수 {{selectedCard.length}} <v-btn @click="sharing" icon><v-icon>done_outline</v-icon></v-btn></v-flex>
+      <v-flex v-if="sharing_flag" style="font-size:18px; font-weight:bold;">
+        현재 선택된 카드 수 {{selectedCard.length}} 
+        <v-btn @click="sharing" icon>
+          <v-icon>done_outline</v-icon>
+        </v-btn>  
+        <input
+              type="text"
+              v-model="share_link"
+              readonly
+              style="border:1px solid black; width:250px;"
+        />
+        <v-btn @click="clipBoadCopy" icon>
+          <v-icon>file_copy</v-icon>
+        </v-btn>
+      </v-flex>
       <v-spacer/>
       <v-btn @click="sharing_flag=!sharing_flag" icon><v-icon>share</v-icon></v-btn>
       <v-menu transition="slide-y-transition" :close-on-content-click="false">
@@ -54,7 +68,8 @@ export default {
       summary_flag:true,
       sharing_flag:false,
       selectedCard:[],
-      card_num:0
+      card_num:0,
+      share_link:""
     }
   },
   components: {
@@ -72,7 +87,7 @@ export default {
     updateCardNum(event) {
       this.card_num= event
     },
-    sharing() {
+    async sharing() {
       var card_id = []
       this.cardList.forEach((element, index) => {
         if(this.selectedCard[0]===index) {
@@ -87,8 +102,17 @@ export default {
         link_list: card_id
       }
 
-      this.$store.dispatch("shareCard", payload)
-      this.sharing_flag=false
+      const id = await this.$store.dispatch("shareCard", payload)
+      this.share_link = "http://localhost:8000/share/"+id
+    },
+    clipBoadCopy() {
+      var t = document.createElement("textarea");
+      document.body.appendChild(t);
+      t.value = this.share_link;
+      t.select();
+      document.execCommand('copy');
+      document.body.removeChild(t);
+      alert("클립보드에 복사 했습니다.")
     }
   }
 }
