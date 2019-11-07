@@ -103,7 +103,7 @@ export default {
       }
 
       const id = await this.$store.dispatch("shareCard", payload)
-      this.share_link = "http://localhost:8000/share/"+id
+      this.share_link = "http://13.125.61.163:8000/share/"+id
     },
     clipBoadCopy() {
       var t = document.createElement("textarea");

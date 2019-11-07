@@ -69,6 +69,8 @@ class LinkViewSet(viewsets.ModelViewSet):
         # 3. url로 썸네일, 태그, 제목, 3줄 요약 가져오기
         thumbnail, title, input_text, meta_tag = urlparse(url) # string으로 None이 넘어올 수 있음
         print(meta_tag)
+        if thumbnail == "None":
+            thumbnail="static/img/link.9f054ce2.png"
 
         if title=='None':
             print("유효하지 않는 URL")
