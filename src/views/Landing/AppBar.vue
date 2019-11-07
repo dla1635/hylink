@@ -1,5 +1,5 @@
 <template>
-<v-app-bar app clipped-left color="white">
+<v-app-bar app clipped-left color="#FAFAFA">
 
     <router-link to="home/label/total">
         <v-img src="@/assets/logo.png" max-width="50"></v-img>
