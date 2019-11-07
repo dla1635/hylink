@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section id="service">
         <v-layout
           column
           wrap
@@ -71,9 +71,12 @@
       </section>
 </template>
 
-<script>
-export default {
-    name: 'Service',
 
+<style lang="stylus" scoped>
+@import url('https://fonts.googleapis.com/css?family=Gothic+A1&display=swap');
+
+#service{
+  font-family: 'Gothic A1', sans-serif;
 }
-</script>
+
+</style>
