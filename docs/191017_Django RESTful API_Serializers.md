@@ -63,7 +63,7 @@ INSTALLED_APPS = [
 
 기존 장고 방식으로 현재 Post Model 구성했을 때 코드 
 
-#### post/models.py
+#### posts/models.py
 
 ```python
 from django.db import models
@@ -130,7 +130,7 @@ Django REST framework가 제공하는 `ModelSerializer`를 이용해 api에 seri
 
 
 
-### post/serializers.py
+### posts/serializers.py
 
 ```python
 from rest_framework import serializers
@@ -167,7 +167,7 @@ Viewset를 이용해 Model 하나를 컨트롤하는 CRUD를 구현합니다.
 
 
 
-### post/views.py
+### posts/views.py
 
 ```python
 from rest_framework import viewsets
@@ -179,14 +179,14 @@ from rest_framework import permissions
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,) # 콤마 빼먹지 않게 주의
     def perform_create(self, seriallizer):
         serializer.save(user=self.request.user)
 ```
 
 
 
-### post/urls.py
+### posts/urls.py
 
 ```python
 from django.urls import path, include
